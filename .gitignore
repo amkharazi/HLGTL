@@ -1,2 +1,5 @@
 Models/cifar10/data/
+Models/cifar10/__pycache__/
 Models/mnist/data/
+Models/mnist/__pycache__/
+
