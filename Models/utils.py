@@ -11,17 +11,16 @@ Contains functions for :
 1. Train/Test Loader for Cifar10
 2. Train/Test Loader for MNIST
 3. Count the parameter of a model
-
-?. Topk Accuracy calculation
-
+4. Train model 
+5. Test model
+6. Topk Accuracy calculation
 '''
 
 def load_cifar(BATCH_SIZE = 16, PATH = './data'):
     '''
-    makes train and test loader for CIFAR10 dataset
-    BATH_SIZE : is the size of batches - Type : Int
-    PATH : is the path where the dataset is going to be downloaded or placed
-    
+    Makes train and test loader for CIFAR10 dataset
+    BATH_SIZE : Is the size of batches - Type : Int
+    PATH : Is the path where the dataset is going to be downloaded or placed
     '''
     transform_train = transforms.Compose([
                         transforms.RandomCrop(32, padding=4),
@@ -53,12 +52,11 @@ def load_cifar(BATCH_SIZE = 16, PATH = './data'):
 
 def load_mnist(BATCH_SIZE = 16, PATH = './data'):
     '''
-    makes train and test loader for MNIST dataset
-    BATH_SIZE : is the size of batches - Type : Int
-    PATH : is the path where the dataset is going to be downloaded or placed
+    Makes train and test loader for MNIST dataset
+    BATH_SIZE : Is the size of batches - Type : Int
+    PATH : Is the path where the dataset is going to be downloaded or placed
     To make the MNIST dataset applicable for similar models as other datasets, 
     we transformed 1 channel images into 3 channel images 
-    
     '''
     transform_train = transforms.Compose([
                         transforms.RandomCrop(32, padding=4),
@@ -89,27 +87,115 @@ def load_mnist(BATCH_SIZE = 16, PATH = './data'):
 
 def count_param(model):
     '''
-    count the number of parameters in a model
+    Counts the number of parameters in a model
     model : nn.Module 
-    
     '''
     return sum(p.numel() for p in model.parameters() if p.requires_grad)
 
+def train(epoch,
+          model,
+          criterion,
+          optimizer,
+          trainloader,
+          result_PATH,
+          model_PATH,
+          device):
+
+    '''
+    epoch: The current epoch index
+    model : The model that is being trained
+    criterion : The criterion for training
+    optimizer: The optimizer for training
+    trainloader: The DataLoader for train dataset
+    result_PATH: The path to save the result of this epoch
+    model_PATH: The path to save the model stats 
+    device: The device to be used 
+    '''
+
+    os.makedirs(os.path.dirname(result_PATH), exist_ok=True)
+    
+    print('\nEpoch: %d' % epoch)
+    model.train()
+    train_loss = 0
+    correct = 0
+    total = 0
+    
+    with open(result_PATH, 'a') as f:
+        f.write(f'\nTraining - Epoch: {epoch}\n')
+        
+        for _, (inputs, targets) in enumerate(trainloader):
+            inputs, targets = inputs.to(device), targets.to(device)
+            optimizer.zero_grad()
+            outputs = model(inputs)
+            loss = criterion(outputs, targets)
+            loss.backward()
+            optimizer.step()
+
+            train_loss += loss.item()
+            _, predicted = outputs.max(1)
+            total += targets.size(0)
+            correct += predicted.eq(targets).sum().item()
+
+        train_summary = f'Train Summary after Epoch: {epoch}, Loss: {train_loss / len(trainloader):.3f}, Accuracy: {100. * correct / total:.3f}% ({correct}/{total})\n'
+        f.write(train_summary)
+
+        print(train_summary)
+        os.makedirs(os.path.dirname(model_PATH), exist_ok=True)
+        torch.save(model.state_dict(), model_PATH)
+        print(f'Model saved to {model_PATH}')
 
 
+def test(epoch,
+         model,
+         criterion,
+         testloader,
+         result_PATH,
+         device):
+    
+    '''
+    epoch: The current epoch index
+    model : The model that is being tested
+    criterion : The criterion for testing
+    testloader: The DataLoader for test dataset
+    result_PATH: The path to save the result of this epoch
+    device: The device to be used 
+    '''
+    
+        
+    os.makedirs(os.path.dirname(result_PATH), exist_ok=True)
+    
+    model.eval()
+    test_loss = 0
+    correct = 0
+    total = 0
+    
+    with torch.no_grad():
+        with open(result_PATH, 'a') as f:
+            f.write(f'\nTesting - Epoch: {epoch}\n')
+            
+            for _, (inputs, targets) in enumerate(testloader):
+                inputs, targets = inputs.to(device), targets.to(device)
+                outputs = model(inputs)
+                loss = criterion(outputs, targets)
 
-
-
-
-
-
+                test_loss += loss.item()
+                _, predicted = outputs.max(1)
+                total += targets.size(0)
+                correct += predicted.eq(targets).sum().item()
+                
+            test_summary = f'Test Summary after Epoch {epoch}, Loss: {test_loss / len(testloader):.3f}, Accuracy: {100. * correct / total:.3f}% ({correct}/{total})\n'
+            f.write(test_summary)
+            
+            print(test_summary)
+            
+            
 
 def topk(output, target, k):
     '''
-    Returns the TOP K accuracy of a model
-    output : is the predicted values - Type : Tesnsor
-    target : is the actual values - Type : Tensor
-    k : is the top K'th accuracy 
+    Returns the TopK accuracy of a model
+    output : Is the predicted values - Type : Tesnsor
+    target : Is the actual values - Type : Tensor
+    k : Is the TopK'th accuracy 
     
     '''
     correct = 0.0
