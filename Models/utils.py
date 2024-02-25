@@ -15,6 +15,11 @@ Contains functions for :
 '''
 
 
+class ToFloat16:
+    def __call__(self, x):
+        return x.to(dtype=torch.float16)
+
+
 def load_cifar(BATCH_SIZE=16, PATH='./data'):
     '''
     Makes train and test loader for CIFAR10 dataset
@@ -28,6 +33,7 @@ def load_cifar(BATCH_SIZE=16, PATH='./data'):
         transforms.ToTensor(),
         transforms.Normalize((0.4914, 0.4822, 0.4465),
                              (0.2023, 0.1994, 0.2010)),
+        ToFloat16(),
     ])
 
     transform_test = transforms.Compose([
@@ -35,6 +41,7 @@ def load_cifar(BATCH_SIZE=16, PATH='./data'):
         transforms.ToTensor(),
         transforms.Normalize((0.4914, 0.4822, 0.4465),
                              (0.2023, 0.1994, 0.2010)),
+        ToFloat16(),
     ])
     trainset = torchvision.datasets.CIFAR10(
         root=PATH, train=True, download=True, transform=transform_train)
@@ -49,7 +56,7 @@ def load_cifar(BATCH_SIZE=16, PATH='./data'):
     # classes = ('plane', 'car', 'bird', 'cat', 'deer',
     #        'dog', 'frog', 'horse', 'ship', 'truck')
 
-    return trainloader, testloader
+    return trainloader, testloader, trainset, testset
 
 
 def load_mnist(BATCH_SIZE=16, PATH='./data'):
@@ -68,6 +75,7 @@ def load_mnist(BATCH_SIZE=16, PATH='./data'):
         transforms.ToTensor(),
         transforms.Normalize((0.1307, 0.1307, 0.1307),
                              (0.3081, 0.3081, 0.3081)),
+        ToFloat16(),
     ])
 
     transform_test = transforms.Compose([
@@ -76,6 +84,7 @@ def load_mnist(BATCH_SIZE=16, PATH='./data'):
         transforms.ToTensor(),
         transforms.Normalize((0.1307, 0.1307, 0.1307),
                              (0.3081, 0.3081, 0.3081)),
+        ToFloat16(),
     ])
     trainset = torchvision.datasets.MNIST(
         root=PATH, train=True, download=True, transform=transform_train)
@@ -107,10 +116,10 @@ def topk(output, target, k):
 
     '''
     correct = 0.0
-    batch_size = output.size(0)
-    _, topk_indices = output.topk(k, dim=1, largest=True, sorted=True)
-    target = target.view(-1, 1).expand_as(topk_indices)
-
-    correct += (topk_indices == target).sum().item()
-
-    return (correct / batch_size) * 100.0
+    batch_size = output.shape[0]
+    for sample in range(batch_size):
+        topk_sorted = output[sample].sort(descending=True)[1][:k]
+        if target[sample] in topk_sorted:
+            correct += 1
+        #    print(f'sample {sample} was correct because : {topk_sorted} and {target[sample]}')
+    return correct  # ,(correct/batch_size)*100.0
