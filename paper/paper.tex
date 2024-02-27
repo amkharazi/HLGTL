@@ -15,7 +15,8 @@
 \mainmatter
 \def\ECCV16SubNumber{***}  % Insert your submission number here
 
-\title{Author Guidelines for ECCV Submission} % Replace with your title
+%\title{Author Guidelines for ECCV Submission} % Replace with your title
+\title{SATURN: Splitting Approach on Tensorized Ubiquitous Regression Networks}
 
 \titlerunning{ECCV-16 submission ID \ECCV16SubNumber}
 
@@ -28,12 +29,16 @@
 \maketitle
 
 \begin{abstract}
-The abstract should summarize the contents of the paper. LNCS guidelines
-indicate it should be at least 70 and at most 150 words. It should be set in 9-point
-font size and should be inset 1.0~cm from the right and left margins.
-\dots
-\keywords{We would like to encourage you to list your keywords within
-the abstract section}
+%The abstract should summarize the contents of the paper. LNCS guidelines
+%indicate it should be at least 70 and at most 150 words. It should be set in 9-point
+%font size and should be inset 1.0~cm from the right and left margins.
+%\dots
+\textit{Fully Connected} (FC) layers are often used in many neural network architectures such as \textit{Convolutional neural networks} (CNNs), Transformers, and many others. The data is flattened before being fed to the FC layers which not only changes the topological structure but also requires many parameters; \textit{Tensor Contraction Layer} (TCL) and \textit{Tensor Regression Layer} (TRL) are capable candidates to use instead of FC layers which preserve the multilinear structure of data as well as reduce the cost of execution. To exploit the capability of TRL and TCL even further, Our method uses specific splitting approaches  to generate thinner higher dimensional tensors from the original data to reduce the cost by a greater factor while also preserving the accuracy. Our experiments on CIFAR10 and MNIST, applied to known models such as ResNet, VGG, and other typical CNNs demonstrate our method's ability to reduce the cost compared to previous methods while also maintaining the accuracy. 
+%\keywords{We would like to encourage you to list your keywords within
+%the abstract section}
+\keywords{
+Machine Learning, Tensorized Regression Layer, Tensorized Contraction Layer, Patching and Splitting, Tensor Methods, Low-Rank Approximation
+}
 \end{abstract}
 
 
