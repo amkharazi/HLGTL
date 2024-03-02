@@ -33,7 +33,7 @@ def load_cifar(BATCH_SIZE=16, PATH='./data'):
         transforms.ToTensor(),
         transforms.Normalize((0.4914, 0.4822, 0.4465),
                              (0.2023, 0.1994, 0.2010)),
-        ToFloat16(),
+        # ToFloat16(),
     ])
 
     transform_test = transforms.Compose([
@@ -41,7 +41,7 @@ def load_cifar(BATCH_SIZE=16, PATH='./data'):
         transforms.ToTensor(),
         transforms.Normalize((0.4914, 0.4822, 0.4465),
                              (0.2023, 0.1994, 0.2010)),
-        ToFloat16(),
+        # ToFloat16(),
     ])
     trainset = torchvision.datasets.CIFAR10(
         root=PATH, train=True, download=True, transform=transform_train)
@@ -75,7 +75,7 @@ def load_mnist(BATCH_SIZE=16, PATH='./data'):
         transforms.ToTensor(),
         transforms.Normalize((0.1307, 0.1307, 0.1307),
                              (0.3081, 0.3081, 0.3081)),
-        ToFloat16(),
+        # ToFloat16(),
     ])
 
     transform_test = transforms.Compose([
@@ -84,7 +84,7 @@ def load_mnist(BATCH_SIZE=16, PATH='./data'):
         transforms.ToTensor(),
         transforms.Normalize((0.1307, 0.1307, 0.1307),
                              (0.3081, 0.3081, 0.3081)),
-        ToFloat16(),
+        # ToFloat16(),
     ])
     trainset = torchvision.datasets.MNIST(
         root=PATH, train=True, download=True, transform=transform_train)
@@ -96,7 +96,7 @@ def load_mnist(BATCH_SIZE=16, PATH='./data'):
     testloader = torch.utils.data.DataLoader(
         testset, batch_size=BATCH_SIZE, shuffle=False, num_workers=2)
 
-    return trainloader, testloader
+    return trainloader, testloader, trainset, testset
 
 
 def count_param(model):
