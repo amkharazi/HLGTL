@@ -3,44 +3,44 @@ Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: paper.aux
 The style file: splncs.bst
 Database file #1: egbib.bib
-You've used 5 entries,
+You've used 1 entry,
             2087 wiz_defined-function locations,
-            519 strings with 4181 characters,
-and the built_in function-call counts, 1335 in all, are:
-= -- 133
-> -- 37
-< -- 3
-+ -- 15
-- -- 10
-* -- 93
-:= -- 181
-add.period$ -- 5
-call.type$ -- 5
-change.case$ -- 5
+            497 strings with 3924 characters,
+and the built_in function-call counts, 353 in all, are:
+= -- 29
+> -- 20
+< -- 1
++ -- 7
+- -- 6
+* -- 33
+:= -- 60
+add.period$ -- 1
+call.type$ -- 1
+change.case$ -- 1
 chr.to.int$ -- 0
-cite$ -- 5
-duplicate$ -- 69
-empty$ -- 127
-format.name$ -- 10
-if$ -- 315
+cite$ -- 1
+duplicate$ -- 15
+empty$ -- 26
+format.name$ -- 6
+if$ -- 75
 int.to.chr$ -- 0
-int.to.str$ -- 5
-missing$ -- 3
-newline$ -- 26
-num.names$ -- 5
-pop$ -- 15
+int.to.str$ -- 1
+missing$ -- 1
+newline$ -- 8
+num.names$ -- 1
+pop$ -- 1
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 51
+skip$ -- 9
 stack$ -- 0
-substring$ -- 96
-swap$ -- 41
-text.length$ -- 3
+substring$ -- 19
+swap$ -- 9
+text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
 warning$ -- 0
-while$ -- 14
-width$ -- 6
-write$ -- 56
+while$ -- 4
+width$ -- 2
+write$ -- 14
