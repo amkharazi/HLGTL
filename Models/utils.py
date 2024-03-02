@@ -33,7 +33,7 @@ def load_cifar(BATCH_SIZE=16, PATH='./data'):
         transforms.ToTensor(),
         transforms.Normalize((0.4914, 0.4822, 0.4465),
                              (0.2023, 0.1994, 0.2010)),
-        ToFloat16(),
+        # ToFloat16(),
     ])
 
     transform_test = transforms.Compose([
@@ -41,7 +41,7 @@ def load_cifar(BATCH_SIZE=16, PATH='./data'):
         transforms.ToTensor(),
         transforms.Normalize((0.4914, 0.4822, 0.4465),
                              (0.2023, 0.1994, 0.2010)),
-        ToFloat16(),
+        # ToFloat16(),
     ])
     trainset = torchvision.datasets.CIFAR10(
         root=PATH, train=True, download=True, transform=transform_train)
@@ -75,7 +75,7 @@ def load_mnist(BATCH_SIZE=16, PATH='./data'):
         transforms.ToTensor(),
         transforms.Normalize((0.1307, 0.1307, 0.1307),
                              (0.3081, 0.3081, 0.3081)),
-        ToFloat16(),
+        # ToFloat16(),
     ])
 
     transform_test = transforms.Compose([
@@ -84,7 +84,7 @@ def load_mnist(BATCH_SIZE=16, PATH='./data'):
         transforms.ToTensor(),
         transforms.Normalize((0.1307, 0.1307, 0.1307),
                              (0.3081, 0.3081, 0.3081)),
-        ToFloat16(),
+        # ToFloat16(),
     ])
     trainset = torchvision.datasets.MNIST(
         root=PATH, train=True, download=True, transform=transform_train)
@@ -96,7 +96,7 @@ def load_mnist(BATCH_SIZE=16, PATH='./data'):
     testloader = torch.utils.data.DataLoader(
         testset, batch_size=BATCH_SIZE, shuffle=False, num_workers=2)
 
-    return trainloader, testloader
+    return trainloader, testloader, trainset, testset
 
 
 def count_param(model):
@@ -107,19 +107,25 @@ def count_param(model):
     return sum(p.numel() for p in model.parameters() if p.requires_grad)
 
 
-def topk(output, target, k):
-    '''
-    Returns the TopK accuracy of a model
-    output : Is the predicted values - Type : Tesnsor
-    target : Is the actual values - Type : Tensor
-    k : Is the TopK'th accuracy 
+# def topk_accuracy(output, target, k):
+#     '''
+#     Returns the Top-K accuracy of a model
+#     output : Predicted values - Tensor
+#     target : Actual values - Tensor
+#     k : Top-K accuracy
 
-    '''
-    correct = 0.0
-    batch_size = output.shape[0]
-    for sample in range(batch_size):
-        topk_sorted = output[sample].sort(descending=True)[1][:k]
-        if target[sample] in topk_sorted:
-            correct += 1
-        #    print(f'sample {sample} was correct because : {topk_sorted} and {target[sample]}')
-    return correct  # ,(correct/batch_size)*100.0
+#     Returns:
+#     - Accuracy percentage of top-k predictions
+#     '''
+#     # Get the top-k indices. No need to sort as we just need the topk
+#     _, topk_indices = output.topk(k, dim=1, largest=True, sorted=True)
+
+#     # Check if the targets are in the top k predictions
+#     correct = topk_indices.eq(
+#         target.view(-1, 1).expand_as(topk_indices)).sum().float()
+
+#     return (correct / output.size(0)) * 100.0  # Returns accuracy percentage
+def topk_accuracy(output, target, k):
+    _, topk_indices = output.topk(k, dim=1, largest=True, sorted=True)
+    correct = topk_indices.eq(target.view(-1, 1).expand_as(topk_indices)).sum().float()
+    return (correct / output.size(0)) * 100.0
