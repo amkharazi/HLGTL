@@ -107,21 +107,25 @@ def count_param(model):
     return sum(p.numel() for p in model.parameters() if p.requires_grad)
 
 
+# def topk_accuracy(output, target, k):
+#     '''
+#     Returns the Top-K accuracy of a model
+#     output : Predicted values - Tensor
+#     target : Actual values - Tensor
+#     k : Top-K accuracy
+
+#     Returns:
+#     - Accuracy percentage of top-k predictions
+#     '''
+#     # Get the top-k indices. No need to sort as we just need the topk
+#     _, topk_indices = output.topk(k, dim=1, largest=True, sorted=True)
+
+#     # Check if the targets are in the top k predictions
+#     correct = topk_indices.eq(
+#         target.view(-1, 1).expand_as(topk_indices)).sum().float()
+
+#     return (correct / output.size(0)) * 100.0  # Returns accuracy percentage
 def topk_accuracy(output, target, k):
-    '''
-    Returns the Top-K accuracy of a model
-    output : Predicted values - Tensor
-    target : Actual values - Tensor
-    k : Top-K accuracy
-
-    Returns:
-    - Accuracy percentage of top-k predictions
-    '''
-    # Get the top-k indices. No need to sort as we just need the topk
     _, topk_indices = output.topk(k, dim=1, largest=True, sorted=True)
-
-    # Check if the targets are in the top k predictions
-    correct = topk_indices.eq(
-        target.view(-1, 1).expand_as(topk_indices)).sum().float()
-
-    return (correct / output.size(0)) * 100.0  # Returns accuracy percentage
+    correct = topk_indices.eq(target.view(-1, 1).expand_as(topk_indices)).sum().float()
+    return (correct / output.size(0)) * 100.0
