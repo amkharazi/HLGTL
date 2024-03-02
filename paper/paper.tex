@@ -10,6 +10,8 @@
 
 \usepackage[hidelinks]{hyperref}
 
+\usepackage[super]{nth}
+
 \begin{document}
 % \renewcommand\thelinenumber{\color[rgb]{0.2,0.5,0.8}\normalfont\sffamily\scriptsize\arabic{linenumber}\color[rgb]{0,0,0}}
 % \renewcommand\makeLineNumber {\hss\thelinenumber\ \hspace{6mm} \rlap{\hskip\textwidth\ \hspace{6.5mm}\thelinenumber}}
@@ -68,9 +70,20 @@ Machine Learning, Tensorized Regression Layer, Tensorized Contraction Layer, Pat
 %so we advise authors to read this document carefully.
 
 
+Conventional Neural Networks, especially those that are applied to images such as \textit{Convolutional Neural Network} (CNNs), often consist of two main parts: One that is responsible to extract features from the input data, and the other part is a \textit{MultiLayer Perceptron} (MLP) which Maps the extracted features to the desired space. Despite the importance of data and their spatial relationship, maintaining their topological structure is often discarded since many known CNNs like ResNet or VGG, seem to work fine as they are; However in cases where these structures are more important than the others such as MRI, It is crucial to adapt the known networks to work without destroying the multi-linear structure of the data.
+
+Multi-linear or Multi-modal structures have always existed in many natural datasets and we can represent these using Tensors; Images could be considered as a \nth{3} orders tensors with width, height and the color channels as the corresponding 3 modes, the same could be considered for videos as \nth{4} order tensor with an extra time mode. In practice, many of the natural datasets can be considered as tensors which then requires the tensor expansion to the linear algebra. 
+
+Considering the new advances in \textit{Deep Neural Networks} (DNNs) and their applications to computer vision such as image recognition, image segmentation, image generation, video generation, vision transformers, etc $\dots$; most architectures still flatten the data before using them on MLPs which not only destroys the natural structure of the data but also increase the number of parameters needed for the model. 
+
+Images as the prime example of data used in vision machine learning tasks are considered \nth{3} order tensors which require their own algebra to be applied when fed to the MLPs (convolution layers are already designed to work on tensors). \textit{Fully Connected} (FC) layers used in many architectures are the main culprit behind vectorizing the data and the number of parameters. To alleviate the situation, a better replacement for FC layers is needed which not only preserves the current model's accuracy but also reduces the number of required parameters and does not destroy the structure of data. 
+
+Some works have been done to address these issues which will be discussed in Section 2. Our method provides a better solution based on one of the previous works and the experiments on CIFAR10 and MNIST applied to known architectures, ResNet and VGG, and typical CNNs proves our superiority. Using a splitting method, to split the original tensor along its modes into smaller tensors and stacking them into a newer, thinner and higher dimensional tensor we reduced the number of parameters while also maintaining the accuracy.  
 
 
-\section{Paper formatting}
+
+%\section{Paper formatting}
+\section{Related Works}
 
 \subsection{Language}
 

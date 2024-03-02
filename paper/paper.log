@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2023.2.24)  2 MAR 2024 19:30
+This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2023.2.24)  2 MAR 2024 20:42
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -444,6 +444,9 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 )
 \Hy@SectionHShift=\skip55
 )
+(c:/texlive/2022/texmf-dist/tex/generic/nth/nth.sty
+Package: nth 2002/02/27
+)
 (c:/texlive/2022/texmf-dist/tex/latex/l3backend/l3backend-xetex.def
 File: l3backend-xetex.def 2023-01-16 L3 backend support: XeTeX
 \g__graphics_track_int=\count319
@@ -455,31 +458,31 @@ File: l3backend-xetex.def 2023-01-16 L3 backend support: XeTeX
 (./paper.aux)
 \openout1 = `paper.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 13.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 15.
 LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 1
-3.
+5.
  (c:/texlive/2022/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 2022/07/10 v2.5l Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
 
 ABD: EveryShipout initializing macros
 *geometry* driver: auto-detecting
@@ -516,18 +519,18 @@ ABD: EveryShipout initializing macros
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-Package hyperref Info: Link coloring OFF on input line 13.
+Package hyperref Info: Link coloring OFF on input line 15.
 (./paper.out) (./paper.out)
 \@outlinefile=\write3
 \openout3 = `paper.out'.
 
-LaTeX Font Info:    Trying to load font information for U+msa on input line 45.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 47.
 
 
 (c:/texlive/2022/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 45.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 47.
 
 
 (c:/texlive/2022/texmf-dist/tex/latex/amsfonts/umsb.fd
@@ -535,23 +538,23 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1
 
 
-]
+] [2]
 Missing character: There is no ‎ (U+200E) in font [lmmono10-regular]:!
-[2]
-Underfull \hbox (badness 10000) in paragraph at lines 223--229
+[3]
+Underfull \hbox (badness 10000) in paragraph at lines 236--242
 
  []
 
-[3]
-Overfull \hbox (3.3364pt too wide) in paragraph at lines 307--313
+[4]
+Overfull \hbox (3.3364pt too wide) in paragraph at lines 320--326
 \TU/lmr/m/n/10 of Collage Languages”, “On Correcting the Intrusion of Tracing N
 on-deterministic
  []
 
-[4]
+[5]
 File: eijkel2.pdf Graphic file (type pdf)
 <use eijkel2.pdf>
- [5] [6] [7] [8] [9
+ [6] [7] [8] [9
 
 ] [10
 
@@ -573,12 +576,12 @@ Package rerunfilecheck Info: File `paper.out' has not changed.
 (rerunfilecheck)             Checksum: EF08A195DB348BD40FFADFF9B5393A10;419.
  ) 
 Here is how much of TeX's memory you used:
- 10361 strings out of 476688
- 161364 string characters out of 5807699
- 1867001 words of memory out of 5000000
- 30440 multiletter control sequences out of 15000+600000
+ 10392 strings out of 476688
+ 162007 string characters out of 5807699
+ 1870001 words of memory out of 5000000
+ 30467 multiletter control sequences out of 15000+600000
  517584 words of font info for 70 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 72i,10n,76p,1091b,383s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 72i,10n,76p,1091b,471s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
 Output written on paper.pdf (16 pages).
