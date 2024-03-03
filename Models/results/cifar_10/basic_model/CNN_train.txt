@@ -1,0 +1,5 @@
+
+Epoch: 1
+Train Summary after Epoch: 1, Loss: 2.103, Accuracy: 20.064% (10032/50000)
+
+Epoch: 2
