@@ -1,3 +1,0 @@
-
-Testing after Epoch: 1
-Test Summary after Epoch 1, Loss: 1.709, Accuracy: 36.960% (3696/10000), Top-3 Accuracy: 71.690%, Top-5 Accuracy: 87.210%
