@@ -1,9 +1,0 @@
-\begin{thebibliography}{1}
-
-\bibitem{kossaifi2020tensor}
-Kossaifi, J., Lipton, Z.C., Kolbeinsson, A., Khanna, A., Furlanello, T.,
-  Anandkumar, A.:
-\newblock Tensor regression networks.
-\newblock Journal of Machine Learning Research \textbf{21}(123) (2020)  1--21
-
-\end{thebibliography}
