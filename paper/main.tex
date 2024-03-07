@@ -134,25 +134,41 @@ Given the tensorized nature of our methods, it is required to be familiar with b
 
 \subsection{Notation}
 \label{subsec:notation}
-For a 3-order tensor $T\in \mathbb{R}^{I_1\times I_2\times I_3}$, there are 3 modes with respected sizes $I_1$, $I_2$, and $I_3$. 
-Its $T_{i_1, i_2, i_3}$ 
+For a 3-order tensor $T\in \mathbb{R}^{I_0\times I_1\times I_2}$, there are 3 modes with respected sizes $I_0$, $I_1$, and $I_2$. 
+Its $T_{i_0, i_1, i_2}$ 
 \textbf{element}
-is 0-order tensor (scalar), $(i_1, i_2, i_3)$. 
-\textbf{Slices} of its first and second modes are 2-order tensors (matrices) $M$ and are denoted by two colons, $T_{:,:,i_3}$. 
-\textbf{Fibers} of its first mode are 1-order tensors (vectors) $V$ and are denoted by a colon, $T_{:, i_2, i_3}$.
+is 0-order tensor (scalar), $(i_0, i_1, i_2)$. 
+\textbf{Slices} of its first and second modes are 2-order tensors (matrices) $M$ and are denoted by two colons, $T_{:,:,i_2}$. 
+\textbf{Fibers} of its first mode are 1-order tensors (vectors) $V$ and are denoted by a colon, $T_{:, i_1, i_2}$.
 
 \subsection{Tensor n-mode unfolding}
 \label{subsec:tensor-folding}
 Given a tensor 
-$T\in \mathbb{R}^{I_1\times I_2\times \dots \times I_N}$,
-its n-mode folding is ش matrix defined
-\linebreak as $T_{\left[n\right]} \in \mathbb{R}^{I_n \times \left(I_1\times \dots I_{n-1}\times I_{n+1}\times \dots \times I_N\right)}$. Mapping of elements are done via :
+$T\in \mathbb{R}^{I_0\times I_1\times \dots \times I_N}$,
+its n-mode unfolding is a matrix defined
+\linebreak 
+as $T_{\left[n\right]} \in \mathbb{R}^{I_n \times \left(I_0\times \dots I_{n-1}\times I_{n+1}\times \dots \times I_N\right)}$. Mapping of elements are done via :
 
 \begin{align}
 	\label{eq:unfolding}
-	&(i_1, \dots, i_n,\dots,i_N) \longrightarrow (i_n,r)\\
-	&\text{where } r = \sum_{\substack{p=1 \\ p\neq n}}^{N} I_p \prod_{\substack{l=p+1 \\ l\neq n}}^{N} I_l
+	&(i_0, \dots, i_n,\dots,i_N) \longrightarrow (i_n,r)\\
+	&\text{where } r = \sum_{\substack{p=0 \\ p\neq n}}^{N} I_p \prod_{\substack{l=p+1 \\ l\neq n}}^{N} I_l
 \end{align}
+
+\subsection{Tensor Vectorization}
+\label{subsec:tensor-vectorization}
+Given a tensor 
+$T\in \mathbb{R}^{I_0\times I_1\times \dots \times I_N}$, its vectorization is defined as $Vec(T) \in \mathbb{R}^{(I_0\times \dots \times I_N)}$. Mapping of elements are done via :
+
+\begin{align}
+	\label{eq:vectorization}
+	&(i_1,\dots,i_N) \longrightarrow r\\
+	&\text{where } r = \sum_{\substack{p=0}}^{N} I_p \prod_{\substack{l=p+1}}^{N} I_l
+\end{align}
+
+
+
+
 
 
 
