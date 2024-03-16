@@ -142,7 +142,7 @@ is 0-order tensor (scalar), $(i_0, i_1, i_2)$.
 \textbf{Fibers} of its first mode are 1-order tensors (vectors) $V$ and are denoted by a colon, $T_{:, i_1, i_2}$.
 
 \subsection{Tensor n-mode unfolding}
-\label{subsec:tensor-folding}
+\label{subsec:tensor-unfolding}
 Given a tensor 
 $T\in \mathbb{R}^{I_0\times I_1\times \dots \times I_N}$,
 its n-mode unfolding is a matrix defined
@@ -151,8 +151,8 @@ as $T_{\left[n\right]} \in \mathbb{R}^{I_n \times \left(I_0\times \dots I_{n-1}\
 
 \begin{align}
 	\label{eq:unfolding}
-	&(i_0, \dots, i_n,\dots,i_N) \longrightarrow (i_n,r)\\
-	&\text{where } r = \sum_{\substack{p=0 \\ p\neq n}}^{N} I_p \prod_{\substack{l=p+1 \\ l\neq n}}^{N} I_l
+	&(i_0, \dots, i_n,\dots,i_N) \longrightarrow (i_n,j)\\
+	&\text{where } j = \sum_{\substack{p=0 \\ p\neq n}}^{N} I_p \prod_{\substack{l=p+1 \\ l\neq n}}^{N} I_l
 \end{align}
 
 \subsection{Tensor Vectorization}
@@ -162,14 +162,37 @@ $T\in \mathbb{R}^{I_0\times I_1\times \dots \times I_N}$, its vectorization is d
 
 \begin{align}
 	\label{eq:vectorization}
-	&(i_1,\dots,i_N) \longrightarrow r\\
-	&\text{where } r = \sum_{\substack{p=0}}^{N} I_p \prod_{\substack{l=p+1}}^{N} I_l
+	&(i_1,\dots,i_N) \longrightarrow j\\
+	&\text{where } j = \sum_{\substack{p=0}}^{N} I_p \prod_{\substack{l=p+1}}^{N} I_l
 \end{align}
 
+\subsection{Tensor $n$-mode product}
+\label{subsec:tensor-nmode-product}
+Given a tensor 
+$T\in \mathbb{R}^{I_0\times \dots\times I_n \times \dots \times I_N}$, its $n$-mode product with matrix
+\linebreak
+ $M \in \mathbb{R}^{J_n \times I_n}$ is defined as $ (T \times_n M) \in \mathbb{R}^{I_0\times \dots\times J_n \times \dots \times I_N}$. Tensor $n$-mode product is a very useful method used in many tensor related operations as the foundation and many tensor decomposition and contractions are done via multiple $n$-mode products. Mapping of elements are done via : 
+ % change mapping of elements to something else 
+ 
+ \begin{align}
+ 	\label{eq:nmode-product}
+ 	&i_0,i_1,\dots,i_{n-1},j_n,i_{n+1},\dots,i_N \longrightarrow j\\
+ 	&\text{where } j = \sum_{i_n = 0}^{I_n} T_{i_0,\dots,i_N} M_{j_n,i_n}
+ \end{align}
+ 
+ 
+ 
+ Tensor $n$-mode product can be expressed as the dot product of two matrices, $M \in \mathbb{R}^{J_n \times I_n}$ and $T_{\left[n\right]}$ from \ref{subsec:tensor-unfolding}. 
+ 
+ \begin{align}
+ 	\label{eq:nmode-product-matrix}
+ 	(T \times_n M ) = MT_{\left[n\right]} \in \mathbb{R}^{I_0\times \dots\times J_n \times \dots \times I_N}
+ \end{align} 
 
 
-
-
+\subsection{Tensor Contraction}
+\label{subsec:tensor-contraction}
+%Or Known as "Generalized Inner Product" 
 
 
 \section{Tensor Regression Network}
