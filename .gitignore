@@ -3,3 +3,6 @@ Models/cifar10/__pycache__/
 Models/mnist/data/
 Models/mnist/__pycache__/
 paper-old/
+paper/
+Models/
+TCL-TRL-Scratch/
