@@ -23,29 +23,29 @@ def download_mnist(save_dir):
     print('MNIST dataset downloaded successfully.')
 
 def download_tiny_imagenet(save_dir):
-    print("Downloading TinyImageNet dataset...")
+    print('Downloading TinyImageNet dataset...')
     os.makedirs(save_dir, exist_ok=True)
-    url = "http://cs231n.stanford.edu/tiny-imagenet-200.zip"
-    download_path = os.path.join(save_dir, "tiny-imagenet-200.zip")
+    url = 'http://cs231n.stanford.edu/tiny-imagenet-200.zip'
+    download_path = os.path.join(save_dir, 'tiny-imagenet-200.zip')
     
-    if not os.path.exists(download_path):
+    if not os.path.exists(download_path) or not os.path.exists(os.path.join('../datasets','tiny-imagenet-200')):
         try:
             wget.download(url, out=download_path)
         except Exception as e:
-            print(f"Error downloading the file: {e}")
+            print(f'Error downloading the file: {e}')
             return
     
-    if not os.path.exists(os.path.join(save_dir, "tiny-imagenet-200")):
+    if not os.path.exists(os.path.join(save_dir, 'tiny-imagenet-200')):
         try:
-            with zipfile.ZipFile(download_path, "r") as zip_ref:
+            with zipfile.ZipFile(download_path, 'r') as zip_ref:
                 zip_ref.extractall(save_dir)
         except Exception as e:
-            print(f"Error extracting the zip file: {e}")
+            print(f'Error extracting the zip file: {e}')
             return
     
     # os.remove(download_path)
     
-    print("TinyImageNet dataset downloaded successfully.")
+    print('TinyImageNet dataset downloaded successfully.')
 
 def main(dataset=None, save_dir=None):
     if save_dir is None:
@@ -61,7 +61,7 @@ def main(dataset=None, save_dir=None):
     elif dataset == 'tiny_imagenet':
         download_tiny_imagenet(save_dir)
     else:
-        print("Invalid dataset choice. Please choose from 'cifar10', 'mnist', or 'tiny_imagenet'.")
+        print('Invalid dataset choice. Please choose from cifar10, mnist, or tiny_imagenet.')
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Download datasets.')

@@ -12,7 +12,7 @@ def get_cifar10_dataloaders(data_dir='../datasets', transform_train=None, transf
             transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
         ])
     if transform_test is None:
-        transform_train = transforms.Compose([
+        transform_test = transforms.Compose([
             transforms.Resize((image_size, image_size)), 
             transforms.ToTensor(),
             transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
