@@ -65,9 +65,10 @@ def main(dataset=None, save_dir=None):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Download datasets.')
-    parser.add_argument('--dataset', type=str, nargs='?', choices=['cifar10', 'mnist', 'tiny_imagenet'],
-                        help="Choose which dataset to download (cifar10, mnist, or tiny_imagenet)")
+    parser.add_argument('--dataset', type=str, nargs='?', choices=['cifar10', 'mnist', 'tiny_imagenet'], 
+                        default=None,
+                        help='Choose which dataset to download (cifar10, mnist, or tiny_imagenet). If None, then all datasets will be downloaded')
     parser.add_argument('--save_dir', type=str, default=None,
-                        help="Specify the directory to save the datasets.")
+                        help='Specify the directory to save the datasets. If None, then ./datasets is set as the path')
     args = parser.parse_args()
     main(args.dataset, args.save_dir)
