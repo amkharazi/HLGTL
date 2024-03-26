@@ -16,7 +16,7 @@ def VGG19(pretrained  = True,
           avg_pool = True,
           new_classifier = None):
     
-    model = model.vgg19(weights=None)
+    model = models.vgg19(weights=None)
     if pretrained:
         model.load_state_dict(torch.load(weights_path))
         
@@ -28,7 +28,7 @@ def VGG19(pretrained  = True,
     else:
         model.avgpool = avg_pool
         
-    if input_shape != (224,224) or num_classes != 1000 and new_classifier is None:
+    if (input_shape != (224,224) or num_classes != 1000) and (new_classifier is None or new_classifier is False):
         out_shape = out_shape_vgg19(in_shape=input_shape, batch_size = 5)
         model.classifier[0] = nn.Linear(out_shape[1] * out_shape[2] * out_shape[3], 4096)
         model.classifier[6] = nn.Linear(4096, num_classes)

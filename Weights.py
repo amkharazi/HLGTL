@@ -12,7 +12,7 @@ def download_resnet50_weights(save_dir):
     os.makedirs(save_dir, exist_ok=True)
     save_path = os.path.join(save_dir, 'resnet50_weights.pth')
     if not os.path.exists(save_path):
-        resnet50 = models.resnet50(pretrained=True)
+        resnet50 = models.resnet50(weights='DEFAULT')
         torch.save(resnet50.state_dict(), save_path)
     print('Resnet50 weights downloaded successfully.')
     
@@ -21,7 +21,7 @@ def download_resnet101_weights(save_dir):
     os.makedirs(save_dir, exist_ok=True)
     save_path = os.path.join(save_dir, 'resnet101_weights.pth')
     if not os.path.exists(save_path):
-        resnet101 = models.resnet101(pretrained=True)
+        resnet101 = models.resnet101(weights='DEFAULT')
         torch.save(resnet101.state_dict(), save_path)
     print('ResNet101 weights downloaded successfully.')
 
@@ -30,7 +30,7 @@ def download_vgg19_weights(save_dir):
     os.makedirs(save_dir, exist_ok=True)
     save_path = os.path.join(save_dir, 'vgg19_weights.pth')
     if not os.path.exists(save_path):
-        vgg19 = models.vgg19(pretrained=True)
+        vgg19 = models.vgg19(weights='DEFAULT')
         torch.save(vgg19.state_dict(), save_path)
     print('VGG19 weights downloaded successfully.')
 

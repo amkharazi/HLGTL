@@ -10,14 +10,14 @@ def out_shape_resnet101(in_shape = (224,224), batch_size = 1):
     # output shape before avg pool layer and classifier layers
     return x.shape
   
-def ResNet101(pretrained  = True,
+def Resnet101(pretrained  = True,
               weights_path = '../weights/resnet101_weights.pth',
               input_shape = (224,224),
               num_classes = 1000,
               avg_pool = True,
               new_classifier = None):
     
-    model = model.resnet101(weights=None)
+    model = models.resnet101(weights=None)
     if pretrained:
         model.load_state_dict(torch.load(weights_path))
         
@@ -29,7 +29,7 @@ def ResNet101(pretrained  = True,
     else:
         model.avgpool = avg_pool
         
-    if input_shape != (224,224) or num_classes != 1000 and new_classifier is None:
+    if (input_shape != (224,224) or num_classes != 1000) and (new_classifier is None or new_classifier is False):
         out_shape = out_shape_resnet101(in_shape=input_shape, batch_size = 5)
         model.fc = nn.Linear(out_shape[1] * out_shape[2] * out_shape[3], num_classes)
         
