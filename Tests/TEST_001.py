@@ -8,11 +8,12 @@
 # Transfer Learning - Classifier parameters
 ########################################################
 
-# Import all .py files
+# Add all .py files to path
 import sys
 sys.path.append('..')
 
-
+# Import Libraries
+from Utils.Accuracy_measures import topk_accuracy
 
 
 
