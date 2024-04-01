@@ -28,7 +28,7 @@ def download_tiny_imagenet(save_dir):
     url = 'http://cs231n.stanford.edu/tiny-imagenet-200.zip'
     download_path = os.path.join(save_dir, 'tiny-imagenet-200.zip')
     
-    if not os.path.exists(download_path) or not os.path.exists(os.path.join('../datasets','tiny-imagenet-200')):
+    if not os.path.exists(download_path):
         try:
             wget.download(url, out=download_path)
         except Exception as e:

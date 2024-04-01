@@ -38,10 +38,10 @@ if __name__ == '__main__':
     image_size = 192
 
     mnist_transform_train = transforms.Compose([
-            transforms.Resize((image_size, image_size)), 
             transforms.Grayscale(num_output_channels=3),
             transforms.RandomHorizontalFlip(),
-            transforms.RandomCrop(32, padding=2), 
+            transforms.RandomCrop(32, padding=2),
+            transforms.Resize((image_size, image_size)), 
             transforms.ToTensor(),
             transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
         ])
@@ -68,7 +68,7 @@ if __name__ == '__main__':
                 input_shape=(192,192),
                 num_classes=10,
                 avg_pool=False,
-                new_classifier=None)
+                new_classifier=None).to(device)
     
     num_parameters = count_parameters(model)
     classifier_parameters = count_parameters(model.classifier)
@@ -151,6 +151,7 @@ if __name__ == '__main__':
     
     # Train and Test The Model
     n_epoch = 100
+    print(f'Starts training for {len(range(n_epoch))} epochs\n')
     for epoch in range(1,n_epoch+1):
         report_train = train_epoch(train_loader, epoch)
         report_test = test_epoch(test_loader, epoch)
