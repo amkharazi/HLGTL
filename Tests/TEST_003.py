@@ -3,7 +3,7 @@
 # No change to classifier - Basic Model
 # Optimizer Adam - Default
 # No Scheduler
-# MNIST dataset -> (3, 192, 192) 
+# Tiny-Imagenet-200 dataset -> (3, 192, 192) 
 # Not Pretrained
 # No Trasfer Learning
 ########################################################
@@ -69,7 +69,7 @@ if __name__ == '__main__':
     model = CNN(pretrained=False,
                 weights_path=None,
                 input_shape=(192,192),
-                num_classes=10,
+                num_classes=200,
                 avg_pool=False,
                 new_classifier=None).to(device)
     
@@ -150,7 +150,7 @@ if __name__ == '__main__':
     os.makedirs(model_subdir, exist_ok=True)
     
     with open(os.path.join(result_dir, 'model_stats', 'model_info.txt'), 'a') as f:
-        f.write(f'total number of parameters:\n{num_parameters}\ntotal number of classifier parameters{classifier_parameters}')
+        f.write(f'total number of parameters:\n{num_parameters}\ntotal number of classifier parameters:\n{classifier_parameters}')
     
     # Train and Test The Model
     n_epoch = 100

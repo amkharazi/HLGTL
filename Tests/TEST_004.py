@@ -1,5 +1,5 @@
 # Check Test Plan for more details 
-# Test CNN model on MNIST dataset
+# Test ResNet50 model on MNIST dataset
 # No change to classifier - Basic Model
 # Optimizer Adam - Default
 # No Scheduler
@@ -16,7 +16,8 @@ sys.path.append('..')
 from Utils.Accuracy_measures import topk_accuracy
 from Utils.Mnist_loader import get_mnist_dataloaders
 from Utils.num_parameter import count_parameters
-from Models.CNN import CNN
+from Models.Resnet50 import Resnet50
+
 
 import torchvision.transforms as transforms
 from torch import nn
@@ -63,17 +64,26 @@ if __name__ == '__main__':
     # Set up the new classifier 
     
     # Set up the model, optimizer and criterion
-    model = CNN(pretrained=False,
-                weights_path=None,
-                input_shape=(192,192),
-                num_classes=10,
-                avg_pool=False,
-                new_classifier=None).to(device)
+    model = Resnet50(pretrained=True,
+                          weights_path='../weights/resnet50_weights.pth',
+                          input_shape=(192,192),
+                          num_classes=10,
+                          avg_pool=False,
+                          new_classifier=None).to(device)
+    
+    layer = 0
+    for child in model.children():
+        layer+=1
+        if layer < 10:
+            for param in child.parameters():
+                param.requires_grad = False
     
     num_parameters = count_parameters(model)
     classifier_parameters = count_parameters(model.classifier)
     print(f'This Model has {num_parameters} parameters')
     print(f'This Model has {classifier_parameters} classifier parameters')
+
+    
     
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.Adam(model.parameters())
@@ -138,7 +148,7 @@ if __name__ == '__main__':
         return report_test
     
     # Set up the directories to save the results
-    TEST_ID = 'Test_ID001'
+    TEST_ID = 'Test_ID004'
     result_dir = os.path.join('../results', TEST_ID)
     result_subdir = os.path.join(result_dir, 'accuracy_stats')
     model_subdir = os.path.join(result_dir, 'model_stats')
