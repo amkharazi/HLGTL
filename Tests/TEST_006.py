@@ -1,9 +1,9 @@
 # Check Test Plan for more details 
-# Test ResNet50 model on MNIST dataset
+# Test ResNet50 model on Tiny-Imagenet-200  dataset
 # No change to classifier - Basic Model
 # Optimizer Adam - Default
 # No Scheduler
-# MNIST dataset -> (3, 192, 192) 
+# Tiny-Imagenet-200  dataset -> (3, 192, 192) 
 # Not Pretrained
 # No Trasfer Learning
 ########################################################
@@ -14,7 +14,7 @@ sys.path.append('..')
 
 # Import Libraries
 from Utils.Accuracy_measures import topk_accuracy
-from Utils.Mnist_loader import get_mnist_dataloaders
+from Utils.TinyImageNet_loader import get_tinyimagenet_dataloaders
 from Utils.num_parameter import count_parameters
 from Models.Resnet50 import Resnet50
 
@@ -38,36 +38,39 @@ if __name__ == '__main__':
     # Set up the transforms and train/test loaders
     image_size = 192
 
-    mnist_transform_train = transforms.Compose([
-            transforms.Grayscale(num_output_channels=3),
+    tiny_transform_train = transforms.Compose([
             transforms.RandomHorizontalFlip(),
-            transforms.RandomCrop(32, padding=2),
+            transforms.RandomCrop(64, padding=4),
             transforms.Resize((image_size, image_size)), 
             transforms.ToTensor(),
-            transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
+            transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))
         ])
-
-    mnist_transform_test = transforms.Compose([
+    tiny_transform_val = transforms.Compose([
             transforms.Resize((image_size, image_size)), 
-            transforms.Grayscale(num_output_channels=3), 
             transforms.ToTensor(),
-            transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
+            transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))
+        ])
+    tiny_transform_test = transforms.Compose([
+            transforms.Resize((image_size, image_size)), 
+            transforms.ToTensor(),
+            transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))
         ])
 
 
-    train_loader, test_loader = get_mnist_dataloaders(
-                                        data_dir = '../datasets',
-                                        batch_size = 64,
-                                        image_size = 192,
-                                        transform_train = mnist_transform_train ,
-                                        transform_test = mnist_transform_test)
+    train_loader, test_loader, _ = get_tinyimagenet_dataloaders(
+                                                        data_dir = '../datasets',
+                                                        transform_train=tiny_transform_train,
+                                                        transform_val=tiny_transform_val,
+                                                        transform_test=tiny_transform_test,
+                                                        batch_size=64,
+                                                        image_size=192)
     # Set up the new classifier 
     
     # Set up the model, optimizer and criterion
     model = Resnet50(pretrained=True,
                           weights_path='../weights/resnet50_weights.pth',
                           input_shape=(192,192),
-                          num_classes=10,
+                          num_classes=200,
                           avg_pool=False,
                           new_classifier=None).to(device)
     
@@ -148,7 +151,7 @@ if __name__ == '__main__':
         return report_test
     
     # Set up the directories to save the results
-    TEST_ID = 'Test_ID004'
+    TEST_ID = 'Test_ID006'
     result_dir = os.path.join('../results', TEST_ID)
     result_subdir = os.path.join(result_dir, 'accuracy_stats')
     model_subdir = os.path.join(result_dir, 'model_stats')

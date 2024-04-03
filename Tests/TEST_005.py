@@ -1,9 +1,9 @@
 # Check Test Plan for more details 
-# Test ResNet50 model on MNIST dataset
+# Test ResNet50 model on CIFAR10 dataset
 # No change to classifier - Basic Model
 # Optimizer Adam - Default
 # No Scheduler
-# MNIST dataset -> (3, 192, 192) 
+# CIFAR10 dataset -> (3, 192, 192) 
 # Not Pretrained
 # No Trasfer Learning
 ########################################################
@@ -14,7 +14,7 @@ sys.path.append('..')
 
 # Import Libraries
 from Utils.Accuracy_measures import topk_accuracy
-from Utils.Mnist_loader import get_mnist_dataloaders
+from Utils.Cifar10_loader import get_cifar10_dataloaders
 from Utils.num_parameter import count_parameters
 from Models.Resnet50 import Resnet50
 
@@ -38,8 +38,7 @@ if __name__ == '__main__':
     # Set up the transforms and train/test loaders
     image_size = 192
 
-    mnist_transform_train = transforms.Compose([
-            transforms.Grayscale(num_output_channels=3),
+    cifar10_transform_train = transforms.Compose([
             transforms.RandomHorizontalFlip(),
             transforms.RandomCrop(32, padding=2),
             transforms.Resize((image_size, image_size)), 
@@ -47,20 +46,19 @@ if __name__ == '__main__':
             transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
         ])
 
-    mnist_transform_test = transforms.Compose([
+    cifar10_transform_test = transforms.Compose([
             transforms.Resize((image_size, image_size)), 
-            transforms.Grayscale(num_output_channels=3), 
             transforms.ToTensor(),
             transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
         ])
 
 
-    train_loader, test_loader = get_mnist_dataloaders(
-                                        data_dir = '../datasets',
-                                        batch_size = 64,
-                                        image_size = 192,
-                                        transform_train = mnist_transform_train ,
-                                        transform_test = mnist_transform_test)
+    train_loader, test_loader = get_cifar10_dataloaders(
+                                                    data_dir = '../datasets',
+                                                    batch_size = 64,
+                                                    image_size = 192,
+                                                    transform_train = cifar10_transform_train ,
+                                                    transform_test = cifar10_transform_test)
     # Set up the new classifier 
     
     # Set up the model, optimizer and criterion
@@ -148,7 +146,7 @@ if __name__ == '__main__':
         return report_test
     
     # Set up the directories to save the results
-    TEST_ID = 'Test_ID004'
+    TEST_ID = 'Test_ID005'
     result_dir = os.path.join('../results', TEST_ID)
     result_subdir = os.path.join(result_dir, 'accuracy_stats')
     model_subdir = os.path.join(result_dir, 'model_stats')
