@@ -4,12 +4,12 @@ import torchvision.models as models
 
 def out_shape_resnet50(in_shape = (224,224), batch_size = 1):
     dummy_input = torch.rand((batch_size, 3) + in_shape)
-    # model = models.resnet50(weights=None)
-    model = models.resnet50(pretrained=False)
+    model = models.resnet50(weights=None)
+    # model = models.resnet50(pretrained=False)
     x = model.maxpool(model.relu(model.bn1(model.conv1(dummy_input))))
     x = model.layer4(model.layer3(model.layer2(model.layer1(x))))
     # output shape before avg pool layer and classifier layers
-    return x.shape
+    return x.shape  
   
 def Resnet50(pretrained  = True,
              weights_path = '../weights/resnet50_weights.pth',
@@ -18,8 +18,8 @@ def Resnet50(pretrained  = True,
              avg_pool = True,
              new_classifier = None):
     
-    # model = models.resnet50(weights=None)
-    model = models.resnet50(pretrained=False)
+    model = models.resnet50(weights=None)
+    # model = models.resnet50(pretrained=False)
     if pretrained:
         model.load_state_dict(torch.load(weights_path))
         
