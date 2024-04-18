@@ -1,10 +1,10 @@
 import torch
 import torch.nn as nn
 
-class ConvolutionalNN(nn.Module):
-    def __init__(self):
-        super(ConvolutionalNN, self).__init__()
-        
+class _ConvolutionalNN(nn.Module):
+    def __init__(self, tensorized = False):
+        super(_ConvolutionalNN, self).__init__()
+        self.tensorized = tensorized
         self.features = nn.Sequential(
             nn.Conv2d(3, 32, kernel_size=3, stride=1, padding=1),
             nn.BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True),
@@ -32,25 +32,27 @@ class ConvolutionalNN(nn.Module):
     def forward(self, x):
         x = self.features(x)
         x = self.avgpool(x)
-        x = torch.flatten(x, 1)
+        if not self.tensorized:
+           x = torch.flatten(x, 1)
         x = self.classifier(x)
         return x
 
 def out_shape_cnn(in_shape = (224,224), batch_size = 1):
     dummy_input = torch.rand((batch_size, 3) + in_shape)
-    model = ConvolutionalNN()
-    x = model.features(dummy_input)
+    model = _ConvolutionalNN(tensorized=False)
+    dummy_input = model.features(dummy_input)
     # output shape before avg pool layer and classifier layers
-    return x.shape
+    return dummy_input.shape
 
 def CNN(pretrained  = False,
         weights_path = '../weights/cnn_weights.pth',
+        tensorized = False,
         input_shape = (224,224),
         num_classes = 1000,
         avg_pool = True,
         new_classifier = None):
     
-    model = ConvolutionalNN()
+    model = _ConvolutionalNN(tensorized=tensorized)
     if pretrained:
         model.load_state_dict(torch.load(weights_path))
         
@@ -62,7 +64,7 @@ def CNN(pretrained  = False,
     else:
         model.avgpool = avg_pool
         
-    if (input_shape != (224,224) or num_classes != 1000) and (new_classifier is None or new_classifier is False):
+    if (input_shape != (224,224) or num_classes != 1000) and (new_classifier is None):
         out_shape = out_shape_cnn(in_shape=input_shape, batch_size = 5)
         model.classifier[0] = nn.Linear(out_shape[1] * out_shape[2] * out_shape[3], 1024)
         model.classifier[3] = nn.Linear(1024, num_classes)

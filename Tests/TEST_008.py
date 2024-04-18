@@ -1,6 +1,6 @@
 # Check Test Plan for more details 
 # Test ResNet50 model on MNIST dataset
-# No change to classifier - Basic Model
+# New Classifier - Our Methods
 # Optimizer Adam - Default
 # No Scheduler
 # MNIST dataset -> (3, 192, 192) 
@@ -22,6 +22,7 @@ from Models.Resnet50 import Resnet50
 import torchvision.transforms as transforms
 from torch import nn
 from torch import optim
+import tltorch
 
 import time
 import torch
@@ -63,16 +64,26 @@ if __name__ == '__main__':
                                         transform_test = mnist_transform_test)
     # Set up the new classifier 
     
+    new_classifier = nn.Sequential(
+        tltorch.TRL(input_shape=(2048,6,6), output_shape=(10), factorization='Tucker', rank=(200,3,3,8))
+    )
+    
     # Set up the model, optimizer and criterion
     model = Resnet50(pretrained=True,
                           weights_path='../weights/resnet50_weights.pth',
+                          tensorized=True,
                           input_shape=(192,192),
                           num_classes=10,
                           avg_pool=False,
-                          new_classifier=None).to(device)
+                          new_classifier=new_classifier).to(device)
+    
+    # Load pretrained from Tests
+    
+    # weights_path = '../weights/saved/ID001_weights.pth'
+    # model.load_state_dict(torch.load(weights_path))
     
     num_parameters = count_parameters(model)
-    classifier_parameters = count_parameters(model.fc)
+    classifier_parameters = count_parameters(model.classifier)
     print(f'This Model has {num_parameters} parameters')
     print(f'This Model has {classifier_parameters} classifier parameters')
 
@@ -141,7 +152,7 @@ if __name__ == '__main__':
         return report_test
     
     # Set up the directories to save the results
-    TEST_ID = 'Test_ID01'
+    TEST_ID = 'Test_ID008'
     result_dir = os.path.join('../results', TEST_ID)
     result_subdir = os.path.join(result_dir, 'accuracy_stats')
     model_subdir = os.path.join(result_dir, 'model_stats')
@@ -156,7 +167,7 @@ if __name__ == '__main__':
     layer = 0
     for child in model.children():
         layer+=1
-        if layer < 10:
+        if layer < 3:
             for param in child.parameters():
                 param.requires_grad = False
     
@@ -178,7 +189,7 @@ if __name__ == '__main__':
     layer = 0
     for child in model.children():
         layer+=1
-        if layer < 10:
+        if layer < 3:
             for param in child.parameters():
                 param.requires_grad = True
                 

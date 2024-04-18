@@ -2,24 +2,48 @@ import torch
 import torch.nn as nn
 import torchvision.models as models
 
+class _vgg19(nn.Module):
+    def __init__(self, pretrained = True, weights_path = '../weights/gg19_weights.pth', tensorized = False):
+        super(_vgg19, self).__init__()
+        
+        model = models.vgg19(weights= None)
+        if pretrained:
+           model.load_state_dict(torch.load(weights_path))
+        
+        self.tensorized = tensorized
+        self.features = model.features
+        
+        self.avgpool = model.avgpool
+        
+        self.classifier = model.classifier
+
+    def forward(self, x):
+        x = self.features(x)
+        x = self.avgpool(x)
+        if not self.tensorized:
+           x = torch.flatten(x, 1)
+        x = self.classifier(x)
+        return x
+
 def out_shape_vgg19(in_shape = (224,224), batch_size = 1):
     dummy_input = torch.rand((batch_size, 3) + in_shape)
-    model = models.vgg19(weights=None)
-    x = model.features(dummy_input)
+    model = _vgg19(pretrained=False, weights_path= None, tensorized= False)
+    dummy_input = model.features(dummy_input)
     # output shape before avg pool layer and classifier layers
-    return x.shape
+    return dummy_input.shape
   
 def VGG19(pretrained  = True,
           weights_path = '../weights/vgg19_weights.pth',
+          tensorized = False,
           input_shape = (224,224),
           num_classes = 1000,
           avg_pool = True,
           new_classifier = None):
     
-    model = models.vgg19(weights=None)
-    if pretrained:
-        model.load_state_dict(torch.load(weights_path))
-        
+    model = _vgg19(pretrained= pretrained,
+                     weights_path= weights_path,
+                     tensorized= tensorized)
+     
     if isinstance(input_shape, list):
         input_shape = tuple(input_shape)      
     if isinstance(avg_pool, bool):
