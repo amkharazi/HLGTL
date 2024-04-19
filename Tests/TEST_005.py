@@ -17,6 +17,7 @@ from Utils.Accuracy_measures import topk_accuracy
 from Utils.Mnist_loader import get_mnist_dataloaders
 from Utils.Num_parameter import count_parameters
 from Models.Resnet50 import Resnet50
+from Utils.Reshape import reshape
 
 
 import torchvision.transforms as transforms
@@ -65,7 +66,8 @@ if __name__ == '__main__':
     # Set up the new classifier 
     
     new_classifier = nn.Sequential(
-        tltorch.TRL(input_shape=(2048,6,6), output_shape=(10), factorization='Tucker', rank=(200,3,3,8))
+        reshape(split=[2,2,2], map_type=1, device=device),
+        tltorch.TRL(input_shape=(2,2,2,1024,3,3), output_shape=(10), factorization='Tucker', rank=(1,1,1,100,1,1,10)),
     )
     
     # Set up the model, optimizer and criterion
