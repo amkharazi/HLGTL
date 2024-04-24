@@ -89,7 +89,7 @@ if __name__ == '__main__':
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.Adam([
             {'params': model.classifier.parameters(), 'lr': 0.001},
-            {'params': model.features.parameters(), 'lr': 0.0001},
+            {'params': model.features.parameters(), 'lr': 0.00001},
             {'params': model.avgpool.parameters(), 'lr': 0.0001},
             ])
     
