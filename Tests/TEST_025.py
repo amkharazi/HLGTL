@@ -1,7 +1,7 @@
 # Check Test Plan for more details 
 # Test ResNet50 model on Tiny-Imagenet-200  dataset
 # No change to classifier - Basic Model
-# Optimizer Adam - Default
+# Optimizer Adam - Avoid Catastrophic Forgetting
 # No Scheduler
 # MNIST dataset -> (3, 192, 192) 
 # Pretrained
@@ -40,8 +40,9 @@ if __name__ == '__main__':
 
     tiny_transform_train = transforms.Compose([
             transforms.RandomHorizontalFlip(),
-            transforms.RandomCrop(64, padding=4),
             transforms.Resize((image_size, image_size)), 
+            transforms.RandomCrop(image_size, padding=5),
+            transforms.RandomRotation(10),
             transforms.ToTensor(),
             transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))
         ])
@@ -86,7 +87,11 @@ if __name__ == '__main__':
     
     
     criterion = nn.CrossEntropyLoss()
-    optimizer = optim.Adam(model.parameters())
+    optimizer = optim.Adam([
+            {'params': model.classifier.parameters(), 'lr': 0.001},
+            {'params': model.features.parameters(), 'lr': 0.0001},
+            {'params': model.avgpool.parameters(), 'lr': 0.0001},
+            ])
     
     # Define train and test functions (use examples)
     def train_epoch(loader, epoch):
