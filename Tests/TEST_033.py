@@ -1,11 +1,11 @@
 # Check Test Plan for more details 
-# Test ResNet50 model on CIFAR10 dataset
-# No change to classifier - Basic Model
+# Test ResNet50 model on Tiny-Imagenet-200  dataset
+# New Classifier - Our Methods
 # Optimizer Adam - Default
 # No Scheduler
-# CIFAR10 dataset -> (3, 192, 192) 
-# Not Pretrained
-# No Trasfer Learning
+# MNIST dataset -> (3, 192, 192) 
+# Pretrained
+# Trasfer Learning
 ########################################################
 
 # Add all .py files to path
@@ -14,14 +14,16 @@ sys.path.append('..')
 
 # Import Libraries
 from Utils.Accuracy_measures import topk_accuracy
-from Utils.Cifar10_loader import get_cifar10_dataloaders
-from Utils.num_parameter import count_parameters
+from Utils.TinyImageNet_loader import get_tinyimagenet_dataloaders
+from Utils.Num_parameter import count_parameters
 from Models.Resnet50 import Resnet50
+from Utils.Reshape import reshape
 
 
 import torchvision.transforms as transforms
 from torch import nn
 from torch import optim
+import tltorch
 
 import time
 import torch
@@ -38,46 +40,55 @@ if __name__ == '__main__':
     # Set up the transforms and train/test loaders
     image_size = 192
 
-    cifar10_transform_train = transforms.Compose([
+    tiny_transform_train = transforms.Compose([
             transforms.RandomHorizontalFlip(),
-            transforms.RandomCrop(32, padding=2),
+            transforms.RandomCrop(64, padding=4),
             transforms.Resize((image_size, image_size)), 
             transforms.ToTensor(),
-            transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
+            transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))
         ])
-
-    cifar10_transform_test = transforms.Compose([
+    tiny_transform_val = transforms.Compose([
             transforms.Resize((image_size, image_size)), 
             transforms.ToTensor(),
-            transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
+            transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))
+        ])
+    tiny_transform_test = transforms.Compose([
+            transforms.Resize((image_size, image_size)), 
+            transforms.ToTensor(),
+            transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))
         ])
 
 
-    train_loader, test_loader = get_cifar10_dataloaders(
-                                                    data_dir = '../datasets',
-                                                    batch_size = 64,
-                                                    image_size = 192,
-                                                    transform_train = cifar10_transform_train ,
-                                                    transform_test = cifar10_transform_test)
+    train_loader, test_loader, _ = get_tinyimagenet_dataloaders(
+                                                        data_dir = '../datasets',
+                                                        transform_train=tiny_transform_train,
+                                                        transform_val=tiny_transform_val,
+                                                        transform_test=tiny_transform_test,
+                                                        batch_size=64,
+                                                        image_size=192)
     # Set up the new classifier 
+    
+    new_classifier = nn.Sequential(
+        reshape(split=[16,2,2], map_type=1, device=device),
+        tltorch.TRL(input_shape=(16,2,2,128,3,3), output_shape=(200), factorization='Tucker', rank=(4,1,1,100,1,1,200)),
+    )
     
     # Set up the model, optimizer and criterion
     model = Resnet50(pretrained=True,
                           weights_path='../weights/resnet50_weights.pth',
+                          tensorized=True,
                           input_shape=(192,192),
-                          num_classes=10,
+                          num_classes=200,
                           avg_pool=False,
-                          new_classifier=None).to(device)
+                          new_classifier=new_classifier).to(device)
     
-    layer = 0
-    for child in model.children():
-        layer+=1
-        if layer < 10:
-            for param in child.parameters():
-                param.requires_grad = False
+    # Load pretrained from Tests
+    
+    # weights_path = '../weights/saved/ID001_weights.pth'
+    # model.load_state_dict(torch.load(weights_path))
     
     num_parameters = count_parameters(model)
-    classifier_parameters = count_parameters(model.fc)
+    classifier_parameters = count_parameters(model.classifier)
     print(f'This Model has {num_parameters} parameters')
     print(f'This Model has {classifier_parameters} classifier parameters')
 
@@ -146,7 +157,7 @@ if __name__ == '__main__':
         return report_test
     
     # Set up the directories to save the results
-    TEST_ID = 'Test_ID005'
+    TEST_ID = 'Test_ID033'
     result_dir = os.path.join('../results', TEST_ID)
     result_subdir = os.path.join(result_dir, 'accuracy_stats')
     model_subdir = os.path.join(result_dir, 'model_stats')
@@ -157,9 +168,17 @@ if __name__ == '__main__':
     with open(os.path.join(result_dir, 'model_stats', 'model_info.txt'), 'a') as f:
         f.write(f'total number of parameters:\n{num_parameters}\ntotal number of classifier parameters:\n{classifier_parameters}')
     
-    # Train and Test The Model
-    n_epoch = 100
-    print(f'Starts training for {len(range(n_epoch))} epochs\n')
+    # Freeze Convolutional Layers
+    layer = 0
+    for child in model.children():
+        layer+=1
+        if layer < 3:
+            for param in child.parameters():
+                param.requires_grad = False
+    
+    # Train and Test The Model - Frozen Layers
+    n_epoch = 30
+    print(f'Training for {len(range(n_epoch))} epochs\n')
     for epoch in range(1,n_epoch+1):
         report_train = train_epoch(train_loader, epoch)
         report_test = test_epoch(test_loader, epoch)
@@ -170,6 +189,31 @@ if __name__ == '__main__':
             torch.save(model.state_dict(), model_path)
         with open(os.path.join(result_dir, 'accuracy_stats', 'report.txt'), 'a') as f:
             f.write(report)
+            
+    # Unfreeze all layers
+    layer = 0
+    for child in model.children():
+        layer+=1
+        if layer < 3:
+            for param in child.parameters():
+                param.requires_grad = True
+                
+    # Train and Test The Model - Unfrozen Layers - comment if not required
+    n_epoch_additional = 5
+    print(f'Training for Additional {len(range(n_epoch_additional))} epochs\n')
+    for epoch in range(n_epoch+1,n_epoch+n_epoch_additional+1):
+        report_train = train_epoch(train_loader, epoch)
+        report_test = test_epoch(test_loader, epoch)
+    
+        report = report_train + '\n' + report_test + '\n\n'
+        if epoch % 5 == 0:
+            model_path = os.path.join(result_dir, 'model_stats', f'Model_epoch_{epoch}.pth')
+            torch.save(model.state_dict(), model_path)
+        with open(os.path.join(result_dir, 'accuracy_stats', 'report.txt'), 'a') as f:
+            f.write(report)
+    
+            
+    
     
     
 
