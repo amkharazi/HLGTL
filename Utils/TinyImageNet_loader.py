@@ -20,7 +20,7 @@ def label_names_train(root_dir = '../datasets'):
     indices = {}
     idx = 0
     description = label_names_all(root_dir = root_dir)
-    for item in os.listdir(path):
+    for item in sorted(os.listdir(path)):
         item_path = os.path.join(path, item)
         if os.path.isdir(item_path):
             labels[item] = [idx, description[item]]
@@ -32,7 +32,7 @@ class test_dataset(Dataset):
     def __init__(self, root_dir = '../datasets', transform=None):
         self.root_dir = os.path.join(root_dir, 'tiny-imagenet-200/test/images') 
         self.transform = transform
-        self.image_files = os.listdir(self.root_dir)
+        self.image_files = sorted(os.listdir(self.root_dir))
 
     def __len__(self):
         return len(self.image_files)
