@@ -66,6 +66,10 @@ if __name__ == '__main__':
                                                         batch_size=64,
                                                         image_size=192)
     # Set up the new classifier 
+    new_classifier =  nn.Sequential(
+        nn.Dropout(p=0.5),
+        nn.Linear(2048*6*6,200),
+    )
     
     # Set up the model, optimizer and criterion
     model = Resnet50(pretrained=True,
@@ -74,7 +78,7 @@ if __name__ == '__main__':
                           input_shape=(192,192),
                           num_classes=200,
                           avg_pool=False,
-                          new_classifier=None).to(device)
+                          new_classifier=new_classifier).to(device)
     
     # Load pretrained from Tests
     
@@ -87,11 +91,12 @@ if __name__ == '__main__':
     
     
     criterion = nn.CrossEntropyLoss()
-    optimizer = optim.Adam([
-            {'params': model.classifier.parameters(), 'lr': 0.001},
-            {'params': model.features.parameters(), 'lr': 0.00001},
-            {'params': model.avgpool.parameters(), 'lr': 0.0001},
-            ])
+    optimizer = optim.Adam(model.parameters())
+    # optimizer = optim.Adam([
+    #         {'params': model.classifier.parameters(), 'lr': 0.001},
+    #         {'params': model.features.parameters(), 'lr': 0.00001},
+    #         {'params': model.avgpool.parameters(), 'lr': 0.0001},
+    #         ])
     
     # Define train and test functions (use examples)
     def train_epoch(loader, epoch):
@@ -173,7 +178,7 @@ if __name__ == '__main__':
                 param.requires_grad = False
     
     # Train and Test The Model - Frozen Layers
-    n_epoch = 30
+    n_epoch = 5
     print(f'Training for {len(range(n_epoch))} epochs\n')
     for epoch in range(1,n_epoch+1):
         report_train = train_epoch(train_loader, epoch)
@@ -195,7 +200,7 @@ if __name__ == '__main__':
                 param.requires_grad = True
                 
     # Train and Test The Model - Unfrozen Layers - comment if not required
-    n_epoch_additional = 5
+    n_epoch_additional = 10
     print(f'Training for Additional {len(range(n_epoch_additional))} epochs\n')
     for epoch in range(n_epoch+1,n_epoch+n_epoch_additional+1):
         report_train = train_epoch(train_loader, epoch)
