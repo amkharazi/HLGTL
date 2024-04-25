@@ -91,12 +91,12 @@ if __name__ == '__main__':
     
     
     criterion = nn.CrossEntropyLoss()
-    optimizer = optim.Adam(model.parameters())
-    # optimizer = optim.Adam([
-    #         {'params': model.classifier.parameters(), 'lr': 0.001},
-    #         {'params': model.features.parameters(), 'lr': 0.00001},
-    #         {'params': model.avgpool.parameters(), 'lr': 0.0001},
-    #         ])
+    # optimizer = optim.Adam(model.parameters())
+    optimizer = optim.Adam([
+            {'params': model.classifier.parameters(), 'lr': 0.001},
+            {'params': model.features.parameters(), 'lr': 0.00001},
+            {'params': model.avgpool.parameters(), 'lr': 0.001},
+            ])
     
     # Define train and test functions (use examples)
     def train_epoch(loader, epoch):
