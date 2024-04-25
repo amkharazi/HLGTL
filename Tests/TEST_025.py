@@ -1,6 +1,6 @@
 # Check Test Plan for more details 
 # Test ResNet50 model on Tiny-Imagenet-200  dataset
-# No change to classifier - Basic Model
+# New Classifier - Basic Model with dropout
 # Optimizer Adam - Avoid Catastrophic Forgetting
 # No Scheduler
 # MNIST dataset -> (3, 192, 192) 
@@ -68,7 +68,7 @@ if __name__ == '__main__':
     # Set up the new classifier 
     new_classifier =  nn.Sequential(
         nn.Dropout(p=0.5),
-        nn.Linear(2048*6*6,200),
+        nn.Linear(in_features=2048*6*6,out_features=200, bias=True),
     )
     
     # Set up the model, optimizer and criterion
@@ -91,7 +91,6 @@ if __name__ == '__main__':
     
     
     criterion = nn.CrossEntropyLoss()
-    # optimizer = optim.Adam(model.parameters())
     optimizer = optim.Adam([
             {'params': model.classifier.parameters(), 'lr': 0.001},
             {'params': model.features.parameters(), 'lr': 0.00001},
@@ -185,7 +184,7 @@ if __name__ == '__main__':
         report_test = test_epoch(test_loader, epoch)
     
         report = report_train + '\n' + report_test + '\n\n'
-        if epoch % 10 == 0:
+        if epoch % 5 == 0:
             model_path = os.path.join(result_dir, 'model_stats', f'Model_epoch_{epoch}.pth')
             torch.save(model.state_dict(), model_path)
         with open(os.path.join(result_dir, 'accuracy_stats', 'report.txt'), 'a') as f:

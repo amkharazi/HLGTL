@@ -1,7 +1,7 @@
 # Check Test Plan for more details 
 # Test ResNet50 model on Tiny-Imagenet-200  dataset
 # New Classifier - Our Methods
-# Optimizer Adam - Default
+# Optimizer Adam - Avoid Catastrophic Forgetting
 # No Scheduler
 # MNIST dataset -> (3, 192, 192) 
 # Pretrained
@@ -95,7 +95,11 @@ if __name__ == '__main__':
     
     
     criterion = nn.CrossEntropyLoss()
-    optimizer = optim.Adam(model.parameters())
+    optimizer = optim.Adam([
+            {'params': model.classifier.parameters(), 'lr': 0.001},
+            {'params': model.features.parameters(), 'lr': 0.00001},
+            {'params': model.avgpool.parameters(), 'lr': 0.001},
+            ])
     
     # Define train and test functions (use examples)
     def train_epoch(loader, epoch):
@@ -177,14 +181,14 @@ if __name__ == '__main__':
                 param.requires_grad = False
     
     # Train and Test The Model - Frozen Layers
-    n_epoch = 30
+    n_epoch = 5
     print(f'Training for {len(range(n_epoch))} epochs\n')
     for epoch in range(1,n_epoch+1):
         report_train = train_epoch(train_loader, epoch)
         report_test = test_epoch(test_loader, epoch)
     
         report = report_train + '\n' + report_test + '\n\n'
-        if epoch % 10 == 0:
+        if epoch % 5 == 0:
             model_path = os.path.join(result_dir, 'model_stats', f'Model_epoch_{epoch}.pth')
             torch.save(model.state_dict(), model_path)
         with open(os.path.join(result_dir, 'accuracy_stats', 'report.txt'), 'a') as f:
@@ -199,7 +203,7 @@ if __name__ == '__main__':
                 param.requires_grad = True
                 
     # Train and Test The Model - Unfrozen Layers - comment if not required
-    n_epoch_additional = 5
+    n_epoch_additional = 10
     print(f'Training for Additional {len(range(n_epoch_additional))} epochs\n')
     for epoch in range(n_epoch+1,n_epoch+n_epoch_additional+1):
         report_train = train_epoch(train_loader, epoch)
