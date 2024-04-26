@@ -1,10 +1,15 @@
 #!/bin/bash
 
-python3 TEST_030.py
-python3 TEST_031.py
-python3 TEST_032.py
-python3 TEST_033.py
-python3 TEST_034.py
-python3 TEST_035.py
-python3 TEST_036.py
+python3 TEST_037.py
+python3 TEST_038.py
+python3 TEST_039.py
+python3 TEST_040.py
+python3 TEST_041.py
+python3 TEST_042.py
+python3 TEST_043.py
+python3 TEST_044.py
+python3 TEST_045.py
+python3 TEST_046.py
+python3 TEST_047.py
+python3 TEST_048.py
 
