@@ -83,7 +83,7 @@ if __name__ == '__main__':
     # Load pretrained from Tests
     
     weights_path = '../weights/cnn_base_mnist.pth'
-    model.load_state_dict(torch.load(weights_path))
+    model.load_state_dict(torch.load(weights_path), strict=False)
     
     num_parameters = count_parameters(model)
     classifier_parameters = count_parameters(model.classifier)

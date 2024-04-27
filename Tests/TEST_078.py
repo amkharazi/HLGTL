@@ -83,7 +83,7 @@ if __name__ == '__main__':
     # Load pretrained from Tests
     
     weights_path = '../weights/cnn_base_mnist.pth'
-    model.load_state_dict(torch.load(weights_path))
+    model.load_state_dict(torch.load(weights_path), strict=False)
     
     num_parameters = count_parameters(model)
     classifier_parameters = count_parameters(model.classifier)
@@ -155,7 +155,7 @@ if __name__ == '__main__':
         return report_test
     
     # Set up the directories to save the results
-    TEST_ID = 'Test_ID077'
+    TEST_ID = 'Test_ID078'
     result_dir = os.path.join('../results', TEST_ID)
     result_subdir = os.path.join(result_dir, 'accuracy_stats')
     model_subdir = os.path.join(result_dir, 'model_stats')
