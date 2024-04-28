@@ -1,5 +1,5 @@
 # Check Test Plan for more details 
-# Test CNN model on CIFAR10 dataset
+# Test CNN model on MNIST dataset
 # New Classifier - TCL/TRL Model
 # Optimizer Adam - Default
 # No Scheduler

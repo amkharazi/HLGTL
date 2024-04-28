@@ -1,5 +1,5 @@
 # Check Test Plan for more details 
-# Test CNN model on CIFAR10 dataset
+# Test CNN model on MNIST dataset
 # New Classifier - Our Methods
 # Optimizer Adam - Default
 # No Scheduler
@@ -64,9 +64,10 @@ if __name__ == '__main__':
     # Set up the new classifier 
     
     new_classifier = nn.Sequential(
-        reshape(split=[2,2,2], map_type=1, device=device),
-        tltorch.TCL(input_shape=(2,2,2,64,3,3), rank=(2,2,2,64,3,3)),
-        tltorch.TRL(input_shape=(2,2,2,64,3,3), output_shape=(10), factorization='Tucker', rank=(1,1,1,64,3,3,10)),
+        reshape(split=[2,1,1], map_type=1, device=device),
+        nn.Dropout(p=0.5),
+        tltorch.TCL(input_shape=(2,1,1,64,6,6), rank=(2,1,1,64,6,6)),
+        tltorch.TRL(input_shape=(2,1,1,64,6,6), output_shape=(10), factorization='Tucker', rank=(2,1,1,64,6,6,10)),
     )
     
     # Set up the model, optimizer and criterion
