@@ -67,8 +67,8 @@ if __name__ == '__main__':
     
     new_classifier = nn.Sequential(
         reshape(split=[2,2,2], map_type=1, device=device),
-        tltorch.TCL(input_shape=(2,2,2,64,3,3), rank=(1,1,1,50,2,2)),
-        tltorch.TRL(input_shape=(1,1,1,50,2,2), output_shape=(10), factorization='Tucker', rank=(1,1,1,10,1,1,5)),
+        tltorch.TCL(input_shape=(2,2,2,64,3,3), rank=(1,1,1,64,3,3)),
+        tltorch.TRL(input_shape=(1,1,1,64,3,3), output_shape=(10), factorization='Tucker', rank=(1,1,1,64,3,3,10)),
     )
     
     # Set up the model, optimizer and criterion
@@ -175,7 +175,7 @@ if __name__ == '__main__':
                 param.requires_grad = False
     
     # Train and Test The Model - Frozen Layers
-    n_epoch = 10
+    n_epoch = 0
     print(f'Training for {len(range(n_epoch))} epochs\n')
     for epoch in range(1,n_epoch+1):
         report_train = train_epoch(train_loader, epoch)
@@ -197,7 +197,7 @@ if __name__ == '__main__':
                 param.requires_grad = True
                 
     # Train and Test The Model - Unfrozen Layers - comment if not required
-    n_epoch_additional = 10
+    n_epoch_additional = 30
     print(f'Training for Additional {len(range(n_epoch_additional))} epochs\n')
     for epoch in range(n_epoch+1,n_epoch+n_epoch_additional+1):
         report_train = train_epoch(train_loader, epoch)
