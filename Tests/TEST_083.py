@@ -64,11 +64,11 @@ if __name__ == '__main__':
     # Set up the new classifier 
     
     new_classifier = nn.Sequential(
-        reshape(split=[2,2,2], map_type=2, device='cuda'),
+        reshape(split=[2,2,2], map_type=2, device=device),
         nn.Dropout(p=0.5),
-        tltorch.TCL(input_shape=(2,2,2,64,3,3), rank=(1,1,1,64,3,3)),
-        tltorch.TCL(input_shape=(1,1,1,64,3,3), rank=(1,1,1,64,3,3)),
-        tltorch.TRL(input_shape=(1,1,1,64,3,3), output_shape=(10), factorization='Tucker', rank=(1,1,1,64,3,3,10)),
+        tltorch.TCL(input_shape=(2,2,2,64,3,3), rank=(2,2,2,64,3,3)),
+        tltorch.TRL(input_shape=(2,2,2,64,3,3), output_shape=(10,2,2), factorization='Tucker', rank=(1,1,1,64,3,3,10,2,2)),
+        tltorch.TRL(input_shape=(10,2,2), output_shape=(10), factorization='Tucker', rank=(10,2,2,10))
     )
     
     # Set up the model, optimizer and criterion

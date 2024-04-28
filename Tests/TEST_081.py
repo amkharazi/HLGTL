@@ -64,8 +64,8 @@ if __name__ == '__main__':
     
     new_classifier = nn.Sequential(
         tltorch.TCL(input_shape=(128,6,6), rank=(128,6,6)),
-        tltorch.TCL(input_shape=(128,6,6), rank=(128,6,6)),
-        tltorch.TRL(input_shape=(128,6,6), output_shape=(10), factorization='Tucker', rank=(128,6,6,10))
+        tltorch.TRL(input_shape=(128,6,6), output_shape=(10,2,2), factorization='Tucker', rank=(128,6,6,10,2,2)),
+        tltorch.TRL(input_shape=(10,2,2), output_shape=(10), factorization='Tucker', rank=(10,2,2,10))
     )
     
     # Set up the model, optimizer and criterion
