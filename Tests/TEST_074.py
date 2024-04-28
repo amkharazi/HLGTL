@@ -195,7 +195,7 @@ if __name__ == '__main__':
                 param.requires_grad = True
                 
     # Train and Test The Model - Unfrozen Layers - comment if not required
-    n_epoch_additional = 10
+    n_epoch_additional = 15
     print(f'Training for Additional {len(range(n_epoch_additional))} epochs\n')
     for epoch in range(n_epoch+1,n_epoch+n_epoch_additional+1):
         report_train = train_epoch(train_loader, epoch)

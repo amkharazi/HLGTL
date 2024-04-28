@@ -66,9 +66,10 @@ if __name__ == '__main__':
     # Set up the new classifier 
     
     new_classifier = nn.Sequential(
-        reshape(split=[2,2,2], map_type=1, device=device),
-        tltorch.TCL(input_shape=(2,2,2,64,3,3), rank=(2,2,2,64,3,3)),
-        tltorch.TRL(input_shape=(2,2,2,64,3,3), output_shape=(10), factorization='Tucker', rank=(1,1,1,64,3,3,10)),
+        reshape(split=[2,1,1], map_type=1, device=device),
+        nn.Dropout(p=0.5),
+        tltorch.TCL(input_shape=(2,1,1,64,6,6), rank=(2,1,1,64,6,6)),
+        tltorch.TRL(input_shape=(2,1,1,64,6,6), output_shape=(10), factorization='Tucker', rank=(2,1,1,64,6,6,10)),
     )
     
     # Set up the model, optimizer and criterion
@@ -197,7 +198,7 @@ if __name__ == '__main__':
                 param.requires_grad = True
                 
     # Train and Test The Model - Unfrozen Layers - comment if not required
-    n_epoch_additional = 10
+    n_epoch_additional = 15
     print(f'Training for Additional {len(range(n_epoch_additional))} epochs\n')
     for epoch in range(n_epoch+1,n_epoch+n_epoch_additional+1):
         report_train = train_epoch(train_loader, epoch)
