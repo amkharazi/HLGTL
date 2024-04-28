@@ -14,7 +14,7 @@ sys.path.append('..')
 
 # Import Libraries
 from Utils.Accuracy_measures import topk_accuracy
-from Utils.Mnist_loader import get_mnist_dataloaders
+from Utils.Cifar10_loader import get_cifar10_dataloaders
 from Utils.Num_parameter import count_parameters
 from Models.CNN import CNN
 
@@ -39,8 +39,7 @@ if __name__ == '__main__':
     # Set up the transforms and train/test loaders
     image_size = 192
 
-    mnist_transform_train = transforms.Compose([
-            transforms.Grayscale(num_output_channels=3),
+    cifar10_transform_train = transforms.Compose([
             transforms.RandomHorizontalFlip(),
             transforms.RandomCrop(32, padding=2),
             transforms.Resize((image_size, image_size)), 
@@ -48,23 +47,23 @@ if __name__ == '__main__':
             transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
         ])
 
-    mnist_transform_test = transforms.Compose([
+    cifar10_transform_test = transforms.Compose([
             transforms.Resize((image_size, image_size)), 
-            transforms.Grayscale(num_output_channels=3), 
             transforms.ToTensor(),
             transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
         ])
 
 
-    train_loader, test_loader = get_mnist_dataloaders(
-                                        data_dir = '../datasets',
-                                        batch_size = 64,
-                                        image_size = 192,
-                                        transform_train = mnist_transform_train ,
-                                        transform_test = mnist_transform_test)
+    train_loader, test_loader = get_cifar10_dataloaders(
+                                                    data_dir = '../datasets',
+                                                    batch_size = 64,
+                                                    image_size = 192,
+                                                    transform_train = cifar10_transform_train ,
+                                                    transform_test = cifar10_transform_test)
     # Set up the new classifier 
     
     new_classifier = nn.Sequential(
+        tltorch.TCL(input_shape=(128,6,6), rank=(128,6,6)),
         tltorch.TCL(input_shape=(128,6,6), rank=(128,6,6)),
         tltorch.TRL(input_shape=(128,6,6), output_shape=(10), factorization='Tucker', rank=(128,6,6,10))
     )
@@ -80,7 +79,7 @@ if __name__ == '__main__':
     
     # Load pretrained from Tests
     
-    weights_path = '../weights/cnn_base_mnist.pth'
+    weights_path = '../weights/cnn_base_cifar10.pth'
     model.load_state_dict(torch.load(weights_path), strict=False)
     
     num_parameters = count_parameters(model)
