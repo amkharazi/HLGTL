@@ -34,6 +34,7 @@ if __name__ == '__main__':
     
     # Setup the device
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
+    device = 'cpu'
     # device = 'cpu'
     print(f'Device is set to : {device}')
 
@@ -94,7 +95,11 @@ if __name__ == '__main__':
     
     
     criterion = nn.CrossEntropyLoss()
-    optimizer = optim.Adam(model.parameters())
+    optimizer = optim.Adam([
+            {'params': model.classifier.parameters(), 'lr': 0.001},
+            {'params': model.features.parameters(), 'lr': 0.0001},
+            {'params': model.avgpool.parameters(), 'lr': 0.001},
+            ])
     
     # Define train and test functions (use examples)
     def train_epoch(loader, epoch):
@@ -176,7 +181,7 @@ if __name__ == '__main__':
                 param.requires_grad = False
     
     # Train and Test The Model - Frozen Layers
-    n_epoch = 5
+    n_epoch = 0
     print(f'Training for {len(range(n_epoch))} epochs\n')
     for epoch in range(1,n_epoch+1):
         report_train = train_epoch(train_loader, epoch)
