@@ -65,8 +65,8 @@ if __name__ == '__main__':
     # Set up the new classifier 
     
     new_classifier = nn.Sequential(
-        tltorch.TCL(input_shape=(128,6,6), rank=(100,4,4)),
-        tltorch.TRL(input_shape=(100,4,4), output_shape=(10), factorization='Tucker', rank=(70,2,2,10))
+        tltorch.TCL(input_shape=(128,6,6), rank=(128,6,6)),
+        tltorch.TRL(input_shape=(128,6,6), output_shape=(10), factorization='Tucker', rank=(128,6,6,10))
     )
     
     # Set up the model, optimizer and criterion
@@ -173,14 +173,14 @@ if __name__ == '__main__':
                 param.requires_grad = False
     
     # Train and Test The Model - Frozen Layers
-    n_epoch = 10
+    n_epoch = 5
     print(f'Training for {len(range(n_epoch))} epochs\n')
     for epoch in range(1,n_epoch+1):
         report_train = train_epoch(train_loader, epoch)
         report_test = test_epoch(test_loader, epoch)
     
         report = report_train + '\n' + report_test + '\n\n'
-        if epoch % 10 == 0:
+        if epoch % 5 == 0:
             model_path = os.path.join(result_dir, 'model_stats', f'Model_epoch_{epoch}.pth')
             torch.save(model.state_dict(), model_path)
         with open(os.path.join(result_dir, 'accuracy_stats', 'report.txt'), 'a') as f:
