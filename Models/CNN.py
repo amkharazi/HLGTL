@@ -7,15 +7,15 @@ class _ConvolutionalNN(nn.Module):
         self.tensorized = tensorized
         self.features = nn.Sequential(
             nn.Conv2d(3, 32, kernel_size=3, stride=1, padding=1),
-            nn.BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True),
+            # nn.BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True),
             nn.ReLU(inplace=True),
             nn.MaxPool2d(kernel_size=2, stride=2),
             nn.Conv2d(32, 64, kernel_size=3, stride=2, padding=1),
-            nn.BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True),
+            # nn.BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True),
             nn.ReLU(inplace=True),
             nn.MaxPool2d(kernel_size=2, stride=2),
             nn.Conv2d(64, 128, kernel_size=3, stride=2, padding=1),
-            nn.BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True),
+            # nn.BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True),
             nn.ReLU(inplace=True),
             nn.MaxPool2d(kernel_size=2, stride=2),
         )
@@ -25,7 +25,8 @@ class _ConvolutionalNN(nn.Module):
         self.classifier = nn.Sequential(
             nn.Linear(128 * 7 * 7, 1024),
             nn.ReLU(inplace=True),
-            nn.Dropout(p=0.5, inplace=False),
+            # nn.Dropout(p=0.5, inplace=False),
+            nn.Identity(),
             nn.Linear(1024, 1000),
         )
 

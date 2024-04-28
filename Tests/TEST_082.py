@@ -34,7 +34,6 @@ if __name__ == '__main__':
     
     # Setup the device
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
-    device = 'cpu'
     # device = 'cpu'
     print(f'Device is set to : {device}')
 
@@ -67,10 +66,10 @@ if __name__ == '__main__':
     # Set up the new classifier 
     
     new_classifier = nn.Sequential(
-        reshape(split=[2,2,2], map_type=1, device=device),
+        reshape(split=[2,1,1], map_type=1, device=device),
         nn.Dropout(p=0.5),
-        tltorch.TCL(input_shape=(2,2,2,64,3,3), rank=(2,2,2,64,3,3)),
-        tltorch.TRL(input_shape=(2,2,2,64,3,3), output_shape=(10), factorization='Tucker', rank=(1,1,1,64,3,3,10)),
+        tltorch.TCL(input_shape=(2,1,1,64,6,6), rank=(2,1,1,64,6,6)),
+        tltorch.TRL(input_shape=(2,1,1,64,6,6), output_shape=(10), factorization='Tucker', rank=(2,1,1,64,6,6,10)),
     )
     
     # Set up the model, optimizer and criterion
@@ -95,11 +94,7 @@ if __name__ == '__main__':
     
     
     criterion = nn.CrossEntropyLoss()
-    optimizer = optim.Adam([
-            {'params': model.classifier.parameters(), 'lr': 0.001},
-            {'params': model.features.parameters(), 'lr': 0.0001},
-            {'params': model.avgpool.parameters(), 'lr': 0.001},
-            ])
+    optimizer = optim.Adam(model.parameters())
     
     # Define train and test functions (use examples)
     def train_epoch(loader, epoch):
@@ -181,7 +176,7 @@ if __name__ == '__main__':
                 param.requires_grad = False
     
     # Train and Test The Model - Frozen Layers
-    n_epoch = 0
+    n_epoch = 5
     print(f'Training for {len(range(n_epoch))} epochs\n')
     for epoch in range(1,n_epoch+1):
         report_train = train_epoch(train_loader, epoch)

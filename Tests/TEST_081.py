@@ -65,7 +65,6 @@ if __name__ == '__main__':
     # Set up the new classifier 
     
     new_classifier = nn.Sequential(
-        nn.Dropout(p=0.5),
         tltorch.TCL(input_shape=(128,6,6), rank=(128,6,6)),
         tltorch.TRL(input_shape=(128,6,6), output_shape=(10), factorization='Tucker', rank=(128,6,6,10))
     )

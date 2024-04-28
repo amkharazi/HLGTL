@@ -66,10 +66,10 @@ if __name__ == '__main__':
     # Set up the new classifier 
     
     new_classifier = nn.Sequential(
-        reshape(split=[2,2,2], map_type=2, device=device),
+        reshape(split=[2,1,1], map_type=2, device=device),
         nn.Dropout(p=0.5),
-        tltorch.TCL(input_shape=(2,2,2,64,3,3), rank=(2,2,2,64,3,3)),
-        tltorch.TRL(input_shape=(2,2,2,64,3,3), output_shape=(10), factorization='Tucker', rank=(1,1,1,64,3,3,10)),
+        tltorch.TCL(input_shape=(2,1,1,64,6,6), rank=(2,1,1,64,6,6)),
+        tltorch.TRL(input_shape=(2,1,1,64,6,6), output_shape=(10), factorization='Tucker', rank=(2,1,1,64,6,6,10)),
     )
     
     # Set up the model, optimizer and criterion
