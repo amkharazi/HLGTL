@@ -69,7 +69,7 @@ if __name__ == '__main__':
     # Set up the new classifier 
     
     new_classifier = nn.Sequential(
-        reshape(split=[2,1,1], map_type=1, device=device),
+        reshape(split=[2,1,1], map_type=2, device=device),
         nn.Dropout(p=0.5),
         tltorch.TCL(input_shape=(2,1,1,64,6,6), rank=(2,1,1,64,6,6)),
         tltorch.TRL(input_shape=(2,1,1,64,6,6), output_shape=(200), factorization='Tucker', rank=(2,1,1,50,3,3,200)),
@@ -159,7 +159,7 @@ if __name__ == '__main__':
         return report_test
     
     # Set up the directories to save the results
-    TEST_ID = 'Test_ID083'
+    TEST_ID = 'Test_ID084'
     result_dir = os.path.join('../results', TEST_ID)
     result_subdir = os.path.join(result_dir, 'accuracy_stats')
     model_subdir = os.path.join(result_dir, 'model_stats')

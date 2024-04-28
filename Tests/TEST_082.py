@@ -1,6 +1,6 @@
 # Check Test Plan for more details 
-# Test CNN model on MNIST dataset
-# New Classifier - Our Methods
+# Test ResNet101 model on Tiny-Imagenet-200  dataset
+# New Classifier - TCL/TRL Model
 # Optimizer Adam - Default
 # No Scheduler
 # MNIST dataset -> (3, 192, 192) 
@@ -14,10 +14,9 @@ sys.path.append('..')
 
 # Import Libraries
 from Utils.Accuracy_measures import topk_accuracy
-from Utils.Cifar10_loader import get_cifar10_dataloaders
+from Utils.TinyImageNet_loader import get_tinyimagenet_dataloaders
 from Utils.Num_parameter import count_parameters
 from Models.CNN import CNN
-from Utils.Reshape import reshape
 
 
 import torchvision.transforms as transforms
@@ -40,34 +39,37 @@ if __name__ == '__main__':
     # Set up the transforms and train/test loaders
     image_size = 192
 
-    cifar10_transform_train = transforms.Compose([
+    tiny_transform_train = transforms.Compose([
             transforms.RandomHorizontalFlip(),
-            transforms.RandomCrop(32, padding=2),
+            transforms.RandomCrop(64, padding=4),
             transforms.Resize((image_size, image_size)), 
             transforms.ToTensor(),
-            transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
+            transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))
         ])
-
-    cifar10_transform_test = transforms.Compose([
+    tiny_transform_val = transforms.Compose([
             transforms.Resize((image_size, image_size)), 
             transforms.ToTensor(),
-            transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
+            transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))
+        ])
+    tiny_transform_test = transforms.Compose([
+            transforms.Resize((image_size, image_size)), 
+            transforms.ToTensor(),
+            transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))
         ])
 
 
-    train_loader, test_loader = get_cifar10_dataloaders(
-                                                    data_dir = '../datasets',
-                                                    batch_size = 64,
-                                                    image_size = 192,
-                                                    transform_train = cifar10_transform_train ,
-                                                    transform_test = cifar10_transform_test)
+    train_loader, test_loader, _ = get_tinyimagenet_dataloaders(
+                                                        data_dir = '../datasets',
+                                                        transform_train=tiny_transform_train,
+                                                        transform_val=tiny_transform_val,
+                                                        transform_test=tiny_transform_test,
+                                                        batch_size=64,
+                                                        image_size=192)
     # Set up the new classifier 
     
     new_classifier = nn.Sequential(
-        reshape(split=[1,2,2], map_type=2, device=device),
-        nn.Dropout(p=0.5),
-        tltorch.TCL(input_shape=(1,2,2,128,3,3), rank=(1,2,2,64,3,3)),
-        tltorch.TRL(input_shape=(1,2,2,64,3,3), output_shape=(10), factorization='Tucker', rank=(1,2,2,64,3,3,10)),
+        tltorch.TCL(input_shape=(128,6,6), rank=(128,6,6)),
+        tltorch.TRL(input_shape=(128,6,6), output_shape=(200), factorization='Tucker', rank=(128,6,6,200))
     )
     
     # Set up the model, optimizer and criterion
@@ -75,13 +77,13 @@ if __name__ == '__main__':
                           weights_path=None,
                           tensorized=True,
                           input_shape=(192,192),
-                          num_classes=10,
+                          num_classes=200,
                           avg_pool=False,
                           new_classifier=new_classifier).to(device)
     
     # Load pretrained from Tests
     
-    weights_path = '../weights/cnn_base_cifar10.pth'
+    weights_path = '../weights/cnn_base_tiny.pth'
     model.load_state_dict(torch.load(weights_path), strict=False)
     
     num_parameters = count_parameters(model)

@@ -1,11 +1,11 @@
 # Check Test Plan for more details 
-# Test CNN model on MNIST dataset
-# New Classifier - TCL/TRL Model
+# Test ResNet101 model on Tiny-Imagenet-200  dataset
+# No change to classifier - Basic Model
 # Optimizer Adam - Default
 # No Scheduler
 # MNIST dataset -> (3, 192, 192) 
-# Pretrained
-# Trasfer Learning
+# Trained From Scratch
+# No Transfer Learning
 ########################################################
 
 # Add all .py files to path
@@ -14,7 +14,7 @@ sys.path.append('..')
 
 # Import Libraries
 from Utils.Accuracy_measures import topk_accuracy
-from Utils.Cifar10_loader import get_cifar10_dataloaders
+from Utils.TinyImageNet_loader import get_tinyimagenet_dataloaders
 from Utils.Num_parameter import count_parameters
 from Models.CNN import CNN
 
@@ -22,7 +22,6 @@ from Models.CNN import CNN
 import torchvision.transforms as transforms
 from torch import nn
 from torch import optim
-import tltorch
 
 import time
 import torch
@@ -39,47 +38,45 @@ if __name__ == '__main__':
     # Set up the transforms and train/test loaders
     image_size = 192
 
-    cifar10_transform_train = transforms.Compose([
+    tiny_transform_train = transforms.Compose([
             transforms.RandomHorizontalFlip(),
-            transforms.RandomCrop(32, padding=2),
+            transforms.RandomCrop(64, padding=4),
             transforms.Resize((image_size, image_size)), 
             transforms.ToTensor(),
-            transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
+            transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))
         ])
-
-    cifar10_transform_test = transforms.Compose([
+    tiny_transform_val = transforms.Compose([
             transforms.Resize((image_size, image_size)), 
             transforms.ToTensor(),
-            transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
+            transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))
+        ])
+    tiny_transform_test = transforms.Compose([
+            transforms.Resize((image_size, image_size)), 
+            transforms.ToTensor(),
+            transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))
         ])
 
 
-    train_loader, test_loader = get_cifar10_dataloaders(
-                                                    data_dir = '../datasets',
-                                                    batch_size = 64,
-                                                    image_size = 192,
-                                                    transform_train = cifar10_transform_train ,
-                                                    transform_test = cifar10_transform_test)
+    train_loader, test_loader, _ = get_tinyimagenet_dataloaders(
+                                                        data_dir = '../datasets',
+                                                        transform_train=tiny_transform_train,
+                                                        transform_val=tiny_transform_val,
+                                                        transform_test=tiny_transform_test,
+                                                        batch_size=64,
+                                                        image_size=192)
     # Set up the new classifier 
-    
-    new_classifier = nn.Sequential(
-        tltorch.TCL(input_shape=(128,6,6), rank=(128,6,6)),
-        tltorch.TRL(input_shape=(128,6,6), output_shape=(10), factorization='Tucker', rank=(128,6,6,10))
-    )
     
     # Set up the model, optimizer and criterion
     model = CNN(pretrained=False,
                           weights_path=None,
-                          tensorized=True,
+                          tensorized=False,
                           input_shape=(192,192),
-                          num_classes=10,
+                          num_classes=200,
                           avg_pool=False,
-                          new_classifier=new_classifier).to(device)
+                          new_classifier=None).to(device)
     
     # Load pretrained from Tests
     
-    weights_path = '../weights/cnn_base_cifar10.pth'
-    model.load_state_dict(torch.load(weights_path), strict=False)
     
     num_parameters = count_parameters(model)
     classifier_parameters = count_parameters(model.classifier)
@@ -171,14 +168,14 @@ if __name__ == '__main__':
                 param.requires_grad = False
     
     # Train and Test The Model - Frozen Layers
-    n_epoch = 5
+    n_epoch = 0
     print(f'Training for {len(range(n_epoch))} epochs\n')
     for epoch in range(1,n_epoch+1):
         report_train = train_epoch(train_loader, epoch)
         report_test = test_epoch(test_loader, epoch)
     
         report = report_train + '\n' + report_test + '\n\n'
-        if epoch % 5 == 0:
+        if epoch % 10 == 0:
             model_path = os.path.join(result_dir, 'model_stats', f'Model_epoch_{epoch}.pth')
             torch.save(model.state_dict(), model_path)
         with open(os.path.join(result_dir, 'accuracy_stats', 'report.txt'), 'a') as f:
@@ -193,18 +190,24 @@ if __name__ == '__main__':
                 param.requires_grad = True
                 
     # Train and Test The Model - Unfrozen Layers - comment if not required
-    n_epoch_additional = 15
+    n_epoch_additional = 50
     print(f'Training for Additional {len(range(n_epoch_additional))} epochs\n')
     for epoch in range(n_epoch+1,n_epoch+n_epoch_additional+1):
         report_train = train_epoch(train_loader, epoch)
         report_test = test_epoch(test_loader, epoch)
     
         report = report_train + '\n' + report_test + '\n\n'
-        if epoch % 5 == 0:
+        if epoch % 10 == 0:
             model_path = os.path.join(result_dir, 'model_stats', f'Model_epoch_{epoch}.pth')
             torch.save(model.state_dict(), model_path)
         with open(os.path.join(result_dir, 'accuracy_stats', 'report.txt'), 'a') as f:
             f.write(report)
+            
+            
+    # Save weights to be used as a transfer or pretrained model
+    
+    save_path = '../weights/cnn_base_tiny.pth'
+    torch.save(model.state_dict(), save_path)
     
             
     
