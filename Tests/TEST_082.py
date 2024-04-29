@@ -1,11 +1,11 @@
 # Check Test Plan for more details 
-# Test ResNet101 model on Tiny-Imagenet-200  dataset
+# Test CNN model on Tiny-Imagenet-200  dataset
 # New Classifier - TCL/TRL Model
 # Optimizer Adam - Default
 # No Scheduler
 # MNIST dataset -> (3, 192, 192) 
-# Pretrained
-# Trasfer Learning
+# Trained From Scratch
+# No Transfer Learning
 ########################################################
 
 # Add all .py files to path

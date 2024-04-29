@@ -1,5 +1,5 @@
 # Check Test Plan for more details 
-# Test ResNet101 model on Tiny-Imagenet-200  dataset
+# Test CNN model on Tiny-Imagenet-200  dataset
 # No change to classifier - Basic Model
 # Optimizer Adam - Default
 # No Scheduler
@@ -190,7 +190,7 @@ if __name__ == '__main__':
                 param.requires_grad = True
                 
     # Train and Test The Model - Unfrozen Layers - comment if not required
-    n_epoch_additional = 50
+    n_epoch_additional = 20
     print(f'Training for Additional {len(range(n_epoch_additional))} epochs\n')
     for epoch in range(n_epoch+1,n_epoch+n_epoch_additional+1):
         report_train = train_epoch(train_loader, epoch)
