@@ -86,8 +86,8 @@ if __name__ == '__main__':
     
     # Load pretrained from Tests
     
-    weights_path = '../weights/cnn_base_tiny.pth'
-    model.load_state_dict(torch.load(weights_path), strict=False)
+    # weights_path = '../weights/cnn_base_tiny.pth'
+    # model.load_state_dict(torch.load(weights_path), strict=False)
     
     num_parameters = count_parameters(model)
     classifier_parameters = count_parameters(model.classifier)
@@ -179,7 +179,7 @@ if __name__ == '__main__':
                 param.requires_grad = False
     
     # Train and Test The Model - Frozen Layers
-    n_epoch = 5
+    n_epoch = 0
     print(f'Training for {len(range(n_epoch))} epochs\n')
     for epoch in range(1,n_epoch+1):
         report_train = train_epoch(train_loader, epoch)
@@ -201,7 +201,7 @@ if __name__ == '__main__':
                 param.requires_grad = True
                 
     # Train and Test The Model - Unfrozen Layers - comment if not required
-    n_epoch_additional = 15
+    n_epoch_additional = 20
     print(f'Training for Additional {len(range(n_epoch_additional))} epochs\n')
     for epoch in range(n_epoch+1,n_epoch+n_epoch_additional+1):
         report_train = train_epoch(train_loader, epoch)
