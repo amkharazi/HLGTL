@@ -3,7 +3,7 @@
 # New Classifier - Our Methods
 # Optimizer Adam - Default
 # No Scheduler
-# MNIST dataset -> (3, 192, 192) 
+# CIFAR10 dataset -> (3, 192, 192) 
 # Pretrained
 # Trasfer Learning
 # Without Adaptive avg pooling

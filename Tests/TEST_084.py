@@ -3,7 +3,7 @@
 # New Classifier - Our Methods
 # Optimizer Adam - Default
 # No Scheduler
-# MNIST dataset -> (3, 192, 192) 
+# Tiny-Imagenet-200 dataset -> (3, 192, 192) 
 # Trained From Scratch
 # No Transfer Learning
 # Without Adaptive avg pooling

@@ -3,7 +3,7 @@
 # No change to classifier - Basic Model
 # Optimizer Adam - Avoid Catastrophic Forgetting
 # No Scheduler
-# MNIST dataset -> (3, 192, 192) 
+# Tiny-Imagenet-200 dataset -> (3, 192, 192) 
 # Pretrained
 # Trasfer Learning
 # Without Adaptive avg pooling
@@ -91,7 +91,7 @@ if __name__ == '__main__':
     optimizer = optim.Adam([
             {'params': model.classifier.parameters(), 'lr': 0.001},
             {'params': model.features.parameters(), 'lr': 0.00001},
-            {'params': model.avgpool.parameters(), 'lr': 0.0001},
+            {'params': model.avgpool.parameters(), 'lr': 0.001},
             ])
     
     # Define train and test functions (use examples)

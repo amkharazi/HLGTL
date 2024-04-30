@@ -3,7 +3,7 @@
 # New Classifier - Basic Model with dropout
 # Optimizer Adam - Avoid Catastrophic Forgetting
 # No Scheduler
-# MNIST dataset -> (3, 192, 192) 
+# Tiny-Imagenet-200 dataset -> (3, 192, 192) 
 # Pretrained
 # Trasfer Learning
 # Without Adaptive avg pooling

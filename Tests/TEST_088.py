@@ -1,6 +1,6 @@
 # Check Test Plan for more details 
-# Test ResNet50 model on Tiny-Imagenet-200  dataset
-# New Classifier - TCL/TRL Model
+# Test VGG19 model on Tiny-Imagenet-200  dataset
+# New Classifier - Our Methods
 # Optimizer Adam - Avoid Catastrophic Forgetting
 # No Scheduler
 # Tiny-Imagenet-200 dataset -> (3, 192, 192) 
@@ -17,7 +17,8 @@ sys.path.append('..')
 from Utils.Accuracy_measures import topk_accuracy
 from Utils.TinyImageNet_loader import get_tinyimagenet_dataloaders
 from Utils.Num_parameter import count_parameters
-from Models.Resnet50 import Resnet50
+from Models.VGG19 import VGG19
+from Utils.Reshape import reshape
 
 
 import torchvision.transforms as transforms
@@ -69,13 +70,16 @@ if __name__ == '__main__':
     # Set up the new classifier 
     
     new_classifier = nn.Sequential(
-        tltorch.TRL(input_shape=(2048,6,6), output_shape=(200), factorization='Tucker', rank=(600,3,3,200))
+        reshape(split=[2,2,2], map_type=2, device=device),
+        nn.Dropout(p=0.5),
+        tltorch.TCL(input_shape=(2,2,2,512,3,3), rank=(2,2,2,512,1,1)),
+        tltorch.TRL(input_shape=(2,2,2,512,1,1), output_shape=(200), factorization='Tucker', rank=(1,1,1,512,1,1,200)),
     )
     
     # Set up the model, optimizer and criterion
-    model = Resnet50(pretrained=True,
-                          weights_path='../weights/resnet50_weights.pth',
-                          tensorized=True,
+    model = VGG19(pretrained=True,
+                          weights_path='../weights/vgg19_weights.pth',
+                          tensorized=False,
                           input_shape=(192,192),
                           num_classes=200,
                           avg_pool=False,
@@ -158,7 +162,7 @@ if __name__ == '__main__':
         return report_test
     
     # Set up the directories to save the results
-    TEST_ID = 'Test_ID027'
+    TEST_ID = 'Test_ID088'
     result_dir = os.path.join('../results', TEST_ID)
     result_subdir = os.path.join(result_dir, 'accuracy_stats')
     model_subdir = os.path.join(result_dir, 'model_stats')
@@ -185,7 +189,7 @@ if __name__ == '__main__':
         report_test = test_epoch(test_loader, epoch)
     
         report = report_train + '\n' + report_test + '\n\n'
-        if epoch % 5 == 0:
+        if epoch % 10 == 0:
             model_path = os.path.join(result_dir, 'model_stats', f'Model_epoch_{epoch}.pth')
             torch.save(model.state_dict(), model_path)
         with open(os.path.join(result_dir, 'accuracy_stats', 'report.txt'), 'a') as f:
@@ -200,7 +204,7 @@ if __name__ == '__main__':
                 param.requires_grad = True
                 
     # Train and Test The Model - Unfrozen Layers - comment if not required
-    n_epoch_additional = 10
+    n_epoch_additional = 35
     print(f'Training for Additional {len(range(n_epoch_additional))} epochs\n')
     for epoch in range(n_epoch+1,n_epoch+n_epoch_additional+1):
         report_train = train_epoch(train_loader, epoch)
@@ -212,6 +216,7 @@ if __name__ == '__main__':
             torch.save(model.state_dict(), model_path)
         with open(os.path.join(result_dir, 'accuracy_stats', 'report.txt'), 'a') as f:
             f.write(report)
+            
     
             
     
