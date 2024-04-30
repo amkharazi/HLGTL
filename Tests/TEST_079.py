@@ -6,6 +6,7 @@
 # MNIST dataset -> (3, 192, 192) 
 # Pretrained
 # Trasfer Learning
+# Without Adaptive avg pooling
 ########################################################
 
 # Add all .py files to path

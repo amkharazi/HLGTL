@@ -6,6 +6,7 @@
 # MNIST dataset -> (3, 192, 192) 
 # Pretrained
 # Trasfer Learning
+# Without Adaptive avg pooling
 ########################################################
 
 # Add all .py files to path
@@ -81,8 +82,6 @@ if __name__ == '__main__':
     
     # Load pretrained from Tests
     
-    # weights_path = '../weights/saved/ID001_weights.pth'
-    # model.load_state_dict(torch.load(weights_path))
     
     num_parameters = count_parameters(model)
     classifier_parameters = count_parameters(model.classifier)
