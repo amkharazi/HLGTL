@@ -79,7 +79,7 @@ if __name__ == '__main__':
     # Set up the model, optimizer and criterion
     model = VGG19(pretrained=True,
                           weights_path='../weights/vgg19_weights.pth',
-                          tensorized=False,
+                          tensorized=True,
                           input_shape=(192,192),
                           num_classes=200,
                           avg_pool=False,
