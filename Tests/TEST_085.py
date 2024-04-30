@@ -6,7 +6,7 @@
 # MNIST dataset -> (3, 192, 192) 
 # Pretrained
 # Trasfer Learning
-# With Adaptive avg pooling
+# Without Adaptive avg pooling
 ########################################################
 
 # Add all .py files to path
@@ -67,7 +67,6 @@ if __name__ == '__main__':
                                                         image_size=192)
     # Set up the new classifier 
     
-    avg_pool = nn.AdaptiveAvgPool2d(output_size=(6, 6))
     
     # Set up the model, optimizer and criterion
     model = VGG19(pretrained=True,
@@ -75,7 +74,7 @@ if __name__ == '__main__':
                           tensorized=False,
                           input_shape=(192,192),
                           num_classes=200,
-                          avg_pool=avg_pool,
+                          avg_pool=False,
                           new_classifier=None).to(device)
     
     # Load pretrained from Tests
@@ -197,7 +196,7 @@ if __name__ == '__main__':
                 param.requires_grad = True
                 
     # Train and Test The Model - Unfrozen Layers - comment if not required
-    n_epoch_additional = 25
+    n_epoch_additional = 35
     print(f'Training for Additional {len(range(n_epoch_additional))} epochs\n')
     for epoch in range(n_epoch+1,n_epoch+n_epoch_additional+1):
         report_train = train_epoch(train_loader, epoch)
