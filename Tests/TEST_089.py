@@ -1,6 +1,6 @@
 # Check Test Plan for more details 
 # Test VGG19 model on Tiny-Imagenet-200  dataset
-# New Classifier - TCL/TRL Model
+# New Classifier - Our Methods
 # Optimizer Adam - Avoid Catastrophic Forgetting
 # No Scheduler
 # Tiny-Imagenet-200 dataset -> (3, 192, 192) 
@@ -18,6 +18,7 @@ from Utils.Accuracy_measures import topk_accuracy
 from Utils.TinyImageNet_loader import get_tinyimagenet_dataloaders
 from Utils.Num_parameter import count_parameters
 from Models.VGG19 import VGG19
+from Utils.Reshape import reshape
 
 
 import torchvision.transforms as transforms
@@ -69,9 +70,10 @@ if __name__ == '__main__':
     # Set up the new classifier 
     
     new_classifier = nn.Sequential(
+        reshape(split=[8,2,2], map_type=1, device=device),
         nn.Dropout(p=0.5),
-        tltorch.TCL(input_shape=(512,6,6), rank=(512,6,6)),    
-        tltorch.TRL(input_shape=(512,6,6), output_shape=(200), factorization='Tucker', rank=(512,6,6,200))
+        tltorch.TCL(input_shape=(8,2,2,64,3,3), rank=(6,2,2,64,3,3)),
+        tltorch.TRL(input_shape=(6,2,2,64,3,3), output_shape=(200), factorization='Tucker', rank=(4,2,2,64,1,1,200)),
     )
     
     # Set up the model, optimizer and criterion
@@ -160,7 +162,7 @@ if __name__ == '__main__':
         return report_test
     
     # Set up the directories to save the results
-    TEST_ID = 'Test_ID086'
+    TEST_ID = 'Test_ID089'
     result_dir = os.path.join('../results', TEST_ID)
     result_subdir = os.path.join(result_dir, 'accuracy_stats')
     model_subdir = os.path.join(result_dir, 'model_stats')
