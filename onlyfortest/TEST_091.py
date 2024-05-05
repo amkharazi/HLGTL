@@ -67,7 +67,7 @@ if __name__ == '__main__':
     
     new_classifier = nn.Sequential(
         TRL(input_size=(64,2048,6,6), output=(10), rank=(200,3,3,8),ignore_modes = (0,), bias = True, device = device).to(device)
-    )
+    ).to(device)
 
     # Set up the model, optimizer and criterion
     model = Resnet50(pretrained=True,
@@ -105,9 +105,10 @@ if __name__ == '__main__':
             optimizer.zero_grad()
             outputs = model(inputs)
             loss = criterion(outputs, targets)
-        
+
             loss.backward()
             optimizer.step()
+            print('stepped:)')
 
             running_loss += loss.item()
             accuracies = topk_accuracy(outputs, targets, topk=(1, 2, 3, 4, 5))
