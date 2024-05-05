@@ -66,7 +66,7 @@ if __name__ == '__main__':
     # Set up the new classifier 
     
     new_classifier = nn.Sequential(
-        TRL(input_size=(64,2048,6,6), output_shape=(10), rank=(200,3,3,8),ignore_modes = (0,), bias = True, device = device)
+        TRL(input_size=(64,2048,6,6), output=(10), rank=(200,3,3,8),ignore_modes = (0,), bias = True, device = device).to(device)
     )
 
     # Set up the model, optimizer and criterion
