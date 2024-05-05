@@ -108,7 +108,6 @@ if __name__ == '__main__':
 
             loss.backward()
             optimizer.step()
-            print('stepped:)')
 
             running_loss += loss.item()
             accuracies = topk_accuracy(outputs, targets, topk=(1, 2, 3, 4, 5))
