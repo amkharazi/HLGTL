@@ -1,6 +1,7 @@
 
 import torch
 import torch.nn as nn
+from torch.nn import init
 
 # torch.autograd.set_detect_anomaly(True)
 
@@ -43,17 +44,17 @@ class TRL(nn.Module):
         
         self.w_size = tuple(new_size) + self.output
         if self.bias:
-            self.register_parameter('b', nn.Parameter(torch.randn(self.output, device = self.device), requires_grad=True))
+            self.register_parameter('b', nn.Parameter(torch.empty(self.output, device = self.device), requires_grad=True))
         else:
             self.register_parameter('b',None)
             
         # Tucker Decomposition method for TRL
         
-        self.register_parameter('core', nn.Parameter(torch.randn(self.rank, device = self.device), requires_grad=True))
+        self.register_parameter('core', nn.Parameter(torch.empty(self.rank, device = self.device), requires_grad=True))
 
         # List of all factors
         for i,r in enumerate(self.rank):
-            self.register_parameter(f'u{i}', nn.Parameter(torch.randn((r, self.w_size[i]), device = self.device), requires_grad=True))      
+            self.register_parameter(f'u{i}', nn.Parameter(torch.empty((r, self.w_size[i]), device = self.device), requires_grad=True))      
 
         # Generate formula for w :
         
@@ -117,9 +118,19 @@ class TRL(nn.Module):
         self.out_formula = formula
         # print(formula)
         
+        self.init_param() # initialize parameters       
+
     def forward(self, x):
         w = torch.einsum(self.w_formula, self.w_operands)
         out = torch.einsum(self.out_formula, (x, w))
         if self.bias:
             out += self.b 
         return out # You may rearrange your out tensor to your desired shapes
+    
+    def init_param(self): # initialization methods by tensorly
+        for i in range(len(self.rank)):
+            init.normal_(getattr(self, f'u{i}'), mean=0.0, std=0.02)
+        init.normal_(self.core, mean=0.0, std=0.02)
+        if self.bias:
+            bound = 1
+            init.uniform_(self.b, -bound, bound)

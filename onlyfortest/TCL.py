@@ -1,6 +1,9 @@
 
 import torch
 import torch.nn as nn
+from torch.nn import init
+
+import math
 
 # torch.autograd.set_detect_anomaly(True)
 
@@ -36,8 +39,8 @@ class TCL(nn.Module):
                 new_size.append(self.input_size[i])
         
         if self.bias:
-            self.register_parameter('b', nn.Parameter(torch.randn(self.rank, device=self.device), requires_grad=True))
-            self.b = nn.Parameter(torch.randn(self.rank), requires_grad=True)
+            self.register_parameter('b', nn.Parameter(torch.empty(self.rank, device=self.device), requires_grad=True))
+            self.b = nn.Parameter(torch.empty(self.rank), requires_grad=True)
         else:
             self.register_parameter('b',None)
             
@@ -45,7 +48,7 @@ class TCL(nn.Module):
                                    
         # List of all factors
         for i,r in enumerate(self.rank):
-            self.register_parameter(f'u{i}', nn.Parameter(torch.randn((r, new_size[i]), device = self.device), requires_grad=True))
+            self.register_parameter(f'u{i}', nn.Parameter(torch.empty((r, new_size[i]), device = self.device), requires_grad=True))
 
         # Generate formula for output :
         index = 0
@@ -75,7 +78,9 @@ class TCL(nn.Module):
         formula+=extend_str+out_str  
             
         self.out_formula = formula
-        # print(formula)        
+        # print(formula) 
+
+        self.init_param() # initialize parameters       
         
     def forward(self, x):
         operands = [x]
@@ -88,3 +93,9 @@ class TCL(nn.Module):
             out += self.b
         return out # You may rearrange your out tensor to your desired shapes 
     
+    def init_param(self): # initialization methods by tensorly
+        for i in range(len(self.rank)):
+            init.kaiming_uniform_(getattr(self, f'u{i}'), a = math.sqrt(5))
+        if self.bias:
+            bound = 1 / math.sqrt(self.input_size[0])
+            init.uniform_(self.b, -bound, bound)
