@@ -1,0 +1,1087 @@
+\documentclass{article}
+
+
+% if you need to pass options to natbib, use, e.g.:
+%     \PassOptionsToPackage{numbers, compress}{natbib}
+% before loading neurips_2024
+
+% ready for submission
+\usepackage{neurips_2024}
+
+
+% to compile a preprint version, e.g., for submission to arXiv, add add the
+% [preprint] option:
+%     \usepackage[preprint]{neurips_2024}
+
+
+% to compile a camera-ready version, add the [final] option, e.g.:
+%     \usepackage[final]{neurips_2024}
+
+
+% to avoid loading the natbib package, add option nonatbib:
+%    \usepackage[nonatbib]{neurips_2024}
+
+
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{hyperref}       % hyperlinks
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+\usepackage{xcolor}         % colors
+
+\usepackage{amsmath} 		% maths
+\usepackage{graphicx}		% figures
+
+\title{SATURN: Splitting Approach on Tensorized Ubiquitous Regression Networks}
+
+
+% The \author macro works with any number of authors. There are two commands
+% used to separate the names and addresses of multiple authors: \And and \AND.
+%
+% Using \And between authors leaves it to LaTeX to determine where to break the
+% lines. Using \AND forces a line break at that point. So, if LaTeX puts 3 of 4
+% authors names on the first line, and the last on the second line, try using
+% \AND instead of \And before the third author name.
+
+
+\author{%
+	A.~M.~Kharazi\\
+	Department of Computer Science\\
+	Tarbiat Modares University\\
+	Tehran \\
+	\texttt{am.kharazi@modares.ac.ir} \\
+	\And
+	M.~Badzohreh\\
+	Department of Computer Science\\
+	Tarbiat Modares University\\
+	Tehran \\
+	\texttt{noemail} \\ %%TODO
+	\And
+	M.~Rezghi\\
+	Department of Computer Science\\
+	Tarbiat Modares University\\
+	Tehran \\
+	\texttt{noemail} \\ %%TODO	
+%  David S.~Hippocampus\thanks{Use footnote for providing further information
+%    about author (webpage, alternative address)---\emph{not} for acknowledging
+%    funding agencies.} \\
+%  Department of Computer Science\\
+%  Cranberry-Lemon University\\
+%  Pittsburgh, PA 15213 \\
+%  \texttt{hippo@cs.cranberry-lemon.edu} \\
+  % examples of more authors
+  % \And
+  % Coauthor \\
+  % Affiliation \\
+  % Address \\
+  % \texttt{email} \\
+  % \AND
+  % Coauthor \\
+  % Affiliation \\
+  % Address \\
+  % \texttt{email} \\
+  % \And
+  % Coauthor \\
+  % Affiliation \\
+  % Address \\
+  % \texttt{email} \\
+  % \And
+  % Coauthor \\
+  % Affiliation \\
+  % Address \\
+  % \texttt{email} \\
+}
+
+
+\begin{document}
+
+
+\maketitle
+
+
+\begin{abstract}
+%  The abstract paragraph should be indented \nicefrac{1}{2}~inch (3~picas) on
+%  both the left- and right-hand margins. Use 10~point type, with a vertical
+%  spacing (leading) of 11~points.  The word \textbf{Abstract} must be centered,
+%  bold, and in point size 12. Two line spaces precede the abstract. The abstract
+%  must be limited to one paragraph.
+Convolutional Neural Networks, often contain Fully Connected Layers after their convolution phase which requires the data to be flatten. Despite empirical success, these flattening ruin the topological structure of the input data and increase the overall cost of the network. With the tensor nature of the input data, regression layers, can be replaced with their tensorized low rank approximated layers. However, these layers perform poorly when the approximated rank is too low. To address this issue, we provide two unique splitting approaches where the result tensor, is a thinner and higher order tensor which requires lower approximated rank and less cost while preserving the quality of the network. In our experiments, evaluated on CIFAR10, MNIST, and Tiny ImageNet-200,  we have successfully reduced the classifier parameters of the known CNNs such as VGG19, ResNet50, and Resnet101 by more than 95 percent while also achieving better accuracy and overcoming overfitting.    
+\end{abstract}
+
+
+%\section{Submission of papers to NeurIPS 2024}
+\section{Introduction}
+\label{sec:intorduction}
+
+ Neural Networks, especially those that are applied to images such as \textit{Convolutional Neural Network} (CNNs), often consist of two main parts: One that is responsible to extract features from the input data, and the other part is a \textit{MultiLayer Perceptron} (MLP) which Maps the extracted features to the desired space. Despite the importance of data and their spatial relationship, maintaining their topological structure is often discarded since many known CNNs like ResNet or VGG, seem to work fine; However in cases where these structures are more important than the others such as MRI, It is crucial to adapt the known networks to work without destroying the multi-linear structure of the data. While preserving the natural structure of the data throughout the network is important, a greater drawback from using MLPs is their excessive required number of parameters which not only limit their capabilities in real time and practical problems but also prone them to overfitting. 
+ 
+ Most natural datasets can be represented as a Tensor due their multi-linear or multi-modal structure; Images can be considered as a 3-order tensors with width, height and the color channels as their corresponding 3 modes, the same could be considered for videos as 4-order tensor with an extra time mode. In practice, most of the used data in the current machine learning and artificial intelligence tasks can be encoded as tensors, requiring their expansion to the linear algebra.
+ 
+ In machine learning, we usually consider data as vectors and datasets will form a set of vectors (ideally called a matrix). By that definition, many matrix decomposition methods have been invented to work on such matrices. Tensor methods are to generalize these methods to a higher dimensional space. 
+ Mathematically, tensors, have been widely studied in the past. One excellent example within tensor methods is Tensor Decomposition which can be considered as a prime backbone for most tensorized layers and approximations in deep learning 
+ \cite{r1}
+ \cite{r4},
+  Signal Processing
+ \cite{r2}
+ \cite{r3},
+ fusion
+ \cite{r5}, 
+ blind source seperation
+ \cite{r3} 
+ \cite{r6},
+ and computer vision
+ \cite{r7}
+ .  
+ 
+Considering the new advances in \textit{Deep Neural Networks} (DNNs) and their applications to computer vision such as image recognition, image segmentation, image generation, video generation, vision transformers, etc $\dots$; most architectures still flatten the data before feeding them to their MLPs which not only destroys the natural structure of the data but also increase the number of parameters needed for the model. 
+
+Images as the frequent example of data used in  machine learning tasks are considered 3-order tensors which require their own algebra to be applied when fed to the MLP. \textit{Fully Connected} (FC) layers used in many architectures are the main culprit behind vectorizing the data and the number of parameters. To alleviate this situation, a better replacement for FC layers is needed which not only preserves the current model's accuracy but also reduces the number of required parameters and does not destroy the structure of data. 
+
+One possible working solution to tensorizing FC layers is by employing the low rank approximation of the weight tensor. 
+Some works have been done to address these issues which will be discussed in Section 
+\ref{sec:related-works}
+.
+However, those methods usually perform poorly when the approximated rank is too low which is not ideal for larger models. The cost of these models usually depend on the size of the tensor, our experiment shows that a thinner while higher dimensional reshaped tensor of the original input tensor, can perform much better in lower ranks and by a unique splitting and stacking technique, we preserved the models' accuracy. In this paper, we have provided two splitting approaches which have their own use dependent on the model's task; Using these methods, we have reshaped the tensor to a higher dimensional space where the cost of computation is less and has a better capability to handle lower approximated ranks. Our methods evaluated on CIFAR10, MNIST, and Tiny-ImageNet-200 applied to known CNN models such as ResNet50, ResNet101, and VGG19, as well as a typical CNN achieved similar accuracy in most methods with more than 95 percent less parameters compared to the FC layers and even overcame overfitting in some cases. 
+
+%
+%Please read the instructions below carefully and follow them faithfully.
+%
+%
+%\subsection{Style}
+%
+%
+%Papers to be submitted to NeurIPS 2024 must be prepared according to the
+%instructions presented here. Papers may only be up to {\bf nine} pages long,
+%including figures. Additional pages \emph{containing only acknowledgments and
+%references} are allowed. Papers that exceed the page limit will not be
+%reviewed, or in any other way considered for presentation at the conference.
+%
+%
+%The margins in 2024 are the same as those in previous years.
+%
+%
+%Authors are required to use the NeurIPS \LaTeX{} style files obtainable at the
+%NeurIPS website as indicated below. Please make sure you use the current files
+%and not previous versions. Tweaking the style files may be grounds for
+%rejection.
+%
+%
+%\subsection{Retrieval of style files}
+%
+%
+%The style files for NeurIPS and other conference information are available on
+%the website at
+%\begin{center}
+%  \url{http://www.neurips.cc/}
+%\end{center}
+%The file \verb+neurips_2024.pdf+ contains these instructions and illustrates the
+%various formatting requirements your NeurIPS paper must satisfy.
+%
+%
+%The only supported style file for NeurIPS 2024 is \verb+neurips_2024.sty+,
+%rewritten for \LaTeXe{}.  \textbf{Previous style files for \LaTeX{} 2.09,
+%  Microsoft Word, and RTF are no longer supported!}
+%
+%
+%The \LaTeX{} style file contains three optional arguments: \verb+final+, which
+%creates a camera-ready copy, \verb+preprint+, which creates a preprint for
+%submission to, e.g., arXiv, and \verb+nonatbib+, which will not load the
+%\verb+natbib+ package for you in case of package clash.
+%
+%
+%\paragraph{Preprint option}
+%If you wish to post a preprint of your work online, e.g., on arXiv, using the
+%NeurIPS style, please use the \verb+preprint+ option. This will create a
+%nonanonymized version of your work with the text ``Preprint. Work in progress.''
+%in the footer. This version may be distributed as you see fit, as long as you do not say which conference it was submitted to. Please \textbf{do
+%  not} use the \verb+final+ option, which should \textbf{only} be used for
+%papers accepted to NeurIPS.
+%
+%
+%At submission time, please omit the \verb+final+ and \verb+preprint+
+%options. This will anonymize your submission and add line numbers to aid
+%review. Please do \emph{not} refer to these line numbers in your paper as they
+%will be removed during generation of camera-ready copies.
+%
+%
+%The file \verb+neurips_2024.tex+ may be used as a ``shell'' for writing your
+%paper. All you have to do is replace the author, title, abstract, and text of
+%the paper with your own.
+%
+%
+%The formatting instructions contained in these style files are summarized in
+%Sections \ref{gen_inst}, \ref{headings}, and \ref{others} below.
+\section{Related works}
+\label{sec:related-works}
+
+Several prior papers address the importance of using tensors and preserving the natural structure, One uses CP decomposition to enhance convolution layers \cite{r8}. In \cite{r9}, tucker decomposition is used for convolution enhancement with fewer parameters. A weight sharing scheme in multi tasking learning is proposed by \cite{r10}. In \cite{r11}, a Tensor-Train decomposition is used as a low rank approximation of the weight tensor. Some uses tensor methods for model compression and acceleration \cite{r21}. 
+
+In general, tensor methods can be widely used in many machine learning and deep learning tasks, especially computer vision \cite{r22}. Their use, can be categorized into three  main approaches: The first approach compresses the tuned parameters of the pre-trained network while preserving the quality of network with these approximated parameters. So here the new network is not trained and the approximated network could only be used in the test step. Two methods for approximation of the tuned parameters of pertained CNN in each layer based on matrix and tensor decompositions adjusted with clustering of inlet and outlet layers have been proposed \cite{r23}. An improvement is reported in \cite{r24}. Tensor CP and Tucker decompositions are used to approximate the kernels of pre-trained CNN networks \cite{r25} \cite{r26} \cite{r27}. In \cite{r27} a tensor based method to find an approximation of fully connected layer parameters in CNN networks is introduced. Despite the proper implementation results, these methods have the following drawbacks: increase cost of pre-trained networks and finding these compressions is also costly. It also cannot be used in applications such as deep reinforcement learning where the network constantly should be learned. On the other hand, this approach has confined itself to compressing convolutional methods for the test phase, although a deeper question can be asked. Why should we compress an already trained network and not seek for a compact network representation that can be trained from scratch? 
+
+The second approach consider the convolutional layers as a base, and approximate or represent them with smaller parameters, to design end-to-end trainable neural network. Different kinds of methods have been proposed to design end-end learnable networks based on approximation of convolution process with different views: For example, in \cite{r28} and \cite{r29} , the rank-1 approximation of 3-order tensor filters corresponding to each outlet channel is used. 
+In \cite{r30}  ,a share factors corresponding to inlet and outlet are considered to reduce the redundancy of parameters. 
+Recently, in \cite{r31}  by considering  the 3-order filters of each outlet channel as rank-k tensor it has been shown that the pixels of each outlet channel is the contraction of this tensor with the corresponding patch of all input channels.
+Unlike standard convolution, Mobile Nets proposed in \cite{r32}  separate the spatial filtering and integration steps. For each input channel, only a single spatial filtering is performed, and by different combination of these filtered images, different output channels are obtained. 
+
+The third approach do not consider Convolutional structure as a base and try to find other type of layers to work on multidimensional data. One notable recent work is Tensor Regression Networks \cite{r1}. They used a \textit{Tensor Regression Layer} (TRL) and \textit{Tensor Contraction Layer} (TCL) to preserve the structure of the data as they are moving across the network while reducing the number of parameters. Their method surprisingly achieved the near similar accuracy as its FC network with more than 65 percent space saving. TRL and TCL will be discussed in section \ref{sec:mathematical-background}, and they are used as the base of our method. Unfortunately, one of the biggest issues with TCL and TRL is their inadequate implementations. They are theoretically required less parameters than their FC versions; However they often perform poorly in terms of the actual execution time. This is one of the biggest limitation on working with tensors since a practical implementation of tensor methods are yet to be made.
+
+The power of tensor regression has been addressed in many prior papers \cite{t17}\cite{t18} \cite{r19} \cite{r20}. However, most of these works, usually rely on analytical solution and large tensors. In \cite{r33}, a non-linear Tensor-Train decomposition is used instead of tucker decomposition. While many works focuses on individual layers, in \cite{r34}, T-Nets attempts to provide a single high-order, low-rank tensor that jointly capture the full structure of a neural network. 
+
+
+DNNS have been used in many applications and problems, however, many questions still remains in terms of their credibility and why they work so well. DNNs usually contain too many parameters and an important question is whether they require that many parameters.
+By tensorizing the DNNs, we can address these issues and attempt to better understand the concepts of deep learning. For example, one uses tensor methods as a tool to study CNNs \cite{r12}, they follow up by studying the power of overlapping architectures in deep learning \cite{r13}. Some provide global optimal and optimization for non-convex factorization problems \cite{r14}. In \cite{r15}, they used contraction as a composition operator in \textit{Natural Language Processing} (NLP). Some used tensor methods as a tool to guarantee convergence and consistent learning\cite{r16}.
+
+
+Most of the recent works, rely on low rank approximation of the tensor or some tensor decomposition methods as a dimension reduction layer. Despite their success, a fully tensorized end-to-end trainable model requires almost near similar ranks to perform well when compared to their FC competitives. The draw back of using same ranks as the input tensor is the cost. Our method provide a reshaping approach that maintains the accuracy by converting the input tensor into a thinner and higher order tensor that requires fewer parameters and can perform better in lower ranks. To our knowledge, no prior work increases the dimensions of the tensor in order to achieve near similar accuracy while using tensorized layers with lower ranks and fewer parameters. 
+
+\section{Mathematical background}
+\label{sec:mathematical-background}
+This paper, requires basic understanding of tensor methods, If readers are already knowledgeable in the matter, they can skip to section \ref{sec:splitting-approach}.
+
+\subsection{Notations}
+\label{subsec:notations}
+
+For a 3-order tensor $ \mathcal{T} \in \mathbb{R}^{I_1\times I_2\times I_3}$, there are 3 modes with respected sizes $I_1$, $I_2$, and $I_3$. 
+Its $\mathcal{T}_{i_1, i_2, i_3}$ 
+\textbf{element}
+is a 0-order tensor (scalar), $(i_1, i_2, i_3)$. 
+\textbf{Slices} of its first and second modes are 2-order tensors (matrices) $\mathbf{M}$ and are denoted by two colons, $\mathcal{T}_{:,:,i_3}$. 
+\textbf{Fibers} of its first mode are 1-order tensors (vectors) $\mathbf{V}$ and are denoted by a colon, $\mathcal{T}_{:, i_2, i_3}$.
+
+\subsection{Tensor folding and unfolding}
+\label{subsec:tensor-folding-unfolding}
+
+Tensor folding and unfolding are fundamental operations in tensor analysis, allowing for the manipulation and transformation of tensors into different dimensional structures.
+Tensor unfolding, also known as matricization, converts a higher-order tensor into a matrix or a vector. Let $\mathcal{T} \in \mathbb{R}^{I_1 \times I_2 \times \ldots \times I_N}$ be an $N$-order tensor. In our case, tensor folding folds an unfolded tensor back.
+
+\paragraph{Mode-$n$ unfolding :}
+\label{par:mode-n-unfolding}
+
+Unfolding $\mathcal{T}$ along mode-$n$ results in a matrix representation of mode-$n$. This operation is denoted as $T_{[n]}$. The unfolding is achieved by rearranging the entries of $\mathcal{T}$ into a matrix such that the mode-$n$ indices become the rows of the matrix. The mapping from tensor indices to matrix indices is given by:
+\begin{align}
+	\label{eq:unfolding}
+	&(i_1, \dots, i_n,\dots,i_N) \longrightarrow (i_n,r) \nonumber\\ 
+	&\text{where } r = \sum_{\substack{p=1 \\ p\neq n}}^{N} i_p \times \prod_{\substack{l=p+1 \\ l\neq n}}^{N} I_l
+\end{align}
+Each row of the resulting matrix corresponds to a different combination of indices for the remaining modes.
+
+\paragraph{Vectorization : }
+\label{par:vectorization}
+Similar to mode-n unfolding, in tensor vectorization we map each element within the tensor to a element $j$ of $Vec(\mathcal{T})$:
+
+\begin{align}
+	\label{eq:vectorization}
+	&(i_1, \dots, i_n,\dots,i_N) \longrightarrow (r) \nonumber\\ 
+	&\text{where } r = \sum_{\substack{p=1}}^{N} i_p \times \prod_{\substack{l=p+1}}^{N} I_l
+\end{align}
+%\subsubsection{Tensor Folding}
+
+
+\subsection{Tensor contraction}
+\label{subsec:tensor-contraction}
+
+Tensor contraction is a fundamental operation that allows for the multiplication and simplification of tensors and multiplies elements of two tensors and provides a way to combine tensors by summing over shared indices.
+
+\paragraph{Tensor $n$-mode product : }
+Tensor $n$-mode product, is a tensor operation that allows for the multiplication of a tensor with a matrix along a specific mode.
+Given a tensor $\mathcal{T} \in \mathbb{R}^{I_1 \times I_2 \times \dots \times I_N}$ and a matrix $\mathbf{M} \in \mathbb{R}^{J \times I_n}$, the $n$-mode product of $\mathcal{T}$ and $\mathbf{M}$, denoted as $\mathcal{T} \times_n \mathbf{M}$, results in a tensor of size $\mathbb{R}^{I_1 \times \dots \times I_{n-1} \times J \times I_{n+1} \times \dots \times I_N}$. The $n$-mode product can be expressed mathematically as:
+\begin{align}
+	\label{eq:contraction}
+	(\mathcal{T} \times_n \mathbf{M})_{i_1, \ldots, i_{n-1}, j, i_{n+1}, \ldots, i_N} = \sum_{i_n=0}^{I_n} \mathcal{T}_{i_1, \ldots, i_n, \ldots, i_N} \mathbf{M}_{j, i_n}
+\end{align}
+where $i_1, \dots, i_{n-1}, j, i_{n+1}, \dots, i_N$ are the indices of the resulting tensor, and $i_n$ is the summation index. Alternatively, the $n$-mode product can be expressed using the tensor unfolding operation along the $n$-th mode, denoted as $\mathbf{T}_{(n)}$. In this case, the $n$-mode product can be written as:
+\begin{align}
+	\label{eq:contraction2}
+	\mathcal{T} \times_n \mathbf{M} = \mathbf{M} \mathbf{T}_{[n]}
+\end{align}
+
+\paragraph{Generalized inner product : }
+For two tensors $\mathcal{X} \in \mathbb{R}^{I_x \times I_1 \times I_2 \times \dots \times I_N}$ and $\mathcal{Y} \in \mathbb{R}^{I_1 \times I_2 \times \dots \times I_N \times I_y}$ sharing $N$ modes of the same size, a generalized inner product along the $N$ last modes of $X$ and $Y$ is defined as:
+
+\begin{align}
+	\left\langle\mathcal{X}, \mathcal{Y}\right\rangle_N &= \sum_{i_1=0}^{I_1-1} \dots \sum_{i_N=0}^{I_N-1} \mathcal{X}_{:, i_1, i_2, \ldots, i_N} \mathcal{Y}_{i_1, i_2, \ldots, i_N, :}
+\end{align}
+
+where $\left\langle\mathcal{X}, \mathcal{Y}\right\rangle_N \in \mathbb{R}^{I_x\times I_y} $.
+
+\subsection{Tucker decomposition}
+\label{subsec:tucker-decomposition}
+The Tucker decomposition is a powerful method in tensor algebra that breaks down a tensor into a core tensor multiplied by matrices along each mode. In the Tucker decomposition, a tensor $\mathcal{T} \in \mathbb{R}^{I_1 \times I_2 \times \dots \times I_N}$ is represented as the product of a core tensor $\mathcal{G} \in \mathbb{R}^{J_1 \times J_2 \times \dots \times J_N}$ and a set of factor matrices $\mathbf{A}^{(1)} \in \mathbb{R}^{I_1 \times J_1}, \mathbf{A}^{(2)} \in \mathbb{R}^{I_2 \times J_2}, \dots, \mathbf{A}^{(N)} \in \mathbb{R}^{I_N \times J_N}$ along each mode. Mathematically, the Tucker decomposition can be expressed as:
+\begin{align}
+	\label{eq:tucker-decomposition}
+	\mathcal{T} = \mathcal{G} \times_1 \mathbf{A}^{(1)} \times_2 \mathbf{A}^{(2)} \times \dots \times_N \mathbf{A}^{(N)}
+\end{align}
+where $\times_n$ denotes the $n$-mode product. The Tucker decomposition can be computed using the mode-$n$ unfolding of the tensor, denoted as $\mathbf{T}_{[n]}$. By reshaping the tensor along each mode, the Tucker decomposition can be written as:
+\begin{align}
+	\label{eq:tucker-decomposition2}
+	\mathbf{T}{[n]} = \mathbf{A}^{(n)} \mathbf{G}{[n]} \left(\mathbf{A}^{(1)} \otimes \dots \otimes \mathbf{A}^{(n-1)} \otimes \mathbf{A}^{(n+1)} \otimes \dots \otimes \mathbf{A}^{(N)}\right)^T
+\end{align}
+where $\mathbf{G}_{[n]}$ represents the unfolding of the core tensor along mode $n$.
+
+
+\subsection{Tensor regression networks}
+\label{subsec:tensor-regression-network}
+The combination of tensor regression and tensor contractions has been used in an end-to-end trainable model by Kossaifi \cite{r1}, as discussed in section \ref{sec:related-works}
+Given a MLP, there are two ways to interpret FC layers: One is to consider them as a feature extraction layer where they map a latent or feather space to another latent space, on another hand, we can consider them as regression layers which are basically the classifier layers and given the purpose of the network, they can be used interchangeably. In figure \ref{fig:1} a very simple MLP that is being used after some convolution layers is provided. In this case, the first FC layer can be considered a dimension reduction layer while the second FC layer maps the feature space to the target space. In the following text, we will discuss to main approaches to replace such FC layers:
+
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.03]{fig1.jpg}
+	\caption{A simple MLP after some convolution layers.}
+	\label{fig:1}
+\end{figure}
+
+
+\subsubsection{Tensor contraction layer}
+\label{subsubsec:tcl}
+\textit{Tensor Contraction Layer} (TCL) is a form of feature extraction and could also be used for embedding. The prime idea behind TCL is Tucker decomposition; Via multiplying matrices to each mode of the input tensor, we can obtain a denser tensor (dependent of the shape of the matrices). Figure \ref{fig:2-3} demonstrate the TCL process on a 3-order tensor. 
+
+Considering an input tensor $\mathcal{X}$ of size 
+$(S_0,I_1,\dots,I_N)$ and a size 
+%\linebreak 
+$(R_1,\dots,R_N)$ TCL, where $S_0$ is the size of the batch and $(I_i,R_i)$ is the shape of the matrix applied to mode $i$ of the tensor; The number of required parameters is calculated as :
+
+\begin{align}
+	\label{eq:tcl-parmeter}
+	\sum_{i=1}^{N}I_i\times R_i
+\end{align}
+
+And the resulting tensor is of size $(S_0,R_1,\dots,R_N)$.
+Compared to the FC version where the simple regression between these two tensors would require at least $\prod_{i=1}^{N}I_i\times R_i$ parameters.
+
+
+%Considering an input tensor $\mathcal{T}$ of size 
+%$(S_0,I_1,\dots,I_N)$ and a size  
+%$(R_1,\dots,R_N)$ TCL, where $S_0$ is the size of the batch and $(I_i,R_i)$ is the shape of the matrix applied to mode $i$ of the tensor; The number of required parameters is calculated as :
+%$\sum_{i=1}^{N}I_i\times R_i$; And the resulting tensor is of size 
+%$(S_0,R_1,\dots,R_N)$. Compared to the FC version where the simple regression between these two tensors would require $\prod_{i=1}^{N}I_i\times R_i$ parameters.
+
+
+
+\subsubsection{TRL}
+\label{subsubsec:trl}
+\textit{Tensor Regression Layers} (TRL) is a replacement for the FC regression layers.
+A simple regression that is the foundation of a MLP is a trivial generalized inner product of $\mathcal{W}$ (Weight Tensor) with the $\mathcal{X}$ (Input tensor). The idea behind TRL is to reconstruct $W$ from a low rank approximation of itself via tucker decomposition. In figure \ref{fig:2-3},  a TRL application in a MLP is provided. For the sake of simplicity, we considered a binary classification problem where the output of the inner product is a scaler. Similarly, if the desired output is a vector or even a tensor, $\mathcal{W}$ will be a higher dimensional tensor itself to generate each mode of the output. 
+
+Considering an input tensor $\mathcal{X}$ of size 
+$(S_0,I_1,\dots,I_N)$, an output tensor $\mathcal{Y}$ of size 
+$S_0 \times O$, and a size 
+$(R_1,\dots,R_N, R_{N+1})$ TRL with bias $b$ of size $O$  such that 
+$\mathcal{Y} = \left\langle X,W \right\rangle_N + b$; The number of required parameters can be calculated as :
+
+\begin{align}
+	\label{eq:trl-parmeter}
+	\prod_{i=1}^{N}R_i + \left(R_{N+1}\times O + \sum_{i=1}^{N} R_i\times I_i\right)
+\end{align}
+
+Compared to the FC version where the number of parameters is $O\times\prod_{i=1}^{N}I_i$.
+
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.025]{fig2-3.jpg}
+	\caption{Tensor regression networks, replacement for FC layers. In $(a)$, A simple TCL is applied; Each mode $i$ of tensor $\mathcal{T}$ is multiplied by factor $\mathbf{A}^{(i)}$.
+	In $(b)$, A TRL is applied; Generalized inner product of input tensor $\mathcal{T}$ and weight tensor $\mathcal{W}$ is calculated as the output tensor while considering a low rank approximation of weight tensor $\mathcal{W}$ in a tucker decomposed form. 
+	}
+	\label{fig:2-3}
+\end{figure}
+
+
+\section{Splitting approach}
+\label{sec:splitting-approach}
+
+Impressed by the vision transformers patching and down sampling methods, we can transform our input tensor into a thinner and higher dimensional tensor that not only reduces the number of parameters for a TRL or TCL layer but also maintain the accuracy. However, not any reshaping scheme to arbitrary higher orders and dimensions guarantee that
+the multi-linear structure is preserved and the accuracy is maintained
+With a proper splitting scheme, the newly made tenser has better physical interpretation than the flattened data. We introduced two splitting schemes, both of which are useful and could be used differently according to the network architect. Figure \ref{fig:4} demonstrate the general splitting outline. Given a 3-order tensor, if we split across each mode, the output is a 6-order tensor where the first 3 modes correspond the split index, and the next 3 modes are the data in each split.
+
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.015]{fig4.jpg}
+	\caption{
+		An outline of reshaping to higher orders tensor.
+	}
+	\label{fig:4}
+\end{figure}
+
+
+
+\subsection{Attached Splitting}
+\label{subsec:attached-approach}
+
+In attached splitting, every split is continues, that is if mode  $I_i$ of the input tensor $\mathcal{X}$ with length $n$ is to be split into $2$ parts, then the split indices are $(0,\frac{n}{2})$ and $(\frac{n}{2}, n)$.
+Figure 
+\ref{fig:5} 
+demonstrate the splitting process on a matrix. 
+
+Given a tensor $\mathcal{T} \in \mathbb{R}^{I_1\times\dots\times I_N}$ and split sizes 
+$\left(L_1,\dots,L_N\right)$, attached mapping of elements is done via:
+
+\begin{align}
+	\label{eq:map1}
+	\mathcal{T}\left[i_1,\dots,i_N\right] \longrightarrow
+	\mathcal{T}_a\left[
+	\lfloor\frac{L_1\times i_1}{I_1}\rfloor,
+	\dots,
+	\lfloor\frac{L_N\times i_N}{I_N}\rfloor,
+	i_1 \bmod{\frac{I_1}{L_1}},
+	\dots,
+	i_N \bmod{\frac{I_N}{L_N}},
+	\right]
+\end{align}
+
+where $\mathcal{T}_a \in \mathbb{R}^{L_1\times\dots\times L_N\times \frac{I_1}{L_1}\times\dots\times \frac{I_N}{L_N}}$.
+
+
+\subsection{Compressed Splitting}
+\label{subsec:copressed-splitting}
+
+In compressed splitting, we incorporate the idea behind down sampling, that is if mode $I_i$ of input tensor $\mathcal{X}$ with length $n$ is to be split into $2$ part , different to the attached splitting, the indices are even-odd combinations; That is $\left\{
+t | t \in (0,n) \land 
+\left(t\bmod{2} = 0\right)
+\right\}$
+and 
+$\left\{
+t | t \in (0,n) \land 
+\left(t\bmod{2} = 1\right)
+\right\}$.
+
+Given a tensor $\mathcal{T} \in \mathbb{R}^{I_1\times\dots\times I_N}$ and split sizes 
+$\left(L_1,\dots,L_N\right)$, compressed mapping of elements is done via:
+
+
+\begin{align}
+	\label{eq:map2}
+	\mathcal{T}\left[i_1,\dots,i_N\right] \longrightarrow
+	\mathcal{T}_c\left[
+	i_1 \bmod{L_1},
+	\dots,
+	i_N \bmod{L_N},
+	\lfloor\frac{i_1}{L_1}\rfloor,
+	\dots,
+	\lfloor\frac{i_N}{L_N}\rfloor,
+	\right]
+\end{align}
+where $\mathcal{T}_c \in \mathbb{R}^{L_1\times\dots\times L_N\times \frac{I_1}{L_1}\times\dots\times \frac{I_N}{L_N}}$.
+
+\subsection{Method Analysis}
+\label{subsec:method-analysis}
+Considering an input tensor $\mathcal{X}$ of size
+$(S_0,I_1,\dots,I_N)$
+, either reshaping would result in the tensor $\hat{\mathcal{X}}$ of size
+$(S_0,L_1,\dots,L_N,\frac{I_1}{L_1}, \dots, \frac{I_N}{L_N})$. An example of each reshaping approach is done in figure \ref{fig:6-7-8} on a sample image.
+
+In case of a $(r_1\dots,r_N, R_i,\dots,R_N)$ TCL, Since $L_i$s are usually small, the number of parameters required for them $\sum_{i=0}^{N}L_i\times r_i$ is also small; Similarly, $\frac{I_i}{L_i}$ is smaller than $I_i$ so the new desired $R_i$s is smaller than the previous $R_i$s and the total number of parameters can be calculated as:
+\begin{align}
+	\label{eq:reshape-parameter-tcl}
+	\sum_{i=1}^{N}L_i\times r_i + \sum_{i=1}^{N}\frac{I_i}{L_i} \times R_i
+\end{align}
+which is ideally less than equation \ref{eq:tcl-parmeter}.
+
+In case of 
+$(r_1,\dots,r_N, R_1,\dots,R_N,R_{N+1})$
+TRL, the same logic as TCL could also be applied. The total number of parameters in a new TRL is calculated as:
+\begin{align}
+	\label{eq:reshape-parameter-trl}
+	\left(\prod_{i=1}^{N}r_i + \prod_{i=1}^{N}R_i\right) + \left(\sum_{i=1}^{N}L_i\times r_i + \sum_{i=1}^{N}\frac{I_i}{L_i}\times R_i + R_{N+1}\times O\right)
+\end{align} 
+which is ideally less than equation \ref{eq:trl-parmeter}.
+
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.02]{fig5.jpg}
+	\caption{
+		$(a)$ attached splitting of a 2-order tensor. $(b)$ compressed splitting of a 2-order tensor. $(c)$ demonstration of stacking split chunks of a 2-order tensor into a 4-order tensor.
+	}
+	\label{fig:5}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.05]{fig6-7-8.jpg}
+	\caption{
+		$(a)$ original sample image. $(b)$ reshaped sample image using attached approach. $(c)$ reshaped sample image using compressed approach. 
+	}
+	\label{fig:6-7-8}
+\end{figure}
+
+
+\section{Experiments}
+\label{sec:experiments}
+
+
+%\section{General formatting instructions}
+%\label{gen_inst}
+%
+%
+%
+%The text must be confined within a rectangle 5.5~inches (33~picas) wide and
+%9~inches (54~picas) long. The left margin is 1.5~inch (9~picas).  Use 10~point
+%type with a vertical spacing (leading) of 11~points.  Times New Roman is the
+%preferred typeface throughout, and will be selected for you by default.
+%Paragraphs are separated by \nicefrac{1}{2}~line space (5.5 points), with no
+%indentation.
+%
+%
+%The paper title should be 17~point, initial caps/lower case, bold, centered
+%between two horizontal rules. The top rule should be 4~points thick and the
+%bottom rule should be 1~point thick. Allow \nicefrac{1}{4}~inch space above and
+%below the title to rules. All pages should start at 1~inch (6~picas) from the
+%top of the page.
+%
+%
+%For the final version, authors' names are set in boldface, and each name is
+%centered above the corresponding address. The lead author's name is to be listed
+%first (left-most), and the co-authors' names (if different address) are set to
+%follow. If there is only one co-author, list both author and co-author side by
+%side.
+%
+%
+%Please pay special attention to the instructions in Section \ref{others}
+%regarding figures, tables, acknowledgments, and references.
+%
+%
+%\section{Headings: first level}
+%\label{headings}
+%
+%
+%All headings should be lower case (except for first word and proper nouns),
+%flush left, and bold.
+%
+%
+%First-level headings should be in 12-point type.
+%
+%
+%\subsection{Headings: second level}
+%
+%
+%Second-level headings should be in 10-point type.
+%
+%
+%\subsubsection{Headings: third level}
+%
+%
+%Third-level headings should be in 10-point type.
+%
+%
+%\paragraph{Paragraphs}
+%
+%
+%There is also a \verb+\paragraph+ command available, which sets the heading in
+%bold, flush left, and inline with the text, with the heading followed by 1\,em
+%of space.
+%
+%
+%\section{Citations, figures, tables, references}
+%\label{others}
+%
+%
+%These instructions apply to everyone.
+%
+%
+%\subsection{Citations within the text}
+%
+%
+%The \verb+natbib+ package will be loaded for you by default.  Citations may be
+%author/year or numeric, as long as you maintain internal consistency.  As to the
+%format of the references themselves, any style is acceptable as long as it is
+%used consistently.
+%
+%
+%The documentation for \verb+natbib+ may be found at
+%\begin{center}
+%  \url{http://mirrors.ctan.org/macros/latex/contrib/natbib/natnotes.pdf}
+%\end{center}
+%Of note is the command \verb+\citet+, which produces citations appropriate for
+%use in inline text.  For example,
+%\begin{verbatim}
+%   \citet{hasselmo} investigated\dots
+%\end{verbatim}
+%produces
+%\begin{quote}
+%  Hasselmo, et al.\ (1995) investigated\dots
+%\end{quote}
+%
+%
+%If you wish to load the \verb+natbib+ package with options, you may add the
+%following before loading the \verb+neurips_2024+ package:
+%\begin{verbatim}
+%   \PassOptionsToPackage{options}{natbib}
+%\end{verbatim}
+%
+%
+%If \verb+natbib+ clashes with another package you load, you can add the optional
+%argument \verb+nonatbib+ when loading the style file:
+%\begin{verbatim}
+%   \usepackage[nonatbib]{neurips_2024}
+%\end{verbatim}
+%
+%
+%As submission is double blind, refer to your own published work in the third
+%person. That is, use ``In the previous work of Jones et al.\ [4],'' not ``In our
+%previous work [4].'' If you cite your other papers that are not widely available
+%(e.g., a journal paper under review), use anonymous author names in the
+%citation, e.g., an author of the form ``A.\ Anonymous'' and include a copy of the anonymized paper in the supplementary material.
+%
+%
+%\subsection{Footnotes}
+%
+%
+%Footnotes should be used sparingly.  If you do require a footnote, indicate
+%footnotes with a number\footnote{Sample of the first footnote.} in the
+%text. Place the footnotes at the bottom of the page on which they appear.
+%Precede the footnote with a horizontal rule of 2~inches (12~picas).
+%
+%
+%Note that footnotes are properly typeset \emph{after} punctuation
+%marks.\footnote{As in this example.}
+%
+%
+%\subsection{Figures}
+%
+%
+%\begin{figure}
+%  \centering
+%  \fbox{\rule[-.5cm]{0cm}{4cm} \rule[-.5cm]{4cm}{0cm}}
+%  \caption{Sample figure caption.}
+%\end{figure}
+%
+%
+%All artwork must be neat, clean, and legible. Lines should be dark enough for
+%purposes of reproduction. The figure number and caption always appear after the
+%figure. Place one line space before the figure caption and one line space after
+%the figure. The figure caption should be lower case (except for first word and
+%proper nouns); figures are numbered consecutively.
+%
+%
+%You may use color figures.  However, it is best for the figure captions and the
+%paper body to be legible if the paper is printed in either black/white or in
+%color.
+%
+%
+%\subsection{Tables}
+%
+%
+%All tables must be centered, neat, clean and legible.  The table number and
+%title always appear before the table.  See Table~\ref{sample-table}.
+%
+%
+%Place one line space before the table title, one line space after the
+%table title, and one line space after the table. The table title must
+%be lower case (except for first word and proper nouns); tables are
+%numbered consecutively.
+%
+%
+%Note that publication-quality tables \emph{do not contain vertical rules.} We
+%strongly suggest the use of the \verb+booktabs+ package, which allows for
+%typesetting high-quality, professional tables:
+%\begin{center}
+%  \url{https://www.ctan.org/pkg/booktabs}
+%\end{center}
+%This package was used to typeset Table~\ref{sample-table}.
+%
+%
+%\begin{table}
+%  \caption{Sample table title}
+%  \label{sample-table}
+%  \centering
+%  \begin{tabular}{lll}
+%    \toprule
+%    \multicolumn{2}{c}{Part}                   \\
+%    \cmidrule(r){1-2}
+%    Name     & Description     & Size ($\mu$m) \\
+%    \midrule
+%    Dendrite & Input terminal  & $\sim$100     \\
+%    Axon     & Output terminal & $\sim$10      \\
+%    Soma     & Cell body       & up to $10^6$  \\
+%    \bottomrule
+%  \end{tabular}
+%\end{table}
+%
+%\subsection{Math}
+%Note that display math in bare TeX commands will not create correct line numbers for submission. Please use LaTeX (or AMSTeX) commands for unnumbered display math. (You really shouldn't be using \$\$ anyway; see \url{https://tex.stackexchange.com/questions/503/why-is-preferable-to} and \url{https://tex.stackexchange.com/questions/40492/what-are-the-differences-between-align-equation-and-displaymath} for more information.)
+%
+%\subsection{Final instructions}
+%
+%Do not change any aspects of the formatting parameters in the style files.  In
+%particular, do not modify the width or length of the rectangle the text should
+%fit into, and do not change font sizes (except perhaps in the
+%\textbf{References} section; see below). Please note that pages should be
+%numbered.
+%
+%
+%\section{Preparing PDF files}
+%
+%
+%Please prepare submission files with paper size ``US Letter,'' and not, for
+%example, ``A4.''
+%
+%
+%Fonts were the main cause of problems in the past years. Your PDF file must only
+%contain Type 1 or Embedded TrueType fonts. Here are a few instructions to
+%achieve this.
+%
+%
+%\begin{itemize}
+%
+%
+%\item You should directly generate PDF files using \verb+pdflatex+.
+%
+%
+%\item You can check which fonts a PDF files uses.  In Acrobat Reader, select the
+%  menu Files$>$Document Properties$>$Fonts and select Show All Fonts. You can
+%  also use the program \verb+pdffonts+ which comes with \verb+xpdf+ and is
+%  available out-of-the-box on most Linux machines.
+%
+%
+%\item \verb+xfig+ "patterned" shapes are implemented with bitmap fonts.  Use
+%  "solid" shapes instead.
+%
+%
+%\item The \verb+\bbold+ package almost always uses bitmap fonts.  You should use
+%  the equivalent AMS Fonts:
+%\begin{verbatim}
+%   \usepackage{amsfonts}
+%\end{verbatim}
+%followed by, e.g., \verb+\mathbb{R}+, \verb+\mathbb{N}+, or \verb+\mathbb{C}+
+%for $\mathbb{R}$, $\mathbb{N}$ or $\mathbb{C}$.  You can also use the following
+%workaround for reals, natural and complex:
+%\begin{verbatim}
+%   \newcommand{\RR}{I\!\!R} %real numbers
+%   \newcommand{\Nat}{I\!\!N} %natural numbers
+%   \newcommand{\CC}{I\!\!\!\!C} %complex numbers
+%\end{verbatim}
+%Note that \verb+amsfonts+ is automatically loaded by the \verb+amssymb+ package.
+%
+%
+%\end{itemize}
+%
+%
+%If your file contains type 3 fonts or non embedded TrueType fonts, we will ask
+%you to fix it.
+%
+%
+%\subsection{Margins in \LaTeX{}}
+%
+%
+%Most of the margin problems come from figures positioned by hand using
+%\verb+\special+ or other commands. We suggest using the command
+%\verb+\includegraphics+ from the \verb+graphicx+ package. Always specify the
+%figure width as a multiple of the line width as in the example below:
+%\begin{verbatim}
+%   \usepackage[pdftex]{graphicx} ...
+%   \includegraphics[width=0.8\linewidth]{myfile.pdf}
+%\end{verbatim}
+%See Section 4.4 in the graphics bundle documentation
+%(\url{http://mirrors.ctan.org/macros/latex/required/graphics/grfguide.pdf})
+%
+%
+%A number of width problems arise when \LaTeX{} cannot properly hyphenate a
+%line. Please give LaTeX hyphenation hints using the \verb+\-+ command when
+%necessary.
+
+\begin{ack}
+%Use unnumbered first level headings for the acknowledgments. All acknowledgments
+%go at the end of the paper before the list of references. Moreover, you are required to declare
+%funding (financial activities supporting the submitted work) and competing interests (related financial activities outside the submitted work).
+%More information about this disclosure can be found at: \url{https://neurips.cc/Conferences/2024/PaperInformation/FundingDisclosure}.
+%
+%
+%Do {\bf not} include this section in the anonymized submission, only in the final paper. You can use the \texttt{ack} environment provided in the style file to automatically hide this section in the anonymized submission.
+\end{ack}
+
+%\section*{References}
+
+\bibliographystyle{unsrt}
+\bibliography{ref}
+
+%References follow the acknowledgments in the camera-ready paper. Use unnumbered first-level heading for
+%the references. Any choice of citation style is acceptable as long as you are
+%consistent. It is permissible to reduce the font size to \verb+small+ (9 point)
+%when listing the references.
+%Note that the Reference section does not count towards the page limit.
+%\medskip
+%
+%
+%{
+%\small
+%
+%
+%[1] Alexander, J.A.\ \& Mozer, M.C.\ (1995) Template-based algorithms for
+%connectionist rule extraction. In G.\ Tesauro, D.S.\ Touretzky and T.K.\ Leen
+%(eds.), {\it Advances in Neural Information Processing Systems 7},
+%pp.\ 609--616. Cambridge, MA: MIT Press.
+%
+%
+%[2] Bower, J.M.\ \& Beeman, D.\ (1995) {\it The Book of GENESIS: Exploring
+%  Realistic Neural Models with the GEneral NEural SImulation System.}  New York:
+%TELOS/Springer--Verlag.
+%
+%
+%[3] Hasselmo, M.E., Schnell, E.\ \& Barkai, E.\ (1995) Dynamics of learning and
+%recall at excitatory recurrent synapses and cholinergic modulation in rat
+%hippocampal region CA3. {\it Journal of Neuroscience} {\bf 15}(7):5249-5262.
+%}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\appendix
+%
+%\section{Appendix / supplemental material}
+%
+%
+%Optionally include supplemental material (complete proofs, additional experiments and plots) in appendix.
+%All such materials \textbf{SHOULD be included in the main submission.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+\section*{NeurIPS Paper Checklist}
+
+%%% BEGIN INSTRUCTIONS %%%
+The checklist is designed to encourage best practices for responsible machine learning research, addressing issues of reproducibility, transparency, research ethics, and societal impact. Do not remove the checklist: {\bf The papers not including the checklist will be desk rejected.} The checklist should follow the references and follow the (optional) supplemental material.  The checklist does NOT count towards the page
+limit. 
+
+Please read the checklist guidelines carefully for information on how to answer these questions. For each question in the checklist:
+\begin{itemize}
+    \item You should answer \answerYes{}, \answerNo{}, or \answerNA{}.
+    \item \answerNA{} means either that the question is Not Applicable for that particular paper or the relevant information is Not Available.
+    \item Please provide a short (1–2 sentence) justification right after your answer (even for NA). 
+   % \item {\bf The papers not including the checklist will be desk rejected.}
+\end{itemize}
+
+{\bf The checklist answers are an integral part of your paper submission.} They are visible to the reviewers, area chairs, senior area chairs, and ethics reviewers. You will be asked to also include it (after eventual revisions) with the final version of your paper, and its final version will be published with the paper.
+
+The reviewers of your paper will be asked to use the checklist as one of the factors in their evaluation. While "\answerYes{}" is generally preferable to "\answerNo{}", it is perfectly acceptable to answer "\answerNo{}" provided a proper justification is given (e.g., "error bars are not reported because it would be too computationally expensive" or "we were unable to find the license for the dataset we used"). In general, answering "\answerNo{}" or "\answerNA{}" is not grounds for rejection. While the questions are phrased in a binary way, we acknowledge that the true answer is often more nuanced, so please just use your best judgment and write a justification to elaborate. All supporting evidence can appear either in the main paper or the supplemental material, provided in appendix. If you answer \answerYes{} to a question, in the justification please point to the section(s) where related material for the question can be found.
+
+IMPORTANT, please:
+\begin{itemize}
+    \item {\bf Delete this instruction block, but keep the section heading ``NeurIPS paper checklist"},
+    \item  {\bf Keep the checklist subsection headings, questions/answers and guidelines below.}
+    \item {\bf Do not modify the questions and only use the provided macros for your answers}.
+\end{itemize} 
+ 
+
+%%% END INSTRUCTIONS %%%
+
+
+\begin{enumerate}
+
+\item {\bf Claims}
+    \item[] Question: Do the main claims made in the abstract and introduction accurately reflect the paper's contributions and scope?
+    \item[] Answer: \answerTODO{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
+    \item[] Justification: \justificationTODO{}
+    \item[] Guidelines:
+    \begin{itemize}
+        \item The answer NA means that the abstract and introduction do not include the claims made in the paper.
+        \item The abstract and/or introduction should clearly state the claims made, including the contributions made in the paper and important assumptions and limitations. A No or NA answer to this question will not be perceived well by the reviewers. 
+        \item The claims made should match theoretical and experimental results, and reflect how much the results can be expected to generalize to other settings. 
+        \item It is fine to include aspirational goals as motivation as long as it is clear that these goals are not attained by the paper. 
+    \end{itemize}
+
+\item {\bf Limitations}
+    \item[] Question: Does the paper discuss the limitations of the work performed by the authors?
+    \item[] Answer: \answerTODO{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
+    \item[] Justification: \justificationTODO{}
+    \item[] Guidelines:
+    \begin{itemize}
+        \item The answer NA means that the paper has no limitation while the answer No means that the paper has limitations, but those are not discussed in the paper. 
+        \item The authors are encouraged to create a separate "Limitations" section in their paper.
+        \item The paper should point out any strong assumptions and how robust the results are to violations of these assumptions (e.g., independence assumptions, noiseless settings, model well-specification, asymptotic approximations only holding locally). The authors should reflect on how these assumptions might be violated in practice and what the implications would be.
+        \item The authors should reflect on the scope of the claims made, e.g., if the approach was only tested on a few datasets or with a few runs. In general, empirical results often depend on implicit assumptions, which should be articulated.
+        \item The authors should reflect on the factors that influence the performance of the approach. For example, a facial recognition algorithm may perform poorly when image resolution is low or images are taken in low lighting. Or a speech-to-text system might not be used reliably to provide closed captions for online lectures because it fails to handle technical jargon.
+        \item The authors should discuss the computational efficiency of the proposed algorithms and how they scale with dataset size.
+        \item If applicable, the authors should discuss possible limitations of their approach to address problems of privacy and fairness.
+        \item While the authors might fear that complete honesty about limitations might be used by reviewers as grounds for rejection, a worse outcome might be that reviewers discover limitations that aren't acknowledged in the paper. The authors should use their best judgment and recognize that individual actions in favor of transparency play an important role in developing norms that preserve the integrity of the community. Reviewers will be specifically instructed to not penalize honesty concerning limitations.
+    \end{itemize}
+
+\item {\bf Theory Assumptions and Proofs}
+    \item[] Question: For each theoretical result, does the paper provide the full set of assumptions and a complete (and correct) proof?
+    \item[] Answer: \answerTODO{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
+    \item[] Justification: \justificationTODO{}
+    \item[] Guidelines:
+    \begin{itemize}
+        \item The answer NA means that the paper does not include theoretical results. 
+        \item All the theorems, formulas, and proofs in the paper should be numbered and cross-referenced.
+        \item All assumptions should be clearly stated or referenced in the statement of any theorems.
+        \item The proofs can either appear in the main paper or the supplemental material, but if they appear in the supplemental material, the authors are encouraged to provide a short proof sketch to provide intuition. 
+        \item Inversely, any informal proof provided in the core of the paper should be complemented by formal proofs provided in appendix or supplemental material.
+        \item Theorems and Lemmas that the proof relies upon should be properly referenced. 
+    \end{itemize}
+
+    \item {\bf Experimental Result Reproducibility}
+    \item[] Question: Does the paper fully disclose all the information needed to reproduce the main experimental results of the paper to the extent that it affects the main claims and/or conclusions of the paper (regardless of whether the code and data are provided or not)?
+    \item[] Answer: \answerTODO{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
+    \item[] Justification: \justificationTODO{}
+    \item[] Guidelines:
+    \begin{itemize}
+        \item The answer NA means that the paper does not include experiments.
+        \item If the paper includes experiments, a No answer to this question will not be perceived well by the reviewers: Making the paper reproducible is important, regardless of whether the code and data are provided or not.
+        \item If the contribution is a dataset and/or model, the authors should describe the steps taken to make their results reproducible or verifiable. 
+        \item Depending on the contribution, reproducibility can be accomplished in various ways. For example, if the contribution is a novel architecture, describing the architecture fully might suffice, or if the contribution is a specific model and empirical evaluation, it may be necessary to either make it possible for others to replicate the model with the same dataset, or provide access to the model. In general. releasing code and data is often one good way to accomplish this, but reproducibility can also be provided via detailed instructions for how to replicate the results, access to a hosted model (e.g., in the case of a large language model), releasing of a model checkpoint, or other means that are appropriate to the research performed.
+        \item While NeurIPS does not require releasing code, the conference does require all submissions to provide some reasonable avenue for reproducibility, which may depend on the nature of the contribution. For example
+        \begin{enumerate}
+            \item If the contribution is primarily a new algorithm, the paper should make it clear how to reproduce that algorithm.
+            \item If the contribution is primarily a new model architecture, the paper should describe the architecture clearly and fully.
+            \item If the contribution is a new model (e.g., a large language model), then there should either be a way to access this model for reproducing the results or a way to reproduce the model (e.g., with an open-source dataset or instructions for how to construct the dataset).
+            \item We recognize that reproducibility may be tricky in some cases, in which case authors are welcome to describe the particular way they provide for reproducibility. In the case of closed-source models, it may be that access to the model is limited in some way (e.g., to registered users), but it should be possible for other researchers to have some path to reproducing or verifying the results.
+        \end{enumerate}
+    \end{itemize}
+
+
+\item {\bf Open access to data and code}
+    \item[] Question: Does the paper provide open access to the data and code, with sufficient instructions to faithfully reproduce the main experimental results, as described in supplemental material?
+    \item[] Answer: \answerTODO{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
+    \item[] Justification: \justificationTODO{}
+    \item[] Guidelines:
+    \begin{itemize}
+        \item The answer NA means that paper does not include experiments requiring code.
+        \item Please see the NeurIPS code and data submission guidelines (\url{https://nips.cc/public/guides/CodeSubmissionPolicy}) for more details.
+        \item While we encourage the release of code and data, we understand that this might not be possible, so “No” is an acceptable answer. Papers cannot be rejected simply for not including code, unless this is central to the contribution (e.g., for a new open-source benchmark).
+        \item The instructions should contain the exact command and environment needed to run to reproduce the results. See the NeurIPS code and data submission guidelines (\url{https://nips.cc/public/guides/CodeSubmissionPolicy}) for more details.
+        \item The authors should provide instructions on data access and preparation, including how to access the raw data, preprocessed data, intermediate data, and generated data, etc.
+        \item The authors should provide scripts to reproduce all experimental results for the new proposed method and baselines. If only a subset of experiments are reproducible, they should state which ones are omitted from the script and why.
+        \item At submission time, to preserve anonymity, the authors should release anonymized versions (if applicable).
+        \item Providing as much information as possible in supplemental material (appended to the paper) is recommended, but including URLs to data and code is permitted.
+    \end{itemize}
+
+
+\item {\bf Experimental Setting/Details}
+    \item[] Question: Does the paper specify all the training and test details (e.g., data splits, hyperparameters, how they were chosen, type of optimizer, etc.) necessary to understand the results?
+    \item[] Answer: \answerTODO{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
+    \item[] Justification: \justificationTODO{}
+    \item[] Guidelines:
+    \begin{itemize}
+        \item The answer NA means that the paper does not include experiments.
+        \item The experimental setting should be presented in the core of the paper to a level of detail that is necessary to appreciate the results and make sense of them.
+        \item The full details can be provided either with the code, in appendix, or as supplemental material.
+    \end{itemize}
+
+\item {\bf Experiment Statistical Significance}
+    \item[] Question: Does the paper report error bars suitably and correctly defined or other appropriate information about the statistical significance of the experiments?
+    \item[] Answer: \answerTODO{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
+    \item[] Justification: \justificationTODO{}
+    \item[] Guidelines:
+    \begin{itemize}
+        \item The answer NA means that the paper does not include experiments.
+        \item The authors should answer "Yes" if the results are accompanied by error bars, confidence intervals, or statistical significance tests, at least for the experiments that support the main claims of the paper.
+        \item The factors of variability that the error bars are capturing should be clearly stated (for example, train/test split, initialization, random drawing of some parameter, or overall run with given experimental conditions).
+        \item The method for calculating the error bars should be explained (closed form formula, call to a library function, bootstrap, etc.)
+        \item The assumptions made should be given (e.g., Normally distributed errors).
+        \item It should be clear whether the error bar is the standard deviation or the standard error of the mean.
+        \item It is OK to report 1-sigma error bars, but one should state it. The authors should preferably report a 2-sigma error bar than state that they have a 96\% CI, if the hypothesis of Normality of errors is not verified.
+        \item For asymmetric distributions, the authors should be careful not to show in tables or figures symmetric error bars that would yield results that are out of range (e.g. negative error rates).
+        \item If error bars are reported in tables or plots, The authors should explain in the text how they were calculated and reference the corresponding figures or tables in the text.
+    \end{itemize}
+
+\item {\bf Experiments Compute Resources}
+    \item[] Question: For each experiment, does the paper provide sufficient information on the computer resources (type of compute workers, memory, time of execution) needed to reproduce the experiments?
+    \item[] Answer: \answerTODO{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
+    \item[] Justification: \justificationTODO{}
+    \item[] Guidelines:
+    \begin{itemize}
+        \item The answer NA means that the paper does not include experiments.
+        \item The paper should indicate the type of compute workers CPU or GPU, internal cluster, or cloud provider, including relevant memory and storage.
+        \item The paper should provide the amount of compute required for each of the individual experimental runs as well as estimate the total compute. 
+        \item The paper should disclose whether the full research project required more compute than the experiments reported in the paper (e.g., preliminary or failed experiments that didn't make it into the paper). 
+    \end{itemize}
+    
+\item {\bf Code Of Ethics}
+    \item[] Question: Does the research conducted in the paper conform, in every respect, with the NeurIPS Code of Ethics \url{https://neurips.cc/public/EthicsGuidelines}?
+    \item[] Answer: \answerTODO{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
+    \item[] Justification: \justificationTODO{}
+    \item[] Guidelines:
+    \begin{itemize}
+        \item The answer NA means that the authors have not reviewed the NeurIPS Code of Ethics.
+        \item If the authors answer No, they should explain the special circumstances that require a deviation from the Code of Ethics.
+        \item The authors should make sure to preserve anonymity (e.g., if there is a special consideration due to laws or regulations in their jurisdiction).
+    \end{itemize}
+
+
+\item {\bf Broader Impacts}
+    \item[] Question: Does the paper discuss both potential positive societal impacts and negative societal impacts of the work performed?
+    \item[] Answer: \answerTODO{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
+    \item[] Justification: \justificationTODO{}
+    \item[] Guidelines:
+    \begin{itemize}
+        \item The answer NA means that there is no societal impact of the work performed.
+        \item If the authors answer NA or No, they should explain why their work has no societal impact or why the paper does not address societal impact.
+        \item Examples of negative societal impacts include potential malicious or unintended uses (e.g., disinformation, generating fake profiles, surveillance), fairness considerations (e.g., deployment of technologies that could make decisions that unfairly impact specific groups), privacy considerations, and security considerations.
+        \item The conference expects that many papers will be foundational research and not tied to particular applications, let alone deployments. However, if there is a direct path to any negative applications, the authors should point it out. For example, it is legitimate to point out that an improvement in the quality of generative models could be used to generate deepfakes for disinformation. On the other hand, it is not needed to point out that a generic algorithm for optimizing neural networks could enable people to train models that generate Deepfakes faster.
+        \item The authors should consider possible harms that could arise when the technology is being used as intended and functioning correctly, harms that could arise when the technology is being used as intended but gives incorrect results, and harms following from (intentional or unintentional) misuse of the technology.
+        \item If there are negative societal impacts, the authors could also discuss possible mitigation strategies (e.g., gated release of models, providing defenses in addition to attacks, mechanisms for monitoring misuse, mechanisms to monitor how a system learns from feedback over time, improving the efficiency and accessibility of ML).
+    \end{itemize}
+    
+\item {\bf Safeguards}
+    \item[] Question: Does the paper describe safeguards that have been put in place for responsible release of data or models that have a high risk for misuse (e.g., pretrained language models, image generators, or scraped datasets)?
+    \item[] Answer: \answerTODO{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
+    \item[] Justification: \justificationTODO{}
+    \item[] Guidelines:
+    \begin{itemize}
+        \item The answer NA means that the paper poses no such risks.
+        \item Released models that have a high risk for misuse or dual-use should be released with necessary safeguards to allow for controlled use of the model, for example by requiring that users adhere to usage guidelines or restrictions to access the model or implementing safety filters. 
+        \item Datasets that have been scraped from the Internet could pose safety risks. The authors should describe how they avoided releasing unsafe images.
+        \item We recognize that providing effective safeguards is challenging, and many papers do not require this, but we encourage authors to take this into account and make a best faith effort.
+    \end{itemize}
+
+\item {\bf Licenses for existing assets}
+    \item[] Question: Are the creators or original owners of assets (e.g., code, data, models), used in the paper, properly credited and are the license and terms of use explicitly mentioned and properly respected?
+    \item[] Answer: \answerTODO{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
+    \item[] Justification: \justificationTODO{}
+    \item[] Guidelines:
+    \begin{itemize}
+        \item The answer NA means that the paper does not use existing assets.
+        \item The authors should cite the original paper that produced the code package or dataset.
+        \item The authors should state which version of the asset is used and, if possible, include a URL.
+        \item The name of the license (e.g., CC-BY 4.0) should be included for each asset.
+        \item For scraped data from a particular source (e.g., website), the copyright and terms of service of that source should be provided.
+        \item If assets are released, the license, copyright information, and terms of use in the package should be provided. For popular datasets, \url{paperswithcode.com/datasets} has curated licenses for some datasets. Their licensing guide can help determine the license of a dataset.
+        \item For existing datasets that are re-packaged, both the original license and the license of the derived asset (if it has changed) should be provided.
+        \item If this information is not available online, the authors are encouraged to reach out to the asset's creators.
+    \end{itemize}
+
+\item {\bf New Assets}
+    \item[] Question: Are new assets introduced in the paper well documented and is the documentation provided alongside the assets?
+    \item[] Answer: \answerTODO{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
+    \item[] Justification: \justificationTODO{}
+    \item[] Guidelines:
+    \begin{itemize}
+        \item The answer NA means that the paper does not release new assets.
+        \item Researchers should communicate the details of the dataset/code/model as part of their submissions via structured templates. This includes details about training, license, limitations, etc. 
+        \item The paper should discuss whether and how consent was obtained from people whose asset is used.
+        \item At submission time, remember to anonymize your assets (if applicable). You can either create an anonymized URL or include an anonymized zip file.
+    \end{itemize}
+
+\item {\bf Crowdsourcing and Research with Human Subjects}
+    \item[] Question: For crowdsourcing experiments and research with human subjects, does the paper include the full text of instructions given to participants and screenshots, if applicable, as well as details about compensation (if any)? 
+    \item[] Answer: \answerTODO{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
+    \item[] Justification: \justificationTODO{}
+    \item[] Guidelines:
+    \begin{itemize}
+        \item The answer NA means that the paper does not involve crowdsourcing nor research with human subjects.
+        \item Including this information in the supplemental material is fine, but if the main contribution of the paper involves human subjects, then as much detail as possible should be included in the main paper. 
+        \item According to the NeurIPS Code of Ethics, workers involved in data collection, curation, or other labor should be paid at least the minimum wage in the country of the data collector. 
+    \end{itemize}
+
+\item {\bf Institutional Review Board (IRB) Approvals or Equivalent for Research with Human Subjects}
+    \item[] Question: Does the paper describe potential risks incurred by study participants, whether such risks were disclosed to the subjects, and whether Institutional Review Board (IRB) approvals (or an equivalent approval/review based on the requirements of your country or institution) were obtained?
+    \item[] Answer: \answerTODO{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
+    \item[] Justification: \justificationTODO{}
+    \item[] Guidelines:
+    \begin{itemize}
+        \item The answer NA means that the paper does not involve crowdsourcing nor research with human subjects.
+        \item Depending on the country in which research is conducted, IRB approval (or equivalent) may be required for any human subjects research. If you obtained IRB approval, you should clearly state this in the paper. 
+        \item We recognize that the procedures for this may vary significantly between institutions and locations, and we expect authors to adhere to the NeurIPS Code of Ethics and the guidelines for their institution. 
+        \item For initial submissions, do not include any information that would break anonymity (if applicable), such as the institution conducting the review.
+    \end{itemize}
+
+\end{enumerate}
+
+
+\end{document}
