@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2023.2.24)  13 MAY 2024 16:49
+This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2023.2.24)  13 MAY 2024 23:00
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -608,7 +608,7 @@ File: fig5.jpg Graphic file (type bmp)
 <fig5.jpg>
 File: fig6-7-8.jpg Graphic file (type bmp)
 <fig6-7-8.jpg>
- (./neurips_2024.bbl [7]
+ [7] (./neurips_2024.bbl
 Underfull \hbox (badness 10000) in paragraph at lines 22--26
 []\T1/ptm/m/n/10 RZdunek ACi-chocki et al.  Non-neg-a-tive-ma-trixandten-sor fa
 c-tor-iza-tions:
@@ -617,35 +617,36 @@ c-tor-iza-tions:
 Missing character: There is no — ("2014) in font ptmri8t!
 [8]) [9]
 LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 8
-53.
+86.
  (c:/texlive/2022/texmf-dist/tex/latex/psnfss/ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
-)
-Missing character: There is no – ("2013) in font ptmr8t!
-[10] [11]
+) [10] [11]
 Missing character: There is no “ ("201C) in font ptmr8t!
 Missing character: There is no ” ("201D) in font ptmr8t!
-[12] [13] [14] [15]
+[12] [13] [14]
 
 Package natbib Warning: There were undefined citations.
 
-[16] (./neurips_2024.aux)
+[15] (./neurips_2024.aux)
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
 
 Package rerunfilecheck Warning: File `neurips_2024.out' has changed.
 (rerunfilecheck)                Rerun to get outlines right
 (rerunfilecheck)                or use package `bookmark'.
 
 Package rerunfilecheck Info: Checksums for `neurips_2024.out':
-(rerunfilecheck)             Before: 483CEAC160DF0B0779E2C5B9486201C4;2360
-(rerunfilecheck)             After:  6A56AFDF6600A9A84BFD737D4A4F5E5D;2146.
+(rerunfilecheck)             Before: 6A56AFDF6600A9A84BFD737D4A4F5E5D;2146
+(rerunfilecheck)             After:  B4B8A91C971D9E77B6B77E130F485530;2240.
  ) 
 Here is how much of TeX's memory you used:
- 13020 strings out of 476688
- 206515 string characters out of 5807699
+ 13021 strings out of 476688
+ 206531 string characters out of 5807699
  1860001 words of memory out of 5000000
- 33062 multiletter control sequences out of 15000+600000
+ 33063 multiletter control sequences out of 15000+600000
  535958 words of font info for 59 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 72i,13n,76p,1584b,631s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 72i,13n,76p,1584b,611s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on neurips_2024.pdf (16 pages).
+Output written on neurips_2024.pdf (15 pages).
