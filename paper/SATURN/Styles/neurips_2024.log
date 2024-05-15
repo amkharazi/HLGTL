@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2023.2.24)  13 MAY 2024 23:00
+This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2023.2.24)  15 MAY 2024 16:56
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -573,7 +573,7 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 LaTeX Font Info:    Trying to load font information for T1+phv on input line 11
-2.
+3.
 
 (c:/texlive/2022/texmf-dist/tex/latex/psnfss/t1phv.fd
 File: t1phv.fd 2020/03/25 scalable font definitions for T1/phv.
@@ -585,15 +585,12 @@ Package microtype Info: Loading generic protrusion settings for font family
  [1
 
 
-]
-Underfull \vbox (badness 1215) has occurred while \output is active []
+] [2]
 
- [2]
-
-Package natbib Warning: Citation `t17' on page 3 undefined on input line 231.
+Package natbib Warning: Citation `t17' on page 3 undefined on input line 232.
 
 
-Package natbib Warning: Citation `t18' on page 3 undefined on input line 231.
+Package natbib Warning: Citation `t18' on page 3 undefined on input line 232.
 
 [3] [4]
 File: fig1.jpg Graphic file (type bmp)
@@ -603,50 +600,49 @@ File: fig2-3.jpg Graphic file (type bmp)
 <fig2-3.jpg>
 File: fig4.jpg Graphic file (type bmp)
 <fig4.jpg>
+
+Underfull \vbox (badness 2173) has occurred while \output is active []
+
  [6]
 File: fig5.jpg Graphic file (type bmp)
 <fig5.jpg>
 File: fig6-7-8.jpg Graphic file (type bmp)
 <fig6-7-8.jpg>
- [7] (./neurips_2024.bbl
+
+(./neurips_2024.bbl [7]
 Underfull \hbox (badness 10000) in paragraph at lines 22--26
 []\T1/ptm/m/n/10 RZdunek ACi-chocki et al.  Non-neg-a-tive-ma-trixandten-sor fa
 c-tor-iza-tions:
  []
 
 Missing character: There is no — ("2014) in font ptmri8t!
-[8]) [9]
+[8] [9]) [10]
 LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 8
-86.
+87.
  (c:/texlive/2022/texmf-dist/tex/latex/psnfss/ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
-) [10] [11]
+) [11]
+[12]
 Missing character: There is no “ ("201C) in font ptmr8t!
 Missing character: There is no ” ("201D) in font ptmr8t!
-[12] [13] [14]
+[13] [14] [15]
 
 Package natbib Warning: There were undefined citations.
 
-[15] (./neurips_2024.aux)
+[16] (./neurips_2024.aux)
 
 LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
-
-Package rerunfilecheck Warning: File `neurips_2024.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `neurips_2024.out':
-(rerunfilecheck)             Before: 6A56AFDF6600A9A84BFD737D4A4F5E5D;2146
-(rerunfilecheck)             After:  B4B8A91C971D9E77B6B77E130F485530;2240.
+Package rerunfilecheck Info: File `neurips_2024.out' has not changed.
+(rerunfilecheck)             Checksum: B4B8A91C971D9E77B6B77E130F485530;2240.
  ) 
 Here is how much of TeX's memory you used:
  13021 strings out of 476688
  206531 string characters out of 5807699
- 1860001 words of memory out of 5000000
+ 1862001 words of memory out of 5000000
  33063 multiletter control sequences out of 15000+600000
  535958 words of font info for 59 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 72i,13n,76p,1584b,611s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 72i,13n,76p,1584b,609s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on neurips_2024.pdf (15 pages).
+Output written on neurips_2024.pdf (16 pages).
