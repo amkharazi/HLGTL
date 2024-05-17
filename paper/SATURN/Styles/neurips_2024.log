@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2023.2.24)  15 MAY 2024 16:56
+This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2023.2.24)  17 MAY 2024 15:06
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -573,7 +573,7 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 LaTeX Font Info:    Trying to load font information for T1+phv on input line 11
-3.
+2.
 
 (c:/texlive/2022/texmf-dist/tex/latex/psnfss/t1phv.fd
 File: t1phv.fd 2020/03/25 scalable font definitions for T1/phv.
@@ -592,7 +592,11 @@ Package natbib Warning: Citation `t17' on page 3 undefined on input line 232.
 
 Package natbib Warning: Citation `t18' on page 3 undefined on input line 232.
 
-[3] [4]
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [3]
+[4]
 File: fig1.jpg Graphic file (type bmp)
 <fig1.jpg>
  [5]
@@ -630,9 +634,6 @@ Missing character: There is no ” ("201D) in font ptmr8t!
 Package natbib Warning: There were undefined citations.
 
 [16] (./neurips_2024.aux)
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
 Package rerunfilecheck Info: File `neurips_2024.out' has not changed.
 (rerunfilecheck)             Checksum: B4B8A91C971D9E77B6B77E130F485530;2240.
  ) 
