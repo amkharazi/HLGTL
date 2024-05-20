@@ -2,16 +2,20 @@
 \providecommand\hyper@newdestlabel[2]{}
 \providecommand\HyperFirstAtBeginDocument{\AtBeginDocument}
 \HyperFirstAtBeginDocument{\ifx\hyper@anchor\@undefined
+\global\let\oldcontentsline\contentsline
+\gdef\contentsline#1#2#3#4{\oldcontentsline{#1}{#2}{#3}}
 \global\let\oldnewlabel\newlabel
 \gdef\newlabel#1#2{\newlabelxx{#1}#2}
 \gdef\newlabelxx#1#2#3#4#5#6{\oldnewlabel{#1}{{#2}{#3}}}
 \AtEndDocument{\ifx\hyper@anchor\@undefined
+\let\contentsline\oldcontentsline
 \let\newlabel\oldnewlabel
 \fi}
 \fi}
 \global\let\hyper@last\relax 
 \gdef\HyperFirstAtBeginDocument#1{#1}
-\providecommand*\HyPL@Entry[1]{}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
 \citation{r1}
 \citation{r4}
 \citation{r2}
@@ -20,7 +24,6 @@
 \citation{r3}
 \citation{r6}
 \citation{r7}
-\HyPL@Entry{0<</S/D>>}
 \@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1}\protected@file@percent }
 \newlabel{sec:intorduction}{{1}{1}{Introduction}{section.1}{}}
 \citation{r8}
@@ -43,8 +46,8 @@
 \@writefile{toc}{\contentsline {section}{\numberline {2}Related works}{2}{section.2}\protected@file@percent }
 \newlabel{sec:related-works}{{2}{2}{Related works}{section.2}{}}
 \citation{r1}
-\citation{t17}
-\citation{t18}
+\citation{r17}
+\citation{r18}
 \citation{r19}
 \citation{r20}
 \citation{r33}
@@ -58,6 +61,11 @@
 \newlabel{sec:mathematical-background}{{3}{3}{Mathematical background}{section.3}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Notations}{3}{subsection.3.1}\protected@file@percent }
 \newlabel{subsec:notations}{{3.1}{3}{Notations}{subsection.3.1}{}}
+\citation{r4}
+\citation{r4}
+\citation{r4}
+\citation{r4}
+\citation{r4}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Tensor folding and unfolding}{4}{subsection.3.2}\protected@file@percent }
 \newlabel{subsec:tensor-folding-unfolding}{{3.2}{4}{Tensor folding and unfolding}{subsection.3.2}{}}
 \newlabel{par:mode-n-unfolding}{{3.2}{4}{Mode-$n$ unfolding :}{section*.1}{}}
@@ -72,6 +80,8 @@
 \newlabel{eq:contraction}{{3}{4}{Tensor $n$-mode product :}{equation.3.3}{}}
 \newlabel{eq:contraction2}{{4}{4}{Tensor $n$-mode product :}{equation.3.4}{}}
 \@writefile{toc}{\contentsline {paragraph}{Generalized inner product : }{4}{section*.4}\protected@file@percent }
+\citation{r1}
+\citation{r1}
 \citation{r1}
 \@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces A simple MLP after some convolution layers.}}{5}{figure.1}\protected@file@percent }
 \newlabel{fig:1}{{1}{5}{A simple MLP after some convolution layers}{figure.1}{}}
@@ -88,32 +98,36 @@
 \newlabel{fig:2-3}{{2}{6}{Tensor regression networks, replacement for FC layers. In $(a)$, A simple TCL is applied; Each mode $i$ of tensor $\mathcal {T}$ is multiplied by factor $\mathbf {A}^{(i)}$. In $(b)$, A TRL is applied; Generalized inner product of input tensor $\mathcal {T}$ and weight tensor $\mathcal {W}$ is calculated as the output tensor while considering a low rank approximation of weight tensor $\mathcal {W}$ in a tucker decomposed form}{figure.2}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces  An outline of reshaping to higher orders tensor. }}{6}{figure.3}\protected@file@percent }
 \newlabel{fig:4}{{3}{6}{An outline of reshaping to higher orders tensor}{figure.3}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.5.2}TRL}{6}{subsubsection.3.5.2}\protected@file@percent }
-\newlabel{subsubsec:trl}{{3.5.2}{6}{TRL}{subsubsection.3.5.2}{}}
-\newlabel{eq:trl-parmeter}{{9}{6}{TRL}{equation.3.9}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.5.2}Tensor regression layer}{6}{subsubsection.3.5.2}\protected@file@percent }
+\newlabel{subsubsec:trl}{{3.5.2}{6}{Tensor regression layer}{subsubsection.3.5.2}{}}
+\newlabel{eq:trl-parmeter}{{9}{6}{Tensor regression layer}{equation.3.9}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {4}Splitting approach}{6}{section.4}\protected@file@percent }
 \newlabel{sec:splitting-approach}{{4}{6}{Splitting approach}{section.4}{}}
-\bibstyle{unsrt}
-\bibdata{ref}
-\bibcite{r1}{{1}{}{{}}{{}}}
-\bibcite{r4}{{2}{}{{}}{{}}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Attached Splitting}{7}{subsection.4.1}\protected@file@percent }
-\newlabel{subsec:attached-approach}{{4.1}{7}{Attached Splitting}{subsection.4.1}{}}
-\newlabel{eq:map1}{{10}{7}{Attached Splitting}{equation.4.10}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Compressed Splitting}{7}{subsection.4.2}\protected@file@percent }
-\newlabel{subsec:copressed-splitting}{{4.2}{7}{Compressed Splitting}{subsection.4.2}{}}
-\newlabel{eq:map2}{{11}{7}{Compressed Splitting}{equation.4.11}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Method Analysis}{7}{subsection.4.3}\protected@file@percent }
-\newlabel{subsec:method-analysis}{{4.3}{7}{Method Analysis}{subsection.4.3}{}}
-\newlabel{eq:reshape-parameter-tcl}{{12}{7}{Method Analysis}{equation.4.12}{}}
-\newlabel{eq:reshape-parameter-trl}{{13}{7}{Method Analysis}{equation.4.13}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Attached splitting}{7}{subsection.4.1}\protected@file@percent }
+\newlabel{subsec:attached-approach}{{4.1}{7}{Attached splitting}{subsection.4.1}{}}
+\newlabel{eq:map1}{{10}{7}{Attached splitting}{equation.4.10}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Compressed splitting}{7}{subsection.4.2}\protected@file@percent }
+\newlabel{subsec:copressed-splitting}{{4.2}{7}{Compressed splitting}{subsection.4.2}{}}
+\newlabel{eq:map2}{{11}{7}{Compressed splitting}{equation.4.11}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Method analysis}{7}{subsection.4.3}\protected@file@percent }
+\newlabel{subsec:method-analysis}{{4.3}{7}{Method analysis}{subsection.4.3}{}}
+\newlabel{eq:reshape-parameter-tcl}{{12}{7}{Method analysis}{equation.4.12}{}}
+\newlabel{eq:reshape-parameter-trl}{{13}{7}{Method analysis}{equation.4.13}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {5}Experiments}{7}{section.5}\protected@file@percent }
 \newlabel{sec:experiments}{{5}{7}{Experiments}{section.5}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {6}Conclusion}{7}{section.6}\protected@file@percent }
 \newlabel{sec:conclusion}{{6}{7}{Conclusion}{section.6}{}}
+\bibstyle{unsrt}
+\bibdata{ref}
+\bibcite{r1}{{1}{}{{}}{{}}}
+\bibcite{r4}{{2}{}{{}}{{}}}
 \bibcite{r2}{{3}{}{{}}{{}}}
 \bibcite{r3}{{4}{}{{}}{{}}}
 \bibcite{r5}{{5}{}{{}}{{}}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces  $(a)$ attached splitting of a 2-order tensor. $(b)$ compressed splitting of a 2-order tensor. $(c)$ demonstration of stacking split chunks of a 2-order tensor into a 4-order tensor. }}{8}{figure.4}\protected@file@percent }
+\newlabel{fig:5}{{4}{8}{$(a)$ attached splitting of a 2-order tensor. $(b)$ compressed splitting of a 2-order tensor. $(c)$ demonstration of stacking split chunks of a 2-order tensor into a 4-order tensor}{figure.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces  $(a)$ original sample image. $(b)$ reshaped sample image using attached approach. $(c)$ reshaped sample image using compressed approach. }}{8}{figure.5}\protected@file@percent }
+\newlabel{fig:6-7-8}{{5}{8}{$(a)$ original sample image. $(b)$ reshaped sample image using attached approach. $(c)$ reshaped sample image using compressed approach}{figure.5}{}}
 \bibcite{r6}{{6}{}{{}}{{}}}
 \bibcite{r7}{{7}{}{{}}{{}}}
 \bibcite{r8}{{8}{}{{}}{{}}}
@@ -121,10 +135,6 @@
 \bibcite{r10}{{10}{}{{}}{{}}}
 \bibcite{r11}{{11}{}{{}}{{}}}
 \bibcite{r21}{{12}{}{{}}{{}}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces  $(a)$ attached splitting of a 2-order tensor. $(b)$ compressed splitting of a 2-order tensor. $(c)$ demonstration of stacking split chunks of a 2-order tensor into a 4-order tensor. }}{8}{figure.4}\protected@file@percent }
-\newlabel{fig:5}{{4}{8}{$(a)$ attached splitting of a 2-order tensor. $(b)$ compressed splitting of a 2-order tensor. $(c)$ demonstration of stacking split chunks of a 2-order tensor into a 4-order tensor}{figure.4}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces  $(a)$ original sample image. $(b)$ reshaped sample image using attached approach. $(c)$ reshaped sample image using compressed approach. }}{8}{figure.5}\protected@file@percent }
-\newlabel{fig:6-7-8}{{5}{8}{$(a)$ original sample image. $(b)$ reshaped sample image using attached approach. $(c)$ reshaped sample image using compressed approach}{figure.5}{}}
 \bibcite{r22}{{13}{}{{}}{{}}}
 \bibcite{r23}{{14}{}{{}}{{}}}
 \bibcite{r24}{{15}{}{{}}{{}}}
@@ -136,14 +146,48 @@
 \bibcite{r30}{{21}{}{{}}{{}}}
 \bibcite{r31}{{22}{}{{}}{{}}}
 \bibcite{r32}{{23}{}{{}}{{}}}
-\bibcite{r19}{{24}{}{{}}{{}}}
-\bibcite{r20}{{25}{}{{}}{{}}}
-\bibcite{r33}{{26}{}{{}}{{}}}
-\bibcite{r34}{{27}{}{{}}{{}}}
-\bibcite{r12}{{28}{}{{}}{{}}}
-\bibcite{r13}{{29}{}{{}}{{}}}
-\bibcite{r14}{{30}{}{{}}{{}}}
-\bibcite{r15}{{31}{}{{}}{{}}}
-\bibcite{r16}{{32}{}{{}}{{}}}
+\bibcite{r17}{{24}{}{{}}{{}}}
+\bibcite{r18}{{25}{}{{}}{{}}}
+\bibcite{r19}{{26}{}{{}}{{}}}
+\bibcite{r20}{{27}{}{{}}{{}}}
+\bibcite{r33}{{28}{}{{}}{{}}}
+\bibcite{r34}{{29}{}{{}}{{}}}
+\bibcite{r12}{{30}{}{{}}{{}}}
+\bibcite{r13}{{31}{}{{}}{{}}}
+\bibcite{r14}{{32}{}{{}}{{}}}
+\bibcite{r15}{{33}{}{{}}{{}}}
+\bibcite{r16}{{34}{}{{}}{{}}}
+\@writefile{toc}{\contentsline {section}{\numberline {A}Method analysis on TCL}{10}{appendix.A}\protected@file@percent }
+\newlabel{proof-1}{{A}{10}{Method analysis on TCL}{appendix.A}{}}
+\newlabel{eq:proof-1-14}{{14}{10}{Method analysis on TCL}{equation.A.14}{}}
+\newlabel{eq:proof-1-15}{{15}{10}{Method analysis on TCL}{equation.A.15}{}}
+\newlabel{eq:proof-1-16}{{16}{11}{Method analysis on TCL}{equation.A.16}{}}
+\newlabel{eq:proof-1-17}{{17}{11}{Method analysis on TCL}{equation.A.17}{}}
+\newlabel{eq:proof-1-18}{{18}{11}{Method analysis on TCL}{equation.A.18}{}}
+\newlabel{eq:proof-1-19}{{19}{11}{Method analysis on TCL}{equation.A.19}{}}
+\newlabel{eq:proof-1-20}{{20}{11}{Method analysis on TCL}{equation.A.20}{}}
+\newlabel{eq:proof-1-21}{{21}{11}{Method analysis on TCL}{equation.A.21}{}}
+\newlabel{eq:proof-1-22}{{22}{11}{Method analysis on TCL}{equation.A.22}{}}
+\newlabel{eq:proof-1-23}{{23}{12}{Method analysis on TCL}{equation.A.23}{}}
+\newlabel{eq:proof-1-24}{{24}{12}{Method analysis on TCL}{equation.A.24}{}}
+\newlabel{eq:proof-1-25}{{25}{12}{Method analysis on TCL}{equation.A.25}{}}
+\newlabel{eq:proof-1-26}{{26}{12}{Method analysis on TCL}{equation.A.26}{}}
+\newlabel{eq:proof-1-27}{{27}{12}{Method analysis on TCL}{equation.A.27}{}}
+\newlabel{eq:proof-1-28}{{28}{13}{Method analysis on TCL}{equation.A.28}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {B}Method analysis on TRL}{13}{appendix.B}\protected@file@percent }
+\newlabel{proof-2}{{B}{13}{Method analysis on TRL}{appendix.B}{}}
+\newlabel{eq:proof-2-29}{{29}{13}{Method analysis on TRL}{equation.B.29}{}}
+\newlabel{eq:proof-2-30}{{30}{13}{Method analysis on TRL}{equation.B.30}{}}
+\newlabel{eq:proof-2-31}{{31}{13}{Method analysis on TRL}{equation.B.31}{}}
+\newlabel{eq:proof-2-32}{{32}{13}{Method analysis on TRL}{equation.B.32}{}}
+\newlabel{eq:proof-2-33}{{33}{14}{Method analysis on TRL}{equation.B.33}{}}
+\newlabel{eq:proof-2-34}{{34}{14}{Method analysis on TRL}{equation.B.34}{}}
+\newlabel{eq:proof-2-35}{{35}{14}{Method analysis on TRL}{equation.B.35}{}}
+\newlabel{eq:proof-2-36}{{36}{14}{Method analysis on TRL}{equation.B.36}{}}
+\newlabel{eq:proof-2-37}{{37}{14}{Method analysis on TRL}{equation.B.37}{}}
+\newlabel{eq:proof-2-38}{{38}{15}{Method analysis on TRL}{equation.B.38}{}}
+\newlabel{eq:proof-2-39}{{39}{15}{Method analysis on TRL}{equation.B.39}{}}
+\newlabel{eq:proof-2-40}{{40}{15}{Method analysis on TRL}{equation.B.40}{}}
+\newlabel{eq:proof-2-41}{{41}{15}{Method analysis on TRL}{equation.B.41}{}}
 \providecommand\NAT@force@numbers{}\NAT@force@numbers
-\gdef \@abspage@last{16}
+\gdef \@abspage@last{21}

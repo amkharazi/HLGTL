@@ -141,6 +141,16 @@ Andrew~G Howard, Menglong Zhu, Bo~Chen, Dmitry Kalenichenko, Weijun Wang,
   applications.
 \newblock {\em arXiv preprint arXiv:1704.04861}, 2017.
 
+\bibitem{r17}
+Weiwei Guo, Irene Kotsia, and Ioannis Patras.
+\newblock Tensor learning for regression.
+\newblock {\em IEEE Transactions on Image Processing}, 21(2):816--827, 2011.
+
+\bibitem{r18}
+Guillaume Rabusseau and Hachem Kadri.
+\newblock Low-rank regression with tensor responses.
+\newblock {\em Advances in Neural Information Processing Systems}, 29, 2016.
+
 \bibitem{r19}
 Hua Zhou, Lexin Li, and Hongtu Zhu.
 \newblock Tensor regression with applications in neuroimaging data analysis.

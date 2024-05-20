@@ -34,6 +34,7 @@
 
 \usepackage{amsmath} 		% maths
 \usepackage{graphicx}		% figures
+\usepackage{amsthm}			% proofs
 
 \title{SATURN: Splitting Approach on Tensorized Ubiquitous Regression Networks}
 
@@ -229,7 +230,7 @@ Unlike standard convolution, Mobile Nets proposed in \cite{r32}  separate the sp
 
 The third approach do not consider Convolutional structure as a base and try to find other type of layers to work on multidimensional data. One notable recent work is Tensor Regression Networks \cite{r1}. They used a \textit{Tensor Regression Layer} (TRL) and \textit{Tensor Contraction Layer} (TCL) to preserve the structure of the data as they are moving across the network while reducing the number of parameters. Their method surprisingly achieved the near similar accuracy as its FC network with more than 65 percent space saving. TRL and TCL will be discussed in section \ref{sec:mathematical-background}, and they are used as the base of our method. Unfortunately, one of the biggest issues with TCL and TRL is their inadequate implementations. They are theoretically required less parameters than their FC versions; However they often perform poorly in terms of the actual execution time. This is one of the biggest limitation on working with tensors since a practical implementation of tensor methods are yet to be made.
 
-The power of tensor regression has been addressed in many prior papers \cite{t17}\cite{t18} \cite{r19} \cite{r20}. However, most of these works, usually rely on analytical solution and large tensors. In \cite{r33}, a non-linear Tensor-Train decomposition is used instead of tucker decomposition. While many works focuses on individual layers, in \cite{r34}, T-Nets attempts to provide a single high-order, low-rank tensor that jointly capture the full structure of a neural network. 
+The power of tensor regression has been addressed in many prior papers \cite{r17}\cite{r18} \cite{r19} \cite{r20}. However, most of these works, usually rely on analytical solution and large tensors. In \cite{r33}, a non-linear Tensor-Train decomposition is used instead of tucker decomposition. While many works focuses on individual layers, in \cite{r34}, T-Nets attempts to provide a single high-order, low-rank tensor that jointly capture the full structure of a neural network. 
 
 
 DNNS have been used in many applications and problems, however, many questions still remains in terms of their credibility and why they work so well. DNNs usually contain too many parameters and an important question is whether they require that many parameters.
@@ -256,12 +257,12 @@ is a 0-order tensor (scalar), $(i_1, i_2, i_3)$.
 \label{subsec:tensor-folding-unfolding}
 
 Tensor folding and unfolding are fundamental operations in tensor analysis, allowing for the manipulation and transformation of tensors into different dimensional structures.
-Tensor unfolding, also known as matricization, converts a higher-order tensor into a matrix or a vector. Let $\mathcal{T} \in \mathbb{R}^{I_1 \times I_2 \times \ldots \times I_N}$ be an $N$-order tensor. In our case, tensor folding folds an unfolded tensor back.
+Tensor unfolding, also known as matricization, converts a higher-order tensor into a matrix or a vector. Let $\mathcal{T} \in \mathbb{R}^{I_1 \times I_2 \times \ldots \times I_N}$ be an $N$-order tensor. In our case, tensor folding is the inverse operation of tensor unfolding, which reconstructs a higher-order tensor from a matrix or vector. 
 
 \paragraph{Mode-$n$ unfolding :}
 \label{par:mode-n-unfolding}
 
-Unfolding $\mathcal{T}$ along mode-$n$ results in a matrix representation of mode-$n$. This operation is denoted as $T_{[n]}$. The unfolding is achieved by rearranging the entries of $\mathcal{T}$ into a matrix such that the mode-$n$ indices become the rows of the matrix. The mapping from tensor indices to matrix indices is given by:
+Unfolding $\mathcal{T}$ along mode-$n$ \cite{r4} results in a matrix representation of mode-$n$. This operation is denoted as $T_{[n]}$. The unfolding is achieved by rearranging the entries of $\mathcal{T}$ into a matrix such that the mode-$n$ indices become the rows of the matrix. The mapping from tensor indices to matrix indices is given by:
 \begin{align}
 	\label{eq:unfolding}
 	&(i_1, \dots, i_n,\dots,i_N) \longrightarrow (i_n,r) \nonumber\\ 
@@ -271,7 +272,7 @@ Each row of the resulting matrix corresponds to a different combination of indic
 
 \paragraph{Vectorization : }
 \label{par:vectorization}
-Similar to mode-n unfolding, in tensor vectorization we map each element within the tensor to a element $j$ of $Vec(\mathcal{T})$:
+Similar to mode-n unfolding, in tensor vectorization \cite{r4} we map each element within the tensor to a element $j$ of $Vec(\mathcal{T})$:
 
 \begin{align}
 	\label{eq:vectorization}
@@ -284,10 +285,10 @@ Similar to mode-n unfolding, in tensor vectorization we map each element within 
 \subsection{Tensor contraction}
 \label{subsec:tensor-contraction}
 
-Tensor contraction is a fundamental operation that allows for the multiplication and simplification of tensors and multiplies elements of two tensors and provides a way to combine tensors by summing over shared indices.
+Tensor contraction allows for the multiplication and simplification of tensors and provides a way to combine tensors by summing over shared indices.
 
 \paragraph{Tensor $n$-mode product : }
-Tensor $n$-mode product, is a tensor operation that allows for the multiplication of a tensor with a matrix along a specific mode.
+Tensor $n$-mode product \cite{r4} , is a tensor operation that allows for the multiplication of a tensor with a matrix along a specific mode.
 Given a tensor $\mathcal{T} \in \mathbb{R}^{I_1 \times I_2 \times \dots \times I_N}$ and a matrix $\mathbf{M} \in \mathbb{R}^{J \times I_n}$, the $n$-mode product of $\mathcal{T}$ and $\mathbf{M}$, denoted as $\mathcal{T} \times_n \mathbf{M}$, results in a tensor of size $\mathbb{R}^{I_1 \times \dots \times I_{n-1} \times J \times I_{n+1} \times \dots \times I_N}$. The $n$-mode product can be expressed mathematically as:
 \begin{align}
 	\label{eq:contraction}
@@ -300,7 +301,7 @@ where $i_1, \dots, i_{n-1}, j, i_{n+1}, \dots, i_N$ are the indices of the resul
 \end{align}
 
 \paragraph{Generalized inner product : }
-For two tensors $\mathcal{X} \in \mathbb{R}^{I_x \times I_1 \times I_2 \times \dots \times I_N}$ and $\mathcal{Y} \in \mathbb{R}^{I_1 \times I_2 \times \dots \times I_N \times I_y}$ sharing $N$ modes of the same size, a generalized inner product along the $N$ last modes of $X$ and $Y$ is defined as:
+For two tensors $\mathcal{X} \in \mathbb{R}^{I_x \times I_1 \times I_2 \times \dots \times I_N}$ and $\mathcal{Y} \in \mathbb{R}^{I_1 \times I_2 \times \dots \times I_N \times I_y}$ sharing $N$ modes of the same size, a generalized inner product \cite{r4} along the $N$ last modes of $X$ and $Y$ is defined as:
 
 \begin{align}
 	\left\langle\mathcal{X}, \mathcal{Y}\right\rangle_N &= \sum_{i_1=0}^{I_1-1} \dots \sum_{i_N=0}^{I_N-1} \mathcal{X}_{:, i_1, i_2, \ldots, i_N} \mathcal{Y}_{i_1, i_2, \ldots, i_N, :}
@@ -310,7 +311,7 @@ where $\left\langle\mathcal{X}, \mathcal{Y}\right\rangle_N \in \mathbb{R}^{I_x\t
 
 \subsection{Tucker decomposition}
 \label{subsec:tucker-decomposition}
-The Tucker decomposition is a powerful method in tensor algebra that breaks down a tensor into a core tensor multiplied by matrices along each mode. In the Tucker decomposition, a tensor $\mathcal{T} \in \mathbb{R}^{I_1 \times I_2 \times \dots \times I_N}$ is represented as the product of a core tensor $\mathcal{G} \in \mathbb{R}^{J_1 \times J_2 \times \dots \times J_N}$ and a set of factor matrices $\mathbf{A}^{(1)} \in \mathbb{R}^{I_1 \times J_1}, \mathbf{A}^{(2)} \in \mathbb{R}^{I_2 \times J_2}, \dots, \mathbf{A}^{(N)} \in \mathbb{R}^{I_N \times J_N}$ along each mode. Mathematically, the Tucker decomposition can be expressed as:
+The Tucker decomposition \cite{r4} is a powerful method in tensor algebra that breaks down a tensor into a core tensor multiplied by matrices along each mode. In the Tucker decomposition, a tensor $\mathcal{T} \in \mathbb{R}^{I_1 \times I_2 \times \dots \times I_N}$ is represented as the product of a core tensor $\mathcal{G} \in \mathbb{R}^{J_1 \times J_2 \times \dots \times J_N}$ and a set of factor matrices $\mathbf{A}^{(1)} \in \mathbb{R}^{I_1 \times J_1}, \mathbf{A}^{(2)} \in \mathbb{R}^{I_2 \times J_2}, \dots, \mathbf{A}^{(N)} \in \mathbb{R}^{I_N \times J_N}$ along each mode. Mathematically, the Tucker decomposition can be expressed as:
 \begin{align}
 	\label{eq:tucker-decomposition}
 	\mathcal{T} = \mathcal{G} \times_1 \mathbf{A}^{(1)} \times_2 \mathbf{A}^{(2)} \times \dots \times_N \mathbf{A}^{(N)}
@@ -339,7 +340,7 @@ Given a MLP, there are two ways to interpret FC layers: One is to consider them 
 
 \subsubsection{Tensor contraction layer}
 \label{subsubsec:tcl}
-\textit{Tensor Contraction Layer} (TCL) is a form of feature extraction and could also be used for embedding. The prime idea behind TCL is Tucker decomposition; Via multiplying matrices to each mode of the input tensor, we can obtain a denser tensor (dependent of the shape of the matrices). Figure \ref{fig:2-3} demonstrate the TCL process on a 3-order tensor. 
+\textit{Tensor Contraction Layer} (TCL) \cite{r1} is a form of feature extraction and could also be used for embedding. The prime idea behind TCL is Tucker decomposition; Via multiplying matrices to each mode of the input tensor, we can obtain a denser tensor (dependent of the shape of the matrices). Figure \ref{fig:2-3} demonstrate the TCL process on a 3-order tensor. 
 
 Considering an input tensor $\mathcal{X}$ of size 
 $(S_0,I_1,\dots,I_N)$ and a size 
@@ -363,9 +364,9 @@ Compared to the FC version where the simple regression between these two tensors
 
 
 
-\subsubsection{TRL}
+\subsubsection{Tensor regression layer}
 \label{subsubsec:trl}
-\textit{Tensor Regression Layers} (TRL) is a replacement for the FC regression layers.
+\textit{Tensor Regression Layers} (TRL) \cite{r1} is a replacement for the FC regression layers.
 A simple regression that is the foundation of a MLP is a trivial generalized inner product of $\mathcal{W}$ (Weight Tensor) with the $\mathcal{X}$ (Input tensor). The idea behind TRL is to reconstruct $W$ from a low rank approximation of itself via tucker decomposition. In figure \ref{fig:2-3},  a TRL application in a MLP is provided. For the sake of simplicity, we considered a binary classification problem where the output of the inner product is a scaler. Similarly, if the desired output is a vector or even a tensor, $\mathcal{W}$ will be a higher dimensional tensor itself to generate each mode of the output. 
 
 Considering an input tensor $\mathcal{X}$ of size 
@@ -397,7 +398,7 @@ Compared to the FC version where the number of parameters is $O\times\prod_{i=1}
 
 Impressed by the vision transformers patching and down sampling methods, we can transform our input tensor into a thinner and higher dimensional tensor that not only reduces the number of parameters for a TRL or TCL layer but also maintain the accuracy. However, not any reshaping scheme to arbitrary higher orders and dimensions guarantee that
 the multi-linear structure is preserved and the accuracy is maintained
-With a proper splitting scheme, the newly made tenser has better physical interpretation than the flattened data. We introduced two splitting schemes, both of which are useful and could be used differently according to the network architect. Figure \ref{fig:4} demonstrate the general splitting outline. Given a 3-order tensor, if we split across each mode, the output is a 6-order tensor where the first 3 modes correspond the split index, and the next 3 modes are the data in each split.
+With a proper splitting scheme, the newly made tenser has better physical interpretation than the flattened data. We introduced two splitting schemes, both of which are useful and could be used differently according to the network architect. Figure \ref{fig:4} demonstrate the general splitting outline. Given a 3-order tensor, if we split across each mode, the output is a 6-order tensor where the first 3 modes correspond the split index, and the next 3 modes are the split data.
 
 
 \begin{figure}
@@ -411,7 +412,7 @@ With a proper splitting scheme, the newly made tenser has better physical interp
 
 
 
-\subsection{Attached Splitting}
+\subsection{Attached splitting}
 \label{subsec:attached-approach}
 
 In attached splitting, every split is continues, that is if mode  $I_i$ of the input tensor $\mathcal{X}$ with length $n$ is to be split into $2$ parts, then the split indices are $(0,\frac{n}{2})$ and $(\frac{n}{2}, n)$.
@@ -438,7 +439,7 @@ $\left(L_1,\dots,L_N\right)$, attached mapping of elements is done via:
 where $\mathcal{T}_a \in \mathbb{R}^{L_1\times\dots\times L_N\times \frac{I_1}{L_1}\times\dots\times \frac{I_N}{L_N}}$.
 
 
-\subsection{Compressed Splitting}
+\subsection{Compressed splitting}
 \label{subsec:copressed-splitting}
 
 In compressed splitting, we incorporate the idea behind down sampling, that is if mode $I_i$ of input tensor $\mathcal{X}$ with length $n$ is to be split into $2$ part , different to the attached splitting, the indices are even-odd combinations; That is $\left\{
@@ -469,7 +470,7 @@ $\left(L_1,\dots,L_N\right)$, compressed mapping of elements is done via:
 \end{align}
 where $\mathcal{T}_c \in \mathbb{R}^{L_1\times\dots\times L_N\times \frac{I_1}{L_1}\times\dots\times \frac{I_N}{L_N}}$.
 
-\subsection{Method Analysis}
+\subsection{Method analysis}
 \label{subsec:method-analysis}
 Considering an input tensor $\mathcal{X}$ of size
 $(S_0,I_1,\dots,I_N)$
@@ -481,7 +482,7 @@ In case of a $(r_1\dots,r_N, R_i,\dots,R_N)$ TCL, Since $L_i$s are usually small
 	\label{eq:reshape-parameter-tcl}
 	\sum_{i=1}^{N}L_i\times r_i + \sum_{i=1}^{N} R_i \times \frac{I_i}{L_i}
 \end{align}
-which is ideally less than equation \ref{eq:tcl-parmeter}.
+which is ideally less than equation \ref{eq:tcl-parmeter} (Appendix \ref{proof-1}).
 
 In case of 
 $(r_1,\dots,r_N, R_1,\dots,R_N,R_{N+1})$
@@ -490,7 +491,7 @@ TRL, the same logic as TCL could also be applied. The total number of parameters
 	\label{eq:reshape-parameter-trl}
 	\left(\prod_{i=1}^{N}r_i \prod_{i=1}^{N+1}R_i\right) + \left(\sum_{i=1}^{N}L_i\times r_i + \sum_{i=1}^{N} R_i \times \frac{I_i}{L_i} + R_{N+1}\times O\right)
 \end{align} 
-which is ideally less than equation \ref{eq:trl-parmeter}.
+which is ideally less than equation \ref{eq:trl-parmeter} (Appendix \ref{proof-2}).
 
 
 \begin{figure}
@@ -518,6 +519,7 @@ which is ideally less than equation \ref{eq:trl-parmeter}.
 
 \section{Conclusion}
 \label{sec:conclusion}
+Deep neural networks, especially CNNs, often work with multi-dimensional tensors. Despite their empirical success, these architectures usually contain one or more fully connected layers which not only destroy the natural multi-linear structure of the data, but also over parameterize the model. By introducing tensorized layers such TRL and TCL we can achieve near similar accuracy while preserving the multi-modal structure of the data and reducing the number of classifier parameters; However, these methods perform poorly when the approximated rank is too low. We introduced SATURN, a framework which maintains the quality of the network and reduce the number of classifier parameter by more than 96 \%. Our experiment, evaluated on CIFAR10, MNIST, and Tiny ImageNet-200, applied to RestNet50, RestNet101, VGG19 , and classic CNNs demonstrate that by splitting the input tensor via an approach that does not disturb the multi-linear structure of the data, a TCL or TRL with fewer parameters can be performed which also maintains the accuracy. Based on our observations, many popular CNNs  learn their convolutional layers based on the flattening operation and their following FC layers. Therefore, for our framework to achieve best accuracy, the models need to be trained completely for a few iterations. While our framework and similar approaches offer theoretical advantages, they currently do not exhibit the expected speed. This limitation underscores the primary challenge in applying tensor methods to models, as the development of optimal implementations remains a pending task. 
 
 
 %\section{General formatting instructions}
@@ -791,6 +793,7 @@ which is ideally less than equation \ref{eq:trl-parmeter}.
 %necessary.
 
 \begin{ack}
+	TODO
 %Use unnumbered first level headings for the acknowledgments. All acknowledgments
 %go at the end of the paper before the list of references. Moreover, you are required to declare
 %funding (financial activities supporting the submitted work) and competing interests (related financial activities outside the submitted work).
@@ -836,13 +839,314 @@ which is ideally less than equation \ref{eq:trl-parmeter}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%\appendix
-%
+\appendix
+
 %\section{Appendix / supplemental material}
-%
-%
 %Optionally include supplemental material (complete proofs, additional experiments and plots) in appendix.
 %All such materials \textbf{SHOULD be included in the main submission.}
+
+\section{Method analysis on TCL}
+\label{proof-1}
+As stated in subsection \ref{subsec:method-analysis}, 
+equation \ref{eq:reshape-parameter-tcl}, the number of required parameters for a TCL on our framework is ideally less than equation \ref{eq:tcl-parmeter}. Given $\mathcal{T} \in \mathbb{R}^{I_1\times\dots\times I_N}$ and $\hat{\mathcal{T}} \in \mathbb{R}^{L_1\times\dots\times L_N\times \frac{I_1}{L_1}\times\dots\times\frac{I_N}{L_N}}$, ideally a rank $(r_1,\dots,r_N, \hat{R}_1, \dots, \hat{R}_N)$ TCL on $\hat{\mathcal{T}}$ has less parameters than a rank $(R_1,\dots,R_N)$ TCL on $\mathcal{T}$. Since TCL ranks are arbitrary values, one can choose these ranks in a way that inequality \ref{eq:proof-1-14} does not hold.
+
+\begin{align}
+	\label{eq:proof-1-14}
+	\sum_{i=1}^{N}L_i\times r_i + \sum_{i=1}^{N} \hat{R}_i \times \frac{I_i}{L_i} \leq
+	\sum_{i=1}^{N}R_i\times I_i
+\end{align}
+
+\begin{proof}[\textbf{ideal}]
+	We prove that given ideal ranks, inequality \ref{eq:proof-1-14} holds. 
+	
+	Assume $\forall i \hspace{2mm}\hat{R}_i \leq R_i$, then:
+	
+	\begin{align}
+		\label{eq:proof-1-15}
+		\sum_{i=1}^{N} \hat{R}_i \times \frac{I_i}{L_i} \leq \sum_{i=1}^{N}R_i\times I_i \hspace{10mm}&  \forall i \hspace{2mm} L_i \geq 1
+	\end{align}
+
+	Consider $\alpha$ as:
+	
+	\begin{align}
+		\label{eq:proof-1-16}
+		\nonumber
+		\alpha &= \sum_{i=1}^{N}R_i\times I_i - \sum_{i=1}^{N} \hat{R}_i \times \frac{I_i}{L_i}
+		\\
+		&= \sum_{i=1}^{N} (R_i - \frac{\hat{R}_i}{L_i})I_i
+	\end{align}
+
+	Then as long as the first part of equation \ref{eq:reshape-parameter-tcl} is less than $\alpha$, the inequality \ref{eq:proof-1-14} holds.
+	
+	\begin{align}
+		\label{eq:proof-1-17}
+		\sum_{i=0}^{N} r_i\times L_i \leq \alpha
+	\end{align}
+
+	Given the assumption and the inequality \ref{eq:proof-1-17}:
+	
+	\begin{align}
+		\label{eq:proof-1-18}
+		\sum_{i=1}^{N}L_i\times r_i + \sum_{i=1}^{N} \hat{R}_i \times \frac{I_i}{L_i} &\leq
+		\alpha + \sum_{i=1}^{N} \hat{R}_i \times \frac{I_i}{L_i}
+		\nonumber\\
+		&\leq \sum_{i=1}^{N}R_i\times I_i - \sum_{i=1}^{N} \hat{R}_i \times \frac{I_i}{L_i} + \sum_{i=1}^{N} \hat{R}_i \times \frac{I_i}{L_i}
+		\nonumber\\
+		&\leq \sum_{i=1}^{N}R_i\times I_i
+	\end{align}
+
+Therefore, with ideal ranks, $\forall i \hspace{2mm}\hat{R}_i \leq R_i$ and $\sum_{i=0}^{N} r_i\times L_i \leq \alpha$, inequality \ref{eq:proof-1-14} holds.
+\end{proof}
+
+\begin{proof}[\textbf{semi ideal}] 
+	We prove that given semi ideal ranks, inequality \ref{eq:proof-1-14} holds. 
+	
+	Assume $\forall i \hspace{2mm}\hat{R}_i > R_i$, then:
+	
+	\begin{align}
+		\label{eq:proof-1-19}
+		k_i = \hat{R}_i - R_i \hspace{10mm}&  \forall i
+	\end{align}
+
+	We can consider:
+	
+	\begin{align}
+		\label{eq:proof-1-20}
+		\sum_{i=1}^{N} \hat{R}_i \times \frac{I_i}{L_i} = \sum_{i=1}^{N} R_i \times \frac{I_i}{L_i} + \sum_{i=1}^{N} k_i \times \frac{I_i}{L_i}
+	\end{align}
+
+	Consider $\beta$ as:
+	
+	\begin{align}
+		\label{eq:proof-1-21}
+		\beta &= \sum_{i=1}^{N} R_i \times I_i - \sum_{i=1}^{N} R_i \times \frac{I_i}{L_i}
+		\nonumber\\
+		&= \sum_{i=1}^{N} R_i \times I_i \times (1 - \frac{1}{L_i})
+	\end{align}
+
+	Then as long as the second part of equations \ref{eq:proof-1-20} is less than $\beta$, the inequality \ref{eq:proof-1-15} holds.
+	
+	\begin{align}
+		\label{eq:proof-1-22}
+		\sum_{i=1}^{N} k_i \times \frac{I_i}{L_i} \leq \beta
+	\end{align}
+
+Given the assumption and the inequality \ref{eq:proof-1-22}:
+
+\begin{align}
+	\label{eq:proof-1-23}
+	\sum_{i=1}^{N} \hat{R}_i \times \frac{I_i}{L_i} &= \sum_{i=1}^{N} R_i \times \frac{I_i}{L_i} + \sum_{i=1}^{N} k_i \times \frac{I_i}{L_i}
+	\nonumber \\
+	&\leq \sum_{i=1}^{N} R_i \times \frac{I_i}{L_i} + \beta 
+	\nonumber\\
+	&\leq  \sum_{i=1}^{N} R_i \times \frac{I_i}{L_i} + \sum_{i=1}^{N} R_i \times I_i - \sum_{i=1}^{N} R_i \times \frac{I_i}{L_i}
+	\nonumber\\
+	&\leq  \sum_{i=1}^{N} R_i \times I_i
+\end{align}
+
+Therefore, with ideal splits, $\sum_{i=1}^{N} k_i \times \frac{I_i}{L_i} \leq \beta$ , inequality \ref{eq:proof-1-15} holds. The rest of the proof is similar to \textit{\textbf{ideal}} situation.
+\end{proof} 
+ 
+\begin{proof}[\textbf{semi ideal}]
+	We prove that given some ideal ranks, inequality \ref{eq:proof-1-14} holds.
+	
+	 Assume $\exists j \hspace{2mm}\hat{R}_j > R_j$, then:
+	 
+	 \begin{align}
+	 	\label{eq:proof-1-24}
+	 	k_j = \hat{R}_j - R_j \hspace{10mm}&  \forall j \hspace{2mm}s.t \hspace{2mm} \hat{R}_j > R_j
+	 \end{align}
+ 
+ We can consider $N_1 = \left\{\forall i \hspace{1mm}|\hspace{1mm} \hat{R}_i \leq i\right\}$ and $N_2 = \left\{\forall j \hspace{1mm}|\hspace{1mm} \hat{R}_j > j\right\}$ : 
+ 
+ \begin{align}
+ 	\label{eq:proof-1-25}
+ 	\sum_{i=1}^{N} \hat{R}_i \times \frac{I_i}{L_i} &= \sum_{i\in N_1} \hat{R}_i \times \frac{I_i}{L_i} +  \sum_{j\in N_2} \hat{R}_j \times \frac{I_j}{L_j}
+ 	\nonumber\\
+ 	&\leq 
+ 	\sum_{i\in N_1} R_i \times I_i +  \sum_{j\in N_2} \hat{R}_j \times \frac{I_j}{L_j}
+ 	\nonumber \\
+ 	&\leq 
+ 	\sum_{i\in N_1} R_i \times I_i +  \sum_{j\in N_2} R_j \times \frac{I_j}{L_j} + \sum_{j\in N_2} k_j \times \frac{I_j}{L_j}
+ \end{align}
+
+Consider $\beta$ as:
+
+\begin{align}
+	\label{eq:proof-1-26}
+	\beta &= \sum_{i = 1}^{N} R_i \times I_i - \sum_{i\in N_1} R_i \times I_i +  \sum_{j\in N_2} R_j \times \frac{I_j}{L_j}
+	\nonumber\\
+	&= \sum_{i \in N_1} R_i \times I_i + \sum_{j \in N_2} R_j \times I_j - \sum_{i\in N_1} R_i \times I_i +  \sum_{j\in N_2} R_j \times \frac{I_i}{L_i}
+	\nonumber\\
+	&= \sum_{j \in N_2} R_j \times I_j -  \sum_{j\in N_2} R_j \times \frac{I_i}{L_i}
+	\nonumber\\
+	&= \sum_{j \in N_2} R_j \times I_j \times (1 - \frac{1}{L_j})
+\end{align}
+
+Then as long as the last part of inequality \ref{eq:proof-1-25} is less than $\beta$, the inequality \ref{eq:proof-1-15} holds.
+
+\begin{align}
+	\label{eq:proof-1-27}
+	 \sum_{j\in N_2} k_j \times \frac{I_j}{L_j} \leq \beta
+\end{align}
+
+Given the assumption and the inequality \ref{eq:proof-1-27}:
+
+\begin{align}
+	\label{eq:proof-1-28}
+	\sum_{i=1}^{N} \hat{R}_i \times \frac{I_i}{L_i} &\leq
+	\sum_{i\in N_1} R_i \times I_i +  \sum_{j\in N_2} R_j \times \frac{I_j}{L_j} + \sum_{j\in N_2} k_j \times \frac{I_j}{L_j} 
+	\nonumber\\
+	&\leq
+	\sum_{i\in N_1} R_i \times I_i +  \sum_{j\in N_2} R_j \times \frac{I_j}{L_j} + \beta
+	\nonumber\\
+	&\leq
+	\sum_{i\in N_1} R_i \times I_i +  \sum_{j\in N_2} R_j \times \frac{I_j}{L_j} + \sum_{j \in N_2} R_j \times I_j -  \sum_{j\in N_2} R_j \times \frac{I_i}{L_i}
+	\nonumber\\
+	&\leq
+	\sum_{i\in N_1} R_i \times I_i +  \sum_{j \in N_2} R_j \times I_j
+	\nonumber \\
+	&\leq 
+	\sum_{i = 1}^{N}R_i \times I_i
+\end{align}
+
+Therefore, with ideal splits as long as the existed semi ideal ranks follow inequality \ref{eq:proof-1-27}, inequality \ref{eq:proof-1-15} holds. The rest of the proof is similar to \textit{\textbf{ideal}} situation.
+\end{proof}
+
+\section{Method analysis on TRL}
+\label{proof-2}
+As stated in subsection \ref{subsec:method-analysis}, equation \ref{eq:reshape-parameter-trl}, the number of required parameters for a TRL on our framework is ideally less than equations \ref{eq:trl-parmeter}. Given $\mathcal{T} \in \mathbb{R}^{S_0, I_1\times\dots\times I_N}$ and $\hat{\mathcal{T}} \in \mathbb{R}^{S_0, L_1\times\dots\times L_N\times \frac{I_1}{L_1}\times\dots\times\frac{I_N}{L_N}}$, and output $\mathcal{Y} \in \mathbb{R}^{S_0\times O}$, ideally a rank $(r_1,\dots,r_N, \hat{R}_1, \dots, \hat{R}_N, \hat{R}_{N+1})$ TRL on $\hat{\mathcal{T}}$ has less parameters than a rank $(R_1,\dots,R_N, R_{N+1})$ TRL on $\mathcal{T}$. Since TRL ranks are arbitrary values, one can choose these ranks in a way that inequality \ref{eq:proof-2-29} does not hold.
+
+\begin{align}
+	\label{eq:proof-2-29}
+	\prod_{i=1}^{N}r_i \prod_{i=1}^{N+1}\hat{R}_i + \sum_{i=1}^{N}L_i\times r_i + \sum_{i=1}^{N} \hat{R}_i \times \frac{I_i}{L_i} + \hat{R}_{N+1}\times O \leq
+	\prod_{i=1}^{N+1}R_i + \sum_{i=1}^{N} R_i\times I_i + R_{N+1}\times O 
+\end{align}
+
+\begin{proof}[\textbf{ideal}]
+	We prove that given ideal ranks, inequality \ref{eq:proof-2-29} holds. 
+	
+	Assume $\forall i \hspace{2mm}\hat{R}_i \leq R_i$, then:
+	
+	\begin{align}
+		\label{eq:proof-2-30}
+		\sum_{i=1}^{N} \hat{R}_i \times \frac{I_i}{L_i}  + \hat{R}_{N+1}\times O\leq \sum_{i=1}^{N}R_i\times I_i + R_{N+1}\times O \hspace{10mm}&  \forall i \hspace{2mm} L_i \geq 1
+	\end{align}
+
+	Consider $\alpha_1$ as:
+	
+	\begin{align}
+		\label{eq:proof-2-31}
+		\alpha_1 &= \sum_{i=1}^{N}R_i\times I_i + R_{N+1}\times O - \sum_{i=1}^{N} \hat{R}_i \times \frac{I_i}{L_i}  + \hat{R}_{N+1}\times O
+		\nonumber\\
+		&= \sum_{i=1}^{N}(R_i - \frac{\hat{R}_i}{L_i})\times I_i + (R_{N+1} - \hat{R}_{N+1})\times O
+	\end{align}
+
+	Then as long as the second part of equation \ref{eq:reshape-parameter-trl} is less than $\alpha_1$,
+	
+	\begin{align}
+		\label{eq:proof-2-32}
+		\sum_{i=1}^{N}L_i\times r_i \leq \alpha_1
+	\end{align}
+
+It proves that :
+	
+	\begin{align}
+		\label{eq:proof-2-33}
+		&\sum_{i=1}^{N}L_i\times r_i + \sum_{i=1}^{N} \hat{R}_i \times \frac{I_i}{L_i} + \hat{R}_{N+1}\times O 
+		\nonumber\\
+		&\leq
+		\alpha_1 + \sum_{i=1}^{N} \hat{R}_i \times \frac{I_i}{L_i} + \hat{R}_{N+1}\times O 
+		\nonumber\\
+		&\leq
+		\sum_{i=1}^{N}R_i\times I_i + R_{N+1}\times O - \sum_{i=1}^{N} \hat{R}_i \times \frac{I_i}{L_i}  + \hat{R}_{N+1}\times O
+		+ \sum_{i=1}^{N} \hat{R}_i \times \frac{I_i}{L_i} + \hat{R}_{N+1}\times O 
+		\nonumber\\
+		&\leq
+		\sum_{i=1}^{N} R_i\times I_i + R_{N+1}\times O 
+	\end{align}
+
+	As long as $\prod_{i=1}^{N}r_i \prod_{i=1}\hat{R}_i\leq
+	\prod_{i=1}^{N+1}R_i$, inequality \ref{eq:proof-2-29} holds using \ref{eq:proof-2-33}.
+	
+	\begin{align}
+		\label{eq:proof-2-34}
+		&\prod_{i=1}^{N}r_i \prod_{i=1}^{N+1}\hat{R}_i + \sum_{i=1}^{N}L_i\times r_i + \sum_{i=1}^{N} \hat{R}_i \times \frac{I_i}{L_i} + \hat{R}_{N+1}\times O 
+		\nonumber\\
+		&\leq
+		\prod_{i=1}^{N+1}R_i + \sum_{i=1}^{N}L_i\times r_i + \sum_{i=1}^{N} \hat{R}_i \times \frac{I_i}{L_i} + \hat{R}_{N+1}\times O
+		\nonumber\\
+		&\leq
+		\prod_{i=1}^{N+1}R_i + \sum_{i=1}^{N} R_i\times I_i + R_{N+1}\times O
+	\end{align}
+
+Therefore, with ideal ranks, $\forall i \hspace{2mm}\hat{R}_i \leq R_i$ and $\sum_{i=0}^{N} r_iL_i \leq \alpha_1$, inequality \ref{eq:proof-2-29} holds.
+
+Assume $\forall i\hspace{2mm}\prod_{i=1}^{N}r_i \prod_{i=1}\hat{R}_i > 
+\prod_{i=1}^{N+1}R_i$, then consider $\alpha_2$ as:
+
+\begin{align}
+	\label{eq:proof-2-35}
+	\alpha_2 = \frac{\prod_{i=1}^{N+1}R_i}{\prod_{i=1}^{N+1}\hat{R}_i}
+\end{align}
+
+As long as $\prod_{i=1}^{N}r_i \leq \alpha_2$, inequality \ref{eq:proof-2-29} holds using \ref{eq:proof-2-33}. However, if $\prod_{i=1}^{N}r_i > \alpha_2$, then consider $k$ as:
+
+\begin{align}
+	\label{eq:proof-2-36}
+	k = \prod_{i=1}^{N}r_i \prod_{i=1}\hat{R}_i - \prod_{i=1}^{N+1}R_i
+\end{align}
+
+Given:
+
+\begin{align}
+	\label{eq:proof-2-37}
+	k \leq \left(\sum_{i=1}^{N} R_i\times I_i + R_{N+1}\times O \right) - \left(\sum_{i=1}^{N} \hat{R}_i \times \frac{I_i}{L_i} + \hat{R}_{N+1}\times O\right)
+\end{align}
+
+Therefore, with ideal ranks and splits, inequality \ref{eq:proof-2-29} holds using \ref{eq:proof-2-37}.
+\end{proof}
+
+\begin{proof}[\textbf{semi ideal}]
+	We prove that given semi ideal ranks, inequality \ref{eq:proof-2-29} holds.
+	
+	Assume $\forall i \hspace{2mm}\hat{R}_i > R_i$, which is equivalent to  
+	$\exists j \hspace{2mm}\hat{R}_j > R_j$,
+	then:
+	
+	\begin{align}
+		\label{eq:proof-2-38}
+		k_i = \hat{R}_i - R_i
+	\end{align}
+
+We can consider:
+
+\begin{align}
+	\label{eq:proof-2-39}
+	\sum_{i=1}^{N} \hat{R}_i \times \frac{I_i}{L_i} + \hat{R}_{N+1}\times O = \sum_{i=1}^{N} R_i \times \frac{I_i}{L_i} + \sum_{i=1}^{N} k_i \times \frac{I_i}{L_i} + R_{N+1}\times O + k_{N+1}\times O
+\end{align}
+
+	Similar to TCL, consider $\beta$ as:
+	
+	\begin{align}
+		\label{eq:proof-2-40}
+		\beta &= \sum_{i=1}^{N} R_i \times I_i - \sum_{i=1}^{N} R_i \times \frac{I_i}{L_i}
+		\nonumber\\
+		&= \sum_{i=1}^{N} R_i \times I_i \times (1 - \frac{1}{L_i})
+	\end{align}
+
+	Then as long as the $k_i$ parts of equation \ref{eq:proof-2-39} is less than $\beta$, the inequality \ref{eq:proof-2-30} holds.
+	
+	\begin{align}
+		\label{eq:proof-2-41}
+		\sum_{i=1}^{N} k_i \times \frac{I_i}{L_i} + k_{N+1}\times O \leq \beta
+	\end{align}
+	
+	Therefore, given the assumption and the inequality \ref{eq:proof-2-41}, with ideal splits, \ref{eq:proof-2-39} holds. The rest of the proof is similar to \textbf{\textit{ideal}} situation.
+\end{proof}
+
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
