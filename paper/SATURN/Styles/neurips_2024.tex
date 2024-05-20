@@ -35,6 +35,8 @@
 \usepackage{amsmath} 		% maths
 \usepackage{graphicx}		% figures
 \usepackage{amsthm}			% proofs
+\usepackage{multirow}
+
 
 \title{SATURN: Splitting Approach on Tensorized Ubiquitous Regression Networks}
 
@@ -332,7 +334,7 @@ Given a MLP, there are two ways to interpret FC layers: One is to consider them 
 
 \begin{figure}
 	\centering
-	\includegraphics[scale=0.03]{fig1.jpg}
+	\includegraphics[scale=0.03]{fig1.png}
 	\caption{A simple MLP after some convolution layers.}
 	\label{fig:1}
 \end{figure}
@@ -385,7 +387,7 @@ Compared to the FC version where the number of parameters is $O\times\prod_{i=1}
 
 \begin{figure}
 	\centering
-	\includegraphics[scale=0.025]{fig2-3.jpg}
+	\includegraphics[scale=0.025]{fig2-3.png}
 	\caption{Tensor regression networks, replacement for FC layers. In $(a)$, A simple TCL is applied; Each mode $i$ of tensor $\mathcal{T}$ is multiplied by factor $\mathbf{A}^{(i)}$.
 	In $(b)$, A TRL is applied; Generalized inner product of input tensor $\mathcal{T}$ and weight tensor $\mathcal{W}$ is calculated as the output tensor while considering a low rank approximation of weight tensor $\mathcal{W}$ in a tucker decomposed form. 
 	}
@@ -403,7 +405,7 @@ With a proper splitting scheme, the newly made tenser has better physical interp
 
 \begin{figure}
 	\centering
-	\includegraphics[scale=0.015]{fig4.jpg}
+	\includegraphics[scale=0.015]{fig4.png}
 	\caption{
 		An outline of reshaping to higher orders tensor.
 	}
@@ -496,7 +498,7 @@ which is ideally less than equation \ref{eq:trl-parmeter} (Appendix \ref{proof-2
 
 \begin{figure}
 	\centering
-	\includegraphics[scale=0.02]{fig5.jpg}
+	\includegraphics[scale=0.02]{fig5.png}
 	\caption{
 		$(a)$ attached splitting of a 2-order tensor. $(b)$ compressed splitting of a 2-order tensor. $(c)$ demonstration of stacking split chunks of a 2-order tensor into a 4-order tensor.
 	}
@@ -505,7 +507,7 @@ which is ideally less than equation \ref{eq:trl-parmeter} (Appendix \ref{proof-2
 
 \begin{figure}
 	\centering
-	\includegraphics[scale=0.05]{fig6-7-8.jpg}
+	\includegraphics[scale=0.03]{fig6-7-8.png}
 	\caption{
 		$(a)$ original sample image. $(b)$ reshaped sample image using attached approach. $(c)$ reshaped sample image using compressed approach. 
 	}
@@ -516,7 +518,96 @@ which is ideally less than equation \ref{eq:trl-parmeter} (Appendix \ref{proof-2
 \section{Experiments}
 \label{sec:experiments}
 
-
+	We conducted a series of experiments to assess the performance of our proposed framework.Our experiments were performed on GeForce RTX 4090;
+	Datasetes MNIST, CIFAR10, Tiny ImageNet-200 applied to ResNet50, ResNet101, VGG-19, and classic CNN demonstrate that our methods can significantly reduce the number of parameters while maintaining or even improving classification accuracy. In Tables
+	\ref{table:resnet_mnist_cifar10}
+	,
+	\ref{table:vgg_tiny}
+	, and 
+	\ref{table:cnn_mnist}
+	parameters include only the classifier parameters. For a better representation of our methods, we ignored adaptive average pooling layers in all models. \(^A\) and \(^C\) are splitting approaches.
+	
+	\begin{table}
+		\centering
+		\caption{
+		\textbf{Performance evaluation of ResNet50 and ResNet101}, Our methods reduce the number of parameters by more than 90 \% while achieving near similar accuracy. More detailed Table(s) (Appendix \ref{more-table-1}).
+			}
+		\label{table:resnet_mnist_cifar10}
+		\begin{tabular}{c c c c c c}
+			\toprule
+			\textbf{Dataset} & \textbf{Model} & \textbf{TRL} & \textbf{Split} & \textbf{Parameters} & \textbf{Top-1 (\%)} \\
+			\midrule
+			\multirow{8}{*}{MNIST} & \multirow{4}{*}{Resnet50} &   &   & 737,290 & 97.25 \\ 
+			& & (50,3,3,3) &   & 103,816 & 96.49 \\ 
+			& & (1,1,1,20,1,1,4) & (2,2,2)\(^A\) & 20,612 & \textbf{98.56} \\ 
+			& & (4,1,1,20,1,1,10) & (16,2,2)\(^C\) & 3,534 & 98.12 \\ 
+			\cmidrule(lr){2-6}
+			& \multirow{4}{*}{Resnet101} &   &   & 737,290 & \textbf{98.58} \\ 
+			& & (50,3,3,3) &   & 103,816 & 97.42 \\ 
+			& & (1,1,1,20,1,1,4) & (2,2,2)\(^C\) & 20,612 & 98.24 \\ 
+			& & (4,1,1,20,1,1,10) & (16,2,2)\(^A\) & 3,534 & 98.40 \\ 
+			\midrule
+			\multirow{8}{*}{CIFAR10} & \multirow{4}{*}{Resnet50} &   &   & 737,290 & 90.71 \\ 
+			& & (50,3,3,3) &   & 103,816 & 90.41 \\ 
+			& & (1,1,1,100,1,1,10) & (2,2,2)\(^C\) & 103,512 & \textbf{92.58} \\ 
+			& & (4,1,1,10,1,1,4) & (16,2,2)\(^A\) & 1,386 & 90.44 \\ 
+			\cmidrule(lr){2-6}
+			& \multirow{4}{*}{Resnet101} &   &   & 737,290 & \textbf{92.67} \\ 
+			& & (50,3,3,3) &   & 103,816 & 90.30 \\ 
+			& & (1,1,1,100,1,1,10) & (2,2,2)\(^C\) & 103,512 & 91.85 \\ 
+			& & (4,1,1,10,1,1,4) & (16,2,2)\(^A\) & 1,386 & 92.43 \\ 
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	
+	\begin{table}
+		\centering
+		\caption{
+			\textbf{Tiny ImageNet-200 performance on VGG-19},
+			 Given extreme number of classifier parameters for a VGG-19 model, we applied TCL layers before TRL layers. More detailed Table(s) (Appendix \ref{more-table-2}). 
+			}
+		\label{table:vgg_tiny}
+		\begin{tabular}{c c c c c c}
+			\toprule
+			\textbf{TCL} & \textbf{TRL} & \textbf{Split} & \textbf{Parameters} & \textbf{Top-1(\%)} & \textbf{Top-5(\%)} \\
+			\midrule
+			&   &   & 93,102,280 & 63.66 & 84.16 \\ 
+			(512,6,6) & (512,6,6,200) &   & 4,250,832 & 67.32 & 87.87 \\ 
+			(2,2,2,256,1,1) & (1,1,1,256,1,1,200) & (2,2,2)\(^A\) & 666,714 & 68.91 & 88.16 \\ 
+			(6,2,2,64,3,3) & (4,2,2,64,1,1,200) & (8,2,2)\(^C\) & 253,104 & 68.29 & \textbf{88.34} \\ 
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	
+	\begin{table}
+		\centering
+		\caption{
+			\textbf{Classic CNN-MNIST},  Our methods are dependent on a good convolutional foundation. More detailed Table(s) (Appendix \ref{more-table-3}). 
+			}
+		\label{table:cnn_mnist}
+		\begin{tabular}{c c c c c}
+			\toprule
+			\textbf{TCL} & \textbf{TRL} & \textbf{Split} & \textbf{Parameters} & \textbf{Top-1(\%)} \\
+			\midrule
+			&   &   & 4,729,866 & \textbf{98.14} \\ 
+			(128,6,6) & (128,6,6,10) &   & 79,092 & 95.62 \\ 
+			(2,1,1,64,6,6) & (2,1,1,64,6,6,10) & (2,1,1)\(^A\) & 54,528 & 97.11 \\ 
+			(2,1,1,64,6,6) & (2,1,1,64,6,6,10) & (2,1,1)\(^C\) & 54,528 & 97.12 \\ 
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	
+%	\subsection{Analysis}
+%	
+	Our framework performs exceptionally well compared to traditional TCL TRL and baseline models across various datasets and architectures. Notably, our approach significantly reduces the number of parameters without acutely compromising accuracy . In figure \ref{fig:9}, loss and accuracy of selected models and datasets are plotted. \textbf{Ablation study} is carried out in the Appendix \ref{ablation-study}.
+	
+	\begin{figure}
+		\centering
+		\includegraphics[width=1.0\textwidth]{plot.png}
+		\caption{Accuracy and loss plots (Baseline, TCL TRL, Our Method), more detailed plots (Appendix  \ref{more-plots-1})}
+		\label{fig:9}
+	\end{figure}
+	
 \section{Conclusion}
 \label{sec:conclusion}
 Deep neural networks, especially CNNs, often work with multi-dimensional tensors. Despite their empirical success, these architectures usually contain one or more fully connected layers which not only destroy the natural multi-linear structure of the data, but also over parameterize the model. By introducing tensorized layers such TRL and TCL we can achieve near similar accuracy while preserving the multi-modal structure of the data and reducing the number of classifier parameters; However, these methods perform poorly when the approximated rank is too low. We introduced SATURN, a framework which maintains the quality of the network and reduce the number of classifier parameter by more than 96 \%. Our experiment, evaluated on CIFAR10, MNIST, and Tiny ImageNet-200, applied to RestNet50, RestNet101, VGG19 , and classic CNNs demonstrate that by splitting the input tensor via an approach that does not disturb the multi-linear structure of the data, a TCL or TRL with fewer parameters can be performed which also maintains the accuracy. Based on our observations, many popular CNNs  learn their convolutional layers based on the flattening operation and their following FC layers. Therefore, for our framework to achieve best accuracy, the models need to be trained completely for a few iterations. While our framework and similar approaches offer theoretical advantages, they currently do not exhibit the expected speed. This limitation underscores the primary challenge in applying tensor methods to models, as the development of optimal implementations remains a pending task. 

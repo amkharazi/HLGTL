@@ -2,13 +2,10 @@
 \providecommand\hyper@newdestlabel[2]{}
 \providecommand\HyperFirstAtBeginDocument{\AtBeginDocument}
 \HyperFirstAtBeginDocument{\ifx\hyper@anchor\@undefined
-\global\let\oldcontentsline\contentsline
-\gdef\contentsline#1#2#3#4{\oldcontentsline{#1}{#2}{#3}}
 \global\let\oldnewlabel\newlabel
 \gdef\newlabel#1#2{\newlabelxx{#1}#2}
 \gdef\newlabelxx#1#2#3#4#5#6{\oldnewlabel{#1}{{#2}{#3}}}
 \AtEndDocument{\ifx\hyper@anchor\@undefined
-\let\contentsline\oldcontentsline
 \let\newlabel\oldnewlabel
 \fi}
 \fi}
@@ -115,19 +112,27 @@
 \newlabel{eq:reshape-parameter-trl}{{13}{7}{Method analysis}{equation.4.13}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {5}Experiments}{7}{section.5}\protected@file@percent }
 \newlabel{sec:experiments}{{5}{7}{Experiments}{section.5}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {6}Conclusion}{7}{section.6}\protected@file@percent }
-\newlabel{sec:conclusion}{{6}{7}{Conclusion}{section.6}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces  $(a)$ attached splitting of a 2-order tensor. $(b)$ compressed splitting of a 2-order tensor. $(c)$ demonstration of stacking split chunks of a 2-order tensor into a 4-order tensor. }}{8}{figure.4}\protected@file@percent }
+\newlabel{fig:5}{{4}{8}{$(a)$ attached splitting of a 2-order tensor. $(b)$ compressed splitting of a 2-order tensor. $(c)$ demonstration of stacking split chunks of a 2-order tensor into a 4-order tensor}{figure.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces  $(a)$ original sample image. $(b)$ reshaped sample image using attached approach. $(c)$ reshaped sample image using compressed approach. }}{8}{figure.5}\protected@file@percent }
+\newlabel{fig:6-7-8}{{5}{8}{$(a)$ original sample image. $(b)$ reshaped sample image using attached approach. $(c)$ reshaped sample image using compressed approach}{figure.5}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces  \textbf  {Performance evaluation of ResNet50 and ResNet101}, Our methods reduce the number of parameters by more than 90 \% while achieving near similar accuracy. More detailed Table(s) (Appendix \ref {more-table-1}). }}{8}{table.1}\protected@file@percent }
+\newlabel{table:resnet_mnist_cifar10}{{1}{8}{\textbf {Performance evaluation of ResNet50 and ResNet101}, Our methods reduce the number of parameters by more than 90 \% while achieving near similar accuracy. More detailed Table(s) (Appendix \ref {more-table-1})}{table.1}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces  \textbf  {Tiny ImageNet-200 performance on VGG-19}, Given extreme number of classifier parameters for a VGG-19 model, we applied TCL layers before TRL layers. More detailed Table(s) (Appendix \ref {more-table-2}). }}{8}{table.2}\protected@file@percent }
+\newlabel{table:vgg_tiny}{{2}{8}{\textbf {Tiny ImageNet-200 performance on VGG-19}, Given extreme number of classifier parameters for a VGG-19 model, we applied TCL layers before TRL layers. More detailed Table(s) (Appendix \ref {more-table-2})}{table.2}{}}
 \bibstyle{unsrt}
 \bibdata{ref}
 \bibcite{r1}{{1}{}{{}}{{}}}
 \bibcite{r4}{{2}{}{{}}{{}}}
 \bibcite{r2}{{3}{}{{}}{{}}}
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces  \textbf  {Classic CNN-MNIST}, Our methods are dependent on a good convolutional foundation. More detailed Table(s) (Appendix \ref {more-table-3}). }}{9}{table.3}\protected@file@percent }
+\newlabel{table:cnn_mnist}{{3}{9}{\textbf {Classic CNN-MNIST}, Our methods are dependent on a good convolutional foundation. More detailed Table(s) (Appendix \ref {more-table-3})}{table.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Accuracy and loss plots (Baseline, TCL TRL, Our Method), more detailed plots (Appendix \ref {more-plots-1})}}{9}{figure.6}\protected@file@percent }
+\newlabel{fig:9}{{6}{9}{Accuracy and loss plots (Baseline, TCL TRL, Our Method), more detailed plots (Appendix \ref {more-plots-1})}{figure.6}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Conclusion}{9}{section.6}\protected@file@percent }
+\newlabel{sec:conclusion}{{6}{9}{Conclusion}{section.6}{}}
 \bibcite{r3}{{4}{}{{}}{{}}}
 \bibcite{r5}{{5}{}{{}}{{}}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces  $(a)$ attached splitting of a 2-order tensor. $(b)$ compressed splitting of a 2-order tensor. $(c)$ demonstration of stacking split chunks of a 2-order tensor into a 4-order tensor. }}{8}{figure.4}\protected@file@percent }
-\newlabel{fig:5}{{4}{8}{$(a)$ attached splitting of a 2-order tensor. $(b)$ compressed splitting of a 2-order tensor. $(c)$ demonstration of stacking split chunks of a 2-order tensor into a 4-order tensor}{figure.4}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces  $(a)$ original sample image. $(b)$ reshaped sample image using attached approach. $(c)$ reshaped sample image using compressed approach. }}{8}{figure.5}\protected@file@percent }
-\newlabel{fig:6-7-8}{{5}{8}{$(a)$ original sample image. $(b)$ reshaped sample image using attached approach. $(c)$ reshaped sample image using compressed approach}{figure.5}{}}
 \bibcite{r6}{{6}{}{{}}{{}}}
 \bibcite{r7}{{7}{}{{}}{{}}}
 \bibcite{r8}{{8}{}{{}}{{}}}
@@ -157,37 +162,37 @@
 \bibcite{r14}{{32}{}{{}}{{}}}
 \bibcite{r15}{{33}{}{{}}{{}}}
 \bibcite{r16}{{34}{}{{}}{{}}}
-\@writefile{toc}{\contentsline {section}{\numberline {A}Method analysis on TCL}{10}{appendix.A}\protected@file@percent }
-\newlabel{proof-1}{{A}{10}{Method analysis on TCL}{appendix.A}{}}
-\newlabel{eq:proof-1-14}{{14}{10}{Method analysis on TCL}{equation.A.14}{}}
-\newlabel{eq:proof-1-15}{{15}{10}{Method analysis on TCL}{equation.A.15}{}}
-\newlabel{eq:proof-1-16}{{16}{11}{Method analysis on TCL}{equation.A.16}{}}
-\newlabel{eq:proof-1-17}{{17}{11}{Method analysis on TCL}{equation.A.17}{}}
-\newlabel{eq:proof-1-18}{{18}{11}{Method analysis on TCL}{equation.A.18}{}}
-\newlabel{eq:proof-1-19}{{19}{11}{Method analysis on TCL}{equation.A.19}{}}
-\newlabel{eq:proof-1-20}{{20}{11}{Method analysis on TCL}{equation.A.20}{}}
-\newlabel{eq:proof-1-21}{{21}{11}{Method analysis on TCL}{equation.A.21}{}}
-\newlabel{eq:proof-1-22}{{22}{11}{Method analysis on TCL}{equation.A.22}{}}
-\newlabel{eq:proof-1-23}{{23}{12}{Method analysis on TCL}{equation.A.23}{}}
-\newlabel{eq:proof-1-24}{{24}{12}{Method analysis on TCL}{equation.A.24}{}}
-\newlabel{eq:proof-1-25}{{25}{12}{Method analysis on TCL}{equation.A.25}{}}
-\newlabel{eq:proof-1-26}{{26}{12}{Method analysis on TCL}{equation.A.26}{}}
-\newlabel{eq:proof-1-27}{{27}{12}{Method analysis on TCL}{equation.A.27}{}}
-\newlabel{eq:proof-1-28}{{28}{13}{Method analysis on TCL}{equation.A.28}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {B}Method analysis on TRL}{13}{appendix.B}\protected@file@percent }
-\newlabel{proof-2}{{B}{13}{Method analysis on TRL}{appendix.B}{}}
-\newlabel{eq:proof-2-29}{{29}{13}{Method analysis on TRL}{equation.B.29}{}}
-\newlabel{eq:proof-2-30}{{30}{13}{Method analysis on TRL}{equation.B.30}{}}
-\newlabel{eq:proof-2-31}{{31}{13}{Method analysis on TRL}{equation.B.31}{}}
-\newlabel{eq:proof-2-32}{{32}{13}{Method analysis on TRL}{equation.B.32}{}}
-\newlabel{eq:proof-2-33}{{33}{14}{Method analysis on TRL}{equation.B.33}{}}
-\newlabel{eq:proof-2-34}{{34}{14}{Method analysis on TRL}{equation.B.34}{}}
-\newlabel{eq:proof-2-35}{{35}{14}{Method analysis on TRL}{equation.B.35}{}}
-\newlabel{eq:proof-2-36}{{36}{14}{Method analysis on TRL}{equation.B.36}{}}
-\newlabel{eq:proof-2-37}{{37}{14}{Method analysis on TRL}{equation.B.37}{}}
-\newlabel{eq:proof-2-38}{{38}{15}{Method analysis on TRL}{equation.B.38}{}}
-\newlabel{eq:proof-2-39}{{39}{15}{Method analysis on TRL}{equation.B.39}{}}
-\newlabel{eq:proof-2-40}{{40}{15}{Method analysis on TRL}{equation.B.40}{}}
-\newlabel{eq:proof-2-41}{{41}{15}{Method analysis on TRL}{equation.B.41}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {A}Method analysis on TCL}{11}{appendix.A}\protected@file@percent }
+\newlabel{proof-1}{{A}{11}{Method analysis on TCL}{appendix.A}{}}
+\newlabel{eq:proof-1-14}{{14}{11}{Method analysis on TCL}{equation.A.14}{}}
+\newlabel{eq:proof-1-15}{{15}{12}{Method analysis on TCL}{equation.A.15}{}}
+\newlabel{eq:proof-1-16}{{16}{12}{Method analysis on TCL}{equation.A.16}{}}
+\newlabel{eq:proof-1-17}{{17}{12}{Method analysis on TCL}{equation.A.17}{}}
+\newlabel{eq:proof-1-18}{{18}{12}{Method analysis on TCL}{equation.A.18}{}}
+\newlabel{eq:proof-1-19}{{19}{12}{Method analysis on TCL}{equation.A.19}{}}
+\newlabel{eq:proof-1-20}{{20}{12}{Method analysis on TCL}{equation.A.20}{}}
+\newlabel{eq:proof-1-21}{{21}{12}{Method analysis on TCL}{equation.A.21}{}}
+\newlabel{eq:proof-1-22}{{22}{13}{Method analysis on TCL}{equation.A.22}{}}
+\newlabel{eq:proof-1-23}{{23}{13}{Method analysis on TCL}{equation.A.23}{}}
+\newlabel{eq:proof-1-24}{{24}{13}{Method analysis on TCL}{equation.A.24}{}}
+\newlabel{eq:proof-1-25}{{25}{13}{Method analysis on TCL}{equation.A.25}{}}
+\newlabel{eq:proof-1-26}{{26}{13}{Method analysis on TCL}{equation.A.26}{}}
+\newlabel{eq:proof-1-27}{{27}{14}{Method analysis on TCL}{equation.A.27}{}}
+\newlabel{eq:proof-1-28}{{28}{14}{Method analysis on TCL}{equation.A.28}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {B}Method analysis on TRL}{14}{appendix.B}\protected@file@percent }
+\newlabel{proof-2}{{B}{14}{Method analysis on TRL}{appendix.B}{}}
+\newlabel{eq:proof-2-29}{{29}{14}{Method analysis on TRL}{equation.B.29}{}}
+\newlabel{eq:proof-2-30}{{30}{14}{Method analysis on TRL}{equation.B.30}{}}
+\newlabel{eq:proof-2-31}{{31}{14}{Method analysis on TRL}{equation.B.31}{}}
+\newlabel{eq:proof-2-32}{{32}{15}{Method analysis on TRL}{equation.B.32}{}}
+\newlabel{eq:proof-2-33}{{33}{15}{Method analysis on TRL}{equation.B.33}{}}
+\newlabel{eq:proof-2-34}{{34}{15}{Method analysis on TRL}{equation.B.34}{}}
+\newlabel{eq:proof-2-35}{{35}{15}{Method analysis on TRL}{equation.B.35}{}}
+\newlabel{eq:proof-2-36}{{36}{15}{Method analysis on TRL}{equation.B.36}{}}
+\newlabel{eq:proof-2-37}{{37}{15}{Method analysis on TRL}{equation.B.37}{}}
+\newlabel{eq:proof-2-38}{{38}{16}{Method analysis on TRL}{equation.B.38}{}}
+\newlabel{eq:proof-2-39}{{39}{16}{Method analysis on TRL}{equation.B.39}{}}
+\newlabel{eq:proof-2-40}{{40}{16}{Method analysis on TRL}{equation.B.40}{}}
+\newlabel{eq:proof-2-41}{{41}{16}{Method analysis on TRL}{equation.B.41}{}}
 \providecommand\NAT@force@numbers{}\NAT@force@numbers
-\gdef \@abspage@last{21}
+\gdef \@abspage@last{22}
