@@ -4,3 +4,4 @@ weights/
 results/**/model_stats/*.pth
 **/__pycache__/
 onlyfortest/
+Tests/Drafts.ipynb/
