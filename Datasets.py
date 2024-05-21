@@ -1,8 +1,9 @@
-# Download Following Datasets and store them in ./Datasets
-# 1. Cifar10
-# 2. Mnist
-# 3. TinyImageNet
+'''
+Download MNIST, CIFAR10, and Tiny ImageNet-200 Datasets and store them in ./datasets by default
+'''
 
+# Author: A.M.Kharazi
+# License: BSD 3 clause
 
 import os
 import argparse
@@ -11,18 +12,39 @@ import wget
 import zipfile
 
 def download_cifar10(save_dir):
+    '''
+    download CIFAR10 datasets, stored at save_dir
+
+    ----------
+    save_dir : str
+        stored location
+    '''
     print('Downloading CIFAR-10 dataset...')
     os.makedirs(save_dir, exist_ok=True)
     datasets.CIFAR10(root=save_dir, download=True)
     print('CIFAR-10 dataset downloaded successfully.')
 
 def download_mnist(save_dir):
+    '''
+    download CIFAR10 datasets, stored at save_dir
+
+    ----------
+    save_dir : str
+        stored location
+    '''
     print('Downloading MNIST dataset...')
     os.makedirs(save_dir, exist_ok=True)
     datasets.MNIST(root=save_dir, download=True)
     print('MNIST dataset downloaded successfully.')
 
 def download_tiny_imagenet(save_dir):
+    '''
+    download CIFAR10 datasets, stored at save_dir
+
+    ----------
+    save_dir : str
+        stored location
+    '''
     print('Downloading TinyImageNet dataset...')
     os.makedirs(save_dir, exist_ok=True)
     url = 'http://cs231n.stanford.edu/tiny-imagenet-200.zip'
@@ -48,6 +70,16 @@ def download_tiny_imagenet(save_dir):
     print('TinyImageNet dataset downloaded successfully.')
 
 def main(dataset=None, save_dir=None):
+    '''
+    download datasets, stored at save_dir
+
+    ----------
+    dataset : str
+        choices = ['cifar10', 'minist', 'tiny_imagenet', None]
+        if None, then every dataset will be downloaded
+    save_dir : str
+        stored location
+    '''
     if save_dir is None:
         save_dir = './datasets'
     if dataset is None:
