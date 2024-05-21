@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Authors: M.Badzohreh - A.M.Kharazi
+# License: BSD 3 clause
+
+# Uncomment test cases you wish to run, then run the bash file
+
 # python3 TEST_001.py
 # python3 TEST_002.py
 # python3 TEST_003.py
