@@ -8,6 +8,7 @@ import torchvision.datasets as datasets
 def get_cifar10_dataloaders(data_dir='../datasets', transform_train=None, transform_test=None, batch_size=64, image_size=192):
     '''
     creates pytorch dataloaders for CIFAR10 dataset
+    
     ----------
     data_dir : str
             directory of your datasets, default vaule is ../datasets

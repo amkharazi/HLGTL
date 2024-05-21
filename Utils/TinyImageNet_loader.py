@@ -104,6 +104,7 @@ class val_dataset(Dataset):
 def get_tinyimagenet_dataloaders(data_dir='../datasets', transform_train=None, transform_val=None, transform_test=None, batch_size=64, image_size=192):
     '''
     creates pytorch dataloaders for Tiny ImageNet-200 dataset
+    
     ----------
     data_dir : str
             directory of your datasets, default vaule is ../datasets
