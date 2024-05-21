@@ -1,6 +1,27 @@
+# Authors: M.Badzohreh
+# License: BSD 3 clause
+
 import torch
 import torch.nn as nn
 class reshape(nn.Module):
+    '''
+    reshapes the 3-order tensor into 6-order tensor
+
+    ----------
+    split : list
+        split indices to be applied to each mode of the 3-order tensor
+
+    map_type : int
+        based on attached - 1 or compressed - 2 splitting method
+
+    device : str
+        operation device, default value is cpu
+
+        
+    inputs a 3-order torch.tensor
+    
+    returns a 6-order torch.tensor 
+    '''
     def __init__(self, split, map_type=1, device='cpu'):
         super(reshape, self).__init__()
         
