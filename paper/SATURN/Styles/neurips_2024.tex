@@ -126,7 +126,7 @@ Convolutional Neural Networks often contain fully connected layers after their c
  
  In machine learning, we usually consider data as vectors and datasets will form a set of vectors (ideally called a matrix). By that definition, many matrix decomposition methods have been invented to work on such matrices. Tensor methods are to generalize these methods to a higher dimensional space. 
  Mathematically, tensors, have been widely studied in the past. One excellent example within tensor methods is Tensor Decomposition which can be considered as a prime backbone for most tensorized layers and approximations in deep learning 
- \cite{r1}
+ \cite{r1}	
  \cite{r4},
   Signal Processing
  \cite{r2}
@@ -313,7 +313,7 @@ where $\left\langle\mathcal{X}, \mathcal{Y}\right\rangle_N \in \mathbb{R}^{I_x\t
 
 \subsection{Tucker decomposition}
 \label{subsec:tucker-decomposition}
-The Tucker decomposition \cite{r4} is a powerful method in tensor algebra that breaks down a tensor into a core tensor multiplied by matrices along each mode. In the Tucker decomposition, a tensor $\mathcal{T} \in \mathbb{R}^{I_1 \times I_2 \times \dots \times I_N}$ is represented as the product of a core tensor $\mathcal{G} \in \mathbb{R}^{J_1 \times J_2 \times \dots \times J_N}$ and a set of factor matrices $\mathbf{A}^{(1)} \in \mathbb{R}^{I_1 \times J_1}, \mathbf{A}^{(2)} \in \mathbb{R}^{I_2 \times J_2}, \dots, \mathbf{A}^{(N)} \in \mathbb{R}^{I_N \times J_N}$ along each mode. Mathematically, the Tucker decomposition can be expressed as:
+The Tucker decomposition \cite{r4} is a powerful method in tensor algebra that breaks down a tensor into a core tensor multiplied by matrices along each mode. In the Tucker decomposition, a tensor $\mathcal{T} \in \mathbb{R}^{I_1 \times I_2 \times \dots \times I_N}$ is represented as the product of a core tensor $\mathcal{G} \in \mathbb{R}^{J_1 \times J_2 \times \dots \times J_N}$ and a set of factor matrices $\mathbf{A}^{(1)} \in \mathbb{R}^{J_1 \times I_1}, \mathbf{A}^{(2)} \in \mathbb{R}^{J_2 \times I_2}, \dots, \mathbf{A}^{(N)} \in \mathbb{R}^{J_N \times I_N}$ along each mode. Mathematically, the Tucker decomposition can be expressed as:
 \begin{align}
 	\label{eq:tucker-decomposition}
 	\mathcal{T} = \mathcal{G} \times_1 \mathbf{A}^{(1)} \times_2 \mathbf{A}^{(2)} \times \dots \times_N \mathbf{A}^{(N)}
@@ -342,7 +342,7 @@ Given a MLP, there are two ways to interpret FC layers: One is to consider them 
 
 \subsubsection{Tensor contraction layer}
 \label{subsubsec:tcl}
-\textit{Tensor Contraction Layer} (TCL) \cite{r1} is a form of feature extraction and could also be used for embedding. The prime idea behind TCL is Tucker decomposition; Via multiplying matrices to each mode of the input tensor, we can obtain a denser tensor (dependent of the shape of the matrices). Figure \ref{fig:2-3} demonstrate the TCL process on a 3-order tensor. 
+\textit{Tensor Contraction Layer} (TCL) \cite{r1} is a form of feature extraction and could also be used for embedding. The prime idea behind TCL is Tucker decomposition; Via multiplying matrices to each mode of the input tensor, we can obtain a denser tensor (Appendix \ref{A-tcl}). Figure \ref{fig:2-3} demonstrate the TCL process on a 3-order tensor. 
 
 Considering an input tensor $\mathcal{X}$ of size 
 $(S_0,I_1,\dots,I_N)$ and a size 
@@ -369,7 +369,7 @@ Compared to the FC version where the simple regression between these two tensors
 \subsubsection{Tensor regression layer}
 \label{subsubsec:trl}
 \textit{Tensor Regression Layers} (TRL) \cite{r1} is a replacement for the FC regression layers.
-A simple regression that is the foundation of a MLP is a trivial generalized inner product of $\mathcal{W}$ (Weight Tensor) with the $\mathcal{X}$ (Input tensor). The idea behind TRL is to reconstruct $W$ from a low rank approximation of itself via tucker decomposition. In figure \ref{fig:2-3},  a TRL application in a MLP is provided. For the sake of simplicity, we considered a binary classification problem where the output of the inner product is a scaler. Similarly, if the desired output is a vector or even a tensor, $\mathcal{W}$ will be a higher dimensional tensor itself to generate each mode of the output. 
+A simple regression that is the foundation of a MLP is a trivial generalized inner product of $\mathcal{W}$ (Weight Tensor) with the $\mathcal{X}$ (Input tensor). The idea behind TRL is to reconstruct $W$ from a low rank approximation of itself via tucker decomposition (Appendix \ref{A-trl}). In figure \ref{fig:2-3},  a TRL application in a MLP is provided. For the sake of simplicity, we considered a binary classification problem where the output of the inner product is a scaler. Similarly, if the desired output is a vector or even a tensor, $\mathcal{W}$ will be a higher dimensional tensor itself to generate each mode of the output. 
 
 Considering an input tensor $\mathcal{X}$ of size 
 $(S_0,I_1,\dots,I_N)$, an output tensor $\mathcal{Y}$ of size 
@@ -484,7 +484,7 @@ In case of a $(r_1\dots,r_N, R_i,\dots,R_N)$ TCL, Since $L_i$s are usually small
 	\label{eq:reshape-parameter-tcl}
 	\sum_{i=1}^{N}L_i\times r_i + \sum_{i=1}^{N} R_i \times \frac{I_i}{L_i}
 \end{align}
-which is ideally less than equation \ref{eq:tcl-parmeter} (Appendix \ref{proof-1}).
+which is ideally less than equation \ref{eq:tcl-parmeter} (Appendix \ref{proof-1} and \ref{subspace-tcl}).
 
 In case of 
 $(r_1,\dots,r_N, R_1,\dots,R_N,R_{N+1})$
@@ -493,7 +493,7 @@ TRL, the same logic as TCL could also be applied. The total number of parameters
 	\label{eq:reshape-parameter-trl}
 	\left(\prod_{i=1}^{N}r_i \prod_{i=1}^{N+1}R_i\right) + \left(\sum_{i=1}^{N}L_i\times r_i + \sum_{i=1}^{N} R_i \times \frac{I_i}{L_i} + R_{N+1}\times O\right)
 \end{align} 
-which is ideally less than equation \ref{eq:trl-parmeter} (Appendix \ref{proof-2}).
+which is ideally less than equation \ref{eq:trl-parmeter} (Appendix \ref{proof-2} and \ref{subspace-trl}).
 
 
 \begin{figure}
@@ -537,22 +537,22 @@ which is ideally less than equation \ref{eq:trl-parmeter} (Appendix \ref{proof-2
 			\toprule
 			\textbf{Dataset} & \textbf{Model} & \textbf{TRL} & \textbf{Split} & \textbf{Parameters} & \textbf{Top-1 (\%)} \\
 			\midrule
-			\multirow{8}{*}{MNIST} & \multirow{4}{*}{Resnet50} &   &   & 737,290 & 97.25 \\ 
+			\multirow{8}{*}{MNIST} & \multirow{4}{*}{Resnet50} &  Baseline &   & 737,290 & 97.25 \\ 
 			& & (50,3,3,3) &   & 103,816 & 96.49 \\ 
-			& & (1,1,1,20,1,1,4) & (2,2,2)\(^A\) & 20,612 & \textbf{98.56} \\ 
+			& & (1,1,1,20,1,1,4) & (2,2,2)\(^A\) & 20,612 & 98.56 \\ 
 			& & (4,1,1,20,1,1,10) & (16,2,2)\(^C\) & 3,534 & 98.12 \\ 
 			\cmidrule(lr){2-6}
-			& \multirow{4}{*}{Resnet101} &   &   & 737,290 & \textbf{98.58} \\ 
+			& \multirow{4}{*}{Resnet101} &  Baseline &   & 737,290 & 98.58 \\ 
 			& & (50,3,3,3) &   & 103,816 & 97.42 \\ 
 			& & (1,1,1,20,1,1,4) & (2,2,2)\(^C\) & 20,612 & 98.24 \\ 
 			& & (4,1,1,20,1,1,10) & (16,2,2)\(^A\) & 3,534 & 98.40 \\ 
 			\midrule
-			\multirow{8}{*}{CIFAR10} & \multirow{4}{*}{Resnet50} &   &   & 737,290 & 90.71 \\ 
+			\multirow{8}{*}{CIFAR10} & \multirow{4}{*}{Resnet50} &  Baseline &   & 737,290 & 90.71 \\ 
 			& & (50,3,3,3) &   & 103,816 & 90.41 \\ 
-			& & (1,1,1,100,1,1,10) & (2,2,2)\(^C\) & 103,512 & \textbf{92.58} \\ 
+			& & (1,1,1,100,1,1,10) & (2,2,2)\(^C\) & 103,512 & 92.58 \\ 
 			& & (4,1,1,10,1,1,4) & (16,2,2)\(^A\) & 1,386 & 90.44 \\ 
 			\cmidrule(lr){2-6}
-			& \multirow{4}{*}{Resnet101} &   &   & 737,290 & \textbf{92.67} \\ 
+			& \multirow{4}{*}{Resnet101} &  Baseline &   & 737,290 & 92.67 \\ 
 			& & (50,3,3,3) &   & 103,816 & 90.30 \\ 
 			& & (1,1,1,100,1,1,10) & (2,2,2)\(^C\) & 103,512 & 91.85 \\ 
 			& & (4,1,1,10,1,1,4) & (16,2,2)\(^A\) & 1,386 & 92.43 \\ 
@@ -571,10 +571,10 @@ which is ideally less than equation \ref{eq:trl-parmeter} (Appendix \ref{proof-2
 			\toprule
 			\textbf{TCL} & \textbf{TRL} & \textbf{Split} & \textbf{Parameters} & \textbf{Top-1(\%)} & \textbf{Top-5(\%)} \\
 			\midrule
-			&   &   & 93,102,280 & 63.66 & 84.16 \\ 
+			 Baseline &   &   & 93,102,280 & 63.66 & 84.16 \\ 
 			(512,6,6) & (512,6,6,200) &   & 4,250,832 & 67.32 & 87.87 \\ 
 			(2,2,2,256,1,1) & (1,1,1,256,1,1,200) & (2,2,2)\(^A\) & 666,714 & 68.91 & 88.16 \\ 
-			(6,2,2,64,3,3) & (4,2,2,64,1,1,200) & (8,2,2)\(^C\) & 253,104 & 68.29 & \textbf{88.34} \\ 
+			(6,2,2,64,3,3) & (4,2,2,64,1,1,200) & (8,2,2)\(^C\) & 253,104 & 68.29 & 88.34 \\ 
 			\bottomrule
 		\end{tabular}
 	\end{table}
@@ -589,7 +589,7 @@ which is ideally less than equation \ref{eq:trl-parmeter} (Appendix \ref{proof-2
 			\toprule
 			\textbf{TCL} & \textbf{TRL} & \textbf{Split} & \textbf{Parameters} & \textbf{Top-1(\%)} \\
 			\midrule
-			&   &   & 4,729,866 & \textbf{98.14} \\ 
+			Baseline &   &   & 4,729,866 & 98.14 \\ 
 			(128,6,6) & (128,6,6,10) &   & 79,092 & 95.62 \\ 
 			(2,1,1,64,6,6) & (2,1,1,64,6,6,10) & (2,1,1)\(^A\) & 54,528 & 97.11 \\ 
 			(2,1,1,64,6,6) & (2,1,1,64,6,6,10) & (2,1,1)\(^C\) & 54,528 & 97.12 \\ 
@@ -936,6 +936,32 @@ Deep neural networks, especially CNNs, often work with multi-dimensional tensors
 %Optionally include supplemental material (complete proofs, additional experiments and plots) in appendix.
 %All such materials \textbf{SHOULD be included in the main submission.}
 
+\section{TCL}
+\label{A-tcl}
+Given an input tensor $\mathcal{X} \in \mathbb{R}^{S_0\times I_1\times\dots\times I_N}$, a rank $(R_1,\dots,R_N)$ TCL on $\mathcal{X}$  is defined as :
+
+\begin{align}
+	\label{eq:tcl}
+	&\left(V^{(1)},\dots,V^{(N)}\right)_{1:N} \mathcal{X} = \mathcal{X}_{[0]} (V^{(1)}\otimes\dots\otimes V^{(N)})^T
+\end{align}
+
+where $S_0$ is the batch index and $V^{(i)} \in \mathbb{R}^{R_i\times I_i}$.
+
+\section{TRL}
+\label{A-trl}
+Given an input tensor $\mathcal{X} \in \mathbb{R}^{S_0\times I_1\times\dots\times I_N}$, output tensor $\mathcal{Y} \in \mathbb{R}^{S_0\times O}$, a rank $(R_1,\dots,R_N, R_{N+1})$ TRL on $\mathcal{X}$  is defined as:
+
+\begin{align}
+	\label{eq:trl}
+	\mathcal{W} &= \left(U^{(1)},\dots,U^{(N)}, U^{(N+1)}\right)_{0:N+1} \mathcal{G}
+	\nonumber\\
+	\mathcal{Y} &=  \left\langle \mathcal{X}, \mathcal{W}\right\rangle_N
+\end{align}
+
+where $S_0$ is the batch index, $\forall i \hspace{1mm}U^{(i)} \in \mathbb{R}^{R_i\times I_i}$,
+$U^{(N+1)} \in \mathbb{R}^{R_{N+1}\times O}$,
+and $\mathcal{G} \in \mathbb{R}^{I_1\times\dots\times I_N\times O}$.
+
 \section{Method analysis on TCL}
 \label{proof-1}
 As stated in subsection \ref{subsec:method-analysis}, 
@@ -989,6 +1015,8 @@ equation \ref{eq:reshape-parameter-tcl}, the number of required parameters for a
 Therefore, with ideal ranks, $\forall i \hspace{2mm}\hat{R}_i \leq R_i$ and $\sum_{i=0}^{N} r_i\times L_i \leq \alpha$, inequality \ref{eq:proof-1-14} holds.
 \end{proof}
 
+Given no ideal, or some ideal ranks, there is no guarantee that inequality \ref{eq:proof-1-14} holds without further constraints. We will briefly discuss some ideal settings for semi ideal ranks and splits.  
+
 \begin{proof}[\textbf{semi ideal}] 
 	We prove that given semi ideal ranks, inequality \ref{eq:proof-1-14} holds. 
 	
@@ -1035,11 +1063,13 @@ Given the assumption and the inequality \ref{eq:proof-1-22}:
 	&\leq  \sum_{i=1}^{N} R_i \times I_i
 \end{align}
 
-Therefore, with ideal splits, $\sum_{i=1}^{N} k_i \times \frac{I_i}{L_i} \leq \beta$ , inequality \ref{eq:proof-1-15} holds. The rest of the proof is similar to \textit{\textbf{ideal}} situation.
+Therefore, with ideal splits and $\sum_{i=1}^{N} k_i \times \frac{I_i}{L_i} \leq \beta$ , inequality \ref{eq:proof-1-15} holds. The rest of the proof is similar to \textit{\textbf{ideal}} case.
 \end{proof} 
+
+We will now prove that as long as the only existed semi-ideal ranks, follow the rule above, inequality \ref{eq:proof-1-14} can hold.
  
 \begin{proof}[\textbf{semi ideal}]
-	We prove that given some ideal ranks, inequality \ref{eq:proof-1-14} holds.
+	We prove that given just some ideal ranks, inequality \ref{eq:proof-1-14} holds.
 	
 	 Assume $\exists j \hspace{2mm}\hat{R}_j > R_j$, then:
 	 
@@ -1101,7 +1131,7 @@ Given the assumption and the inequality \ref{eq:proof-1-27}:
 	\sum_{i = 1}^{N}R_i \times I_i
 \end{align}
 
-Therefore, with ideal splits as long as the existed semi ideal ranks follow inequality \ref{eq:proof-1-27}, inequality \ref{eq:proof-1-15} holds. The rest of the proof is similar to \textit{\textbf{ideal}} situation.
+Therefore, with ideal splits as long as the existed semi ideal ranks follow inequality \ref{eq:proof-1-27}, inequality \ref{eq:proof-1-15} holds. The rest of the proof is similar to \textit{\textbf{ideal}} case.
 \end{proof}
 
 \section{Method analysis on TRL}
@@ -1171,9 +1201,7 @@ It proves that :
 		\prod_{i=1}^{N+1}R_i + \sum_{i=1}^{N} R_i\times I_i + R_{N+1}\times O
 	\end{align}
 
-Therefore, with ideal ranks, $\forall i \hspace{2mm}\hat{R}_i \leq R_i$ and $\sum_{i=0}^{N} r_iL_i \leq \alpha_1$, inequality \ref{eq:proof-2-29} holds.
-
-Assume $\forall i\hspace{2mm}\prod_{i=1}^{N}r_i \prod_{i=1}\hat{R}_i > 
+Assuming $\exists i\hspace{2mm}\prod_{i=1}^{N}r_i \prod_{i=1}\hat{R}_i > 
 \prod_{i=1}^{N+1}R_i$, then consider $\alpha_2$ as:
 
 \begin{align}
@@ -1195,13 +1223,16 @@ Given:
 	k \leq \left(\sum_{i=1}^{N} R_i\times I_i + R_{N+1}\times O \right) - \left(\sum_{i=1}^{N} \hat{R}_i \times \frac{I_i}{L_i} + \hat{R}_{N+1}\times O\right)
 \end{align}
 
-Therefore, with ideal ranks and splits, inequality \ref{eq:proof-2-29} holds using \ref{eq:proof-2-37}.
+Therefore, with ideal ranks, $\forall i \hspace{2mm}\hat{R}_i \leq R_i$, $\sum_{i=0}^{N} r_iL_i \leq \alpha_1$, and $\prod_{i=1}^{N}r_i \prod_{i=1}\hat{R}_i\leq
+\prod_{i=1}^{N+1}R_i$, or $\prod_{i=1}^{N}r_i \leq \alpha_2$, and inequality \ref{eq:proof-2-37},  inequality \ref{eq:proof-2-29} holds.
 \end{proof}
+
+Given no ideal, or some ideal ranks, there is no guarantee that inequality \ref{eq:proof-2-29} holds without further constraints. We will briefly discuss some ideal settings for semi ideal ranks and splits.  
 
 \begin{proof}[\textbf{semi ideal}]
 	We prove that given semi ideal ranks, inequality \ref{eq:proof-2-29} holds.
 	
-	Assume $\forall i \hspace{2mm}\hat{R}_i > R_i$, which is equivalent to  
+	Assume $\forall i \hspace{2mm}\hat{R}_i > R_i$, which is equivalent to solving for 
 	$\exists j \hspace{2mm}\hat{R}_j > R_j$,
 	then:
 	
@@ -1233,9 +1264,340 @@ We can consider:
 		\sum_{i=1}^{N} k_i \times \frac{I_i}{L_i} + k_{N+1}\times O \leq \beta
 	\end{align}
 	
-	Therefore, given the assumption and the inequality \ref{eq:proof-2-41}, with ideal splits, \ref{eq:proof-2-39} holds. The rest of the proof is similar to \textbf{\textit{ideal}} situation.
+	Therefore, given the assumption and the inequality \ref{eq:proof-2-41}, with ideal splits, \ref{eq:proof-2-30} holds. The rest of the proof is similar to \textbf{\textit{ideal}} case.
 \end{proof}
 
+\section{Subspace of MLP - TCL}
+\label{subspace-tcl}
+%We discuss the subspace attribute of Our method on TCL, classic TCL, and MLP. Given input tensor $\mathcal{X} \in \mathbb{R}^{S_0\times I_1\times\dots\times I_N}$, $\mathcal{X}_{[0]}$ is the vectorization of all samples within batch $S_0$.
+%
+%Consider:
+%
+%\begin{align}
+%	\label{eq:subspace-tcl-42}
+%	\bar{\mathcal{X}} = \mathcal{X}_{[0]} \in \mathbb{R}^{S_0\times I} \hspace{10mm}I=I_1I_2\dots I_N
+%\end{align}
+%
+%A MLP can be represented as:
+%
+%\begin{align}
+%	\label{eq:subspace-tcl-42}
+%	\mathcal{Y} = \bar{\mathcal{X}}\times V^T \hspace{10mm}V\in \mathbb{R}^{R\times I}\hspace{2mm},\hspace{2mm}R = R_1R_2\dots R_N 
+%\end{align}
+%
+%Consider space $\Phi$ such that:
+%
+%\begin{align}
+%	\label{eq:subspace-tcl-43}
+%	\Phi = \left\{V | V \in \mathbb{R}^{R\times I}\right\}
+%\end{align}
+%
+%Assuming $V^{(i)} \in \mathbb{R}^{R_i\times I_i}$, then given a TCL with factors $V^{(i)}$:
+%
+%\begin{align}
+%	\label{eq:subspace-tcl-44}
+%	\hat{\mathcal{X}} = \mathcal{X} \times_1 V^{(1)}\times_2 V^{(2)}\dots \times_{N+1} V^{(N)}
+%\end{align}
+%
+%Then we can consider the vectorized version as :
+%
+%\begin{align}
+%	\label{eq:subspace-tcl-45}
+%	\mathcal{Y} = \bar{\mathcal{X}}\times \hat{V}^T \hspace{10mm} \hat{V} = \left(V^{(1)}\otimes V^{(2)}\otimes \dots\otimes V^{(N)} \right) \in \mathbb{R}^{R\times I}
+%\end{align}
+%
+%Consider space $\Psi$ such that:
+%
+%\begin{align}
+%	\label{eq:subspace-tcl-46}
+%	\Psi = \left\{V = V^{(1)}\otimes V^{(2)}\otimes \dots\otimes V^{(N)} | \forall i \hspace{2mm} V^{(i)} \in \mathbb{R}^{R_i\times I_i}\right\}
+%\end{align}
+
+
+We discuss the subspace attribute of Our method on TCL, classic TCL, and MLP. Given input tensor $\mathcal{X} \in \mathbb{R}^{S_0\times I_1\times\dots\times I_N}$, $\mathcal{X}_{[0]}$ is the vectorization of all samples within the batch $S_0$.
+
+Consider:
+
+\begin{align}
+	\label{eq:subspace-tcl-44}
+	\bar{\mathcal{X}} = \mathcal{X}_{[0]} \in \mathbb{R}^{S_0\times I} \hspace{10mm}I=I_1I_2\dots I_N
+\end{align}
+
+A MLP can be represented as:
+
+\begin{align}
+	\label{eq:subspace-tcl-45}
+	\mathcal{Y} = \bar{\mathcal{X}}\times V^T \hspace{10mm}V\in \mathbb{R}^{R\times I}\hspace{2mm},\hspace{2mm}R = R_1R_2\dots R_N 
+\end{align}
+
+Consider the solution space $\Phi$ such that:
+
+\begin{align}
+	\label{eq:subspace-tcl-46}
+	\Phi = \left\{\bar{\mathcal{X}} V^T | V \in \mathbb{R}^{R\times I}\right\}
+\end{align}
+
+
+Assuming $V^{(i)} \in \mathbb{R}^{R_i\times I_i}$, then a TCL with factors $V^{(i)}$ can be defined as:
+
+\begin{align}
+	\label{eq:subspace-tcl-47}
+	\hat{\mathcal{X}} &= \left(V^{(1)},\dots,V^{(N)}\right)_{1:N} \mathcal{X}
+	\nonumber\\
+	&= \bar{\mathcal{X}} \times (\hat{V})^T 
+\end{align}
+
+where $\hat{V} = \left(V^{(1)}\otimes V^{(2)}\otimes \dots\otimes V^{(N)} \right) \in \mathbb{R}^{R\times I}$.
+
+Consider the solution space $\Psi$ such that:
+
+\begin{align}
+	\label{eq:subspace-tcl-48}
+	\Psi = \left\{\bar{\mathcal{X}} \hat{V}^T | \hat{V} = V^{(1)}\otimes V^{(2)}\otimes \dots\otimes V^{(N)}  \in \mathbb{R}^{R\times I} \land \forall i \hspace{2mm} V^{(i)} \in \mathbb{R}^{R_i\times I_i}\right\}
+\end{align}
+
+It is clear that $\Psi \subseteq \Phi$. So the solution of a TCL is a subset of standard MLP but with less parameters. 
+
+Let $\Gamma$ be a reshape function introduced in section \ref{sec:splitting-approach}:
+
+\begin{align}
+	\label{eq:subspace-tcl-49}
+	\tilde{\mathcal{X}} = \Gamma (\mathcal{X}) \in \mathbb{R}^{L_1\times\dots\times L_N,\frac{I_1}{L_1}\times\dots\times \frac{I_N}{L_N}}
+\end{align}
+
+Consider $U^{(i)} \in \mathbb{R}^{R_i\times \frac{I_i}{L_i}}$ and $W^{(i)} \in \mathbb{R}^{r_i\times L_i}$, then a TCL with factors $U^{(i)}$ and $W^{(i)}$ can be defined as :
+
+\begin{align}
+	\label{eq:subspace-tcl-50}
+	\hat{\mathcal{X}} &= \left(U^{(1)},\dots,U^{(N)}, W^{(1)},\dots,W^{(N)}\right)_{1:2N} \tilde{\mathcal{X}}
+	\nonumber \\
+	& = \left(U^{(1)} \otimes W^{(1)} ,\dots,U^{(N)} \otimes W^{(N)}\right)_{1:N} \Gamma^{-1}(\tilde{\mathcal{X}})
+	\nonumber\\
+	& = \left(V^{(1)} ,\dots,V^{(N)}\right)_{1:N} \mathcal{X}
+	\nonumber\\
+	&= \bar{\mathcal{X}} \times (\tilde{V})^T 
+\end{align}
+
+where $\Gamma^{-1}$ is the inverse of the reshape operation; $\tilde{V} = \left(V^{(1)}\otimes V^{(2)}\otimes \dots\otimes V^{(N)} \right) \in \mathbb{R}^{R^\prime\times I}$, $V^{(i)} = U^{(i)} \otimes W^{(i)}$, and $R^\prime = \prod_{i=1}^{N} R_i r_i$
+
+
+Consider the solution space $\Omega$ such that:
+
+\begin{align}
+	\label{eq:subspace-tcl-51}
+	\Omega &= \left\{
+	\bar{\mathcal{X}} \tilde{V}^T | 
+	\tilde{V} = V^{(1)}\otimes V^{(2)}\otimes \dots\otimes V^{(N)}  \in \mathbb{R}^{R^\prime\times I} \right\}
+	\nonumber \\
+	 &\forall i \hspace{2mm} V^{(i)} = U^{(i)} \otimes W^{(i)} \in \mathbb{R}^{R_ir_i\times I_i} 
+	 \nonumber \\
+	 &\forall i \hspace{2mm} U^{(i)} \in \mathbb{R}^{R_i \times \frac{I_i}{L_i}}, W^{(i)} \in \mathbb{R}^{r_i\times L_i}
+\end{align}
+
+
+It is clear that $\Omega \subseteq \Psi \subseteq \Phi$. So the solution of a TCL on our framework is a subset of standard TCL and standard MLP but with less parameters. 
+
+
+\section{Subspace of MLP - TRL}
+\label{subspace-trl}
+
+
+\section{Additional Tables}
+\label{additional-tables}
+Additional experiments evaluated on MNIST, CIFAR10, and Tiny ImageNet-200 applied to ResNet50, ResNet101, VGG-19 , and classic CNN. In out experiments, to better represent the effect of our methods, we ignored adaptive average pooling layer of all models. 
+
+\begin{table}
+	\caption{MNIST applied to resnet50}
+	\label{atab-1}
+	\centering
+	\begin{tabular}{c c c c c}
+		\toprule
+		\textbf{TRL} & \textbf{Split} & \textbf{Parameters} & \textbf{Top-1(\%)} & \textbf{Top-5(\%)} \\
+		\midrule
+		Baseline & & 737,290 & 97.25 & 99.93 \\
+		$(200,3,3,8)$ & & 424,116 & 98.75 & 99.98 \\
+		$(100,3,3,10)$ & & 213,936 & 97.99 & 99.96 \\
+		$(50,3,3,3)$ & & 103,816 & 96.49 & 99.78 \\
+		$(1,1,1,100,1,1,10)$ & $(2,2,2)$$^A$ & 103,512 & 97.81 & 99.95 \\
+		$(1,1,1,100,1,1,10)$ & $(2,2,2)$$^C$ & 103,512 & 98.18 & 99.98 \\
+		$(1,1,1,20,1,1,4)$ & $(2,2,2)$$^A$ & 20,612 & 98.56 & 99.94 \\
+		$(1,1,1,20,1,1,4)$ & $(2,2,2)$$^C$ & 20,612 & 97.79 & 99.95 \\
+		$(4,1,1,20,1,1,10)$ & $(16,2,2)$$^A$ & 3,534 & 97.85 & 99.96 \\
+		$(4,1,1,20,1,1,10)$ & $(16,2,2)$$^C$ & 3,534 & 98.12 & 100.00 \\
+		$(4,1,1,10,1,1,4)$ & $(16,2,2)$$^A$ & 1,386 & 97.74 & 99.93 \\
+		$(4,1,1,10,1,1,4)$ & $(16,2,2)$$^C$ & 1,386 & 98.43 & 99.89 \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\begin{table}
+	\caption{CIFAR10 applied to ResNet50}
+	\label{atab-2}
+	\centering
+	\begin{tabular}{c c c c c}
+		\toprule
+		\textbf{TRL} & \textbf{Split} & \textbf{Parameters} & \textbf{Top-1(\%)} & \textbf{Top-5(\%)} \\
+		\midrule
+		Baseline & & 737,290 & 90.71 & 99.71 \\
+		$(200,3,3,8)$ & & 424,116 & 91.02 & 99.77 \\
+		$(100,3,3,10)$ & & 213,936 & 92.31 & 99.70 \\
+		$(50,3,3,3)$ & & 103,816 & 90.41 & 99.28 \\
+		$(1,1,1,100,1,1,10)$ & $(2,2,2)$$^A$ & 103,512 & 91.78 & 99.79 \\
+		$(1,1,1,100,1,1,10)$ & $(2,2,2)$$^C$ & 103,512 & 92.58 & 99.83 \\
+		$(1,1,1,20,1,1,4)$ & $(2,2,2)$$^A$ & 20,612 & 90.99 & 99.46 \\
+		$(1,1,1,20,1,1,4)$ & $(2,2,2)$$^C$ & 20,612 & 91.52 & 99.50 \\
+		$(4,1,1,20,1,1,10)$ & $(16,2,2)$$^A$ & 3,534 & 92.26 & 99.82 \\
+		$(4,1,1,20,1,1,10)$ & $(16,2,2)$$^C$ & 3,534 & 91.94 & 99.83 \\
+		$(4,1,1,10,1,1,4)$ & $(16,2,2)$$^A$ & 1,386 & 90.44 & 99.32 \\
+		$(4,1,1,10,1,1,4)$ & $(16,2,2)$$^C$ & 1,386 & 89.03 & 99.43 \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\begin{table}
+	\caption{Tiny ImageNet-200 applied to ResNet50}
+	\label{atab-3}
+	\centering
+	\begin{tabular}{c c c c c}
+		\toprule
+		\textbf{TRL} & \textbf{Split} & \textbf{Parameters} & \textbf{Top-1(\%)} & \textbf{Top-5(\%)} \\
+		\midrule
+		Baseline & & 14,745,800 & 75.77 & 90.82 \\
+		$(1024,3,3,200)$ & & 3,980,388 & 80.68 & 93.72 \\
+		$(600,3,3,200)$ & & 2,348,836 & 81.08 & 93.80 \\
+		$(500,3,3,150)$ & & 1,729,036 & 81.33 & 94.00 \\
+		$(1,1,1,500,1,1,200)$ & $(2,2,2)$$^A$ & 652,012 & 81.86 & 94.57 \\
+		$(1,1,1,500,1,1,200)$ & $(2,2,2)$$^C$ & 652,012 & 81.94 & 94.32 \\
+		$(1,1,1,100,1,1,100)$ & $(2,2,2)$$^A$ & 132,412 & 82.02 & 94.54 \\
+		$(1,1,1,100,1,1,100)$ & $(2,2,2)$$^C$ & 132,412 & 82.73 & 94.49 \\
+		$(4,1,1,100,1,1,200)$ & $(16,2,2)$$^A$ & 222,474 & 82.64 & 94.87 \\
+		$(4,1,1,100,1,1,200)$ & $(16,2,2)$$^C$ & 222,474 & 81.92 & 94.62 \\
+		$(4,1,1,50,1,1,100)$ & $(16,2,2)$$^A$ & 91,274 & 82.38 & 94.35 \\
+		$(4,1,1,50,1,1,100)$ & $(16,2,2)$$^C$ & 91,274 & 82.30 & 94.47 \\
+		\hline
+	\end{tabular}
+\end{table}
+
+
+\begin{table}
+	\caption{MNIST applied to ResNet101}
+	\label{atab-4}
+	\centering
+	\begin{tabular}{c c c c c}
+		\toprule
+		\textbf{TRL} & \textbf{Split} & \textbf{Parameters} & \textbf{Top-1(\%)} & \textbf{Top-5(\%)} \\
+		\midrule
+		Baseline & & 737,290 & 98.58 & 99.97 \\
+		$(200,3,3,8)$ & & 424,116 & 98.35 & 99.98 \\
+		$(100,3,3,10)$ & & 213,936 & 97.99 & 99.98 \\
+		$(50,3,3,3)$ & & 103,816 & 97.42 & 99.86 \\
+		$(1,1,1,100,1,1,10)$ & $(2,2,2)$$^A$ & 103,512 & 98.03 & 99.98 \\
+		$(1,1,1,100,1,1,10)$ & $(2,2,2)$$^C$ & 103,512 & 97.77 & 99.96 \\
+		$(1,1,1,20,1,1,4)$ & $(2,2,2)$$^A$ & 20,612 & 98.24 & 99.84 \\
+		$(1,1,1,20,1,1,4)$ & $(2,2,2)$$^C$ & 20,612 & 98.24 & 99.90 \\
+		$(4,1,1,20,1,1,10)$ & $(16,2,2)$$^A$ & 3,534 & 98.40 & 100 \\
+		$(4,1,1,20,1,1,10)$ & $(16,2,2)$$^C$ & 3,534 & 98.25 & 99.95 \\
+		$(4,1,1,10,1,1,4)$ & $(16,2,2)$$^A$ & 1,386 & 98.03 & 99.96 \\
+		$(4,1,1,10,1,1,4)$ & $(16,2,2)$$^C$ & 1,386 & 98.05 & 99.89 \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\begin{table}
+	\caption{CIFAR10 applied to ResNet101}
+	\label{atab-5}
+	\centering
+	\begin{tabular}{c c c c c}
+		\toprule
+		\textbf{TRL} & \textbf{Split} & \textbf{Parameters} & \textbf{Top-1(\%)} & \textbf{Top-5(\%)} \\
+		\midrule
+		Baseline & & 737,290 & 92.67 & 99.71 \\
+		$(200,3,3,8)$ & & 424,116 & 91.96 & 99.78 \\
+		$(100,3,3,10)$ & & 213,936 & 90.66 & 99.83 \\
+		$(50,3,3,3)$ & & 103,816 & 90.30 & 99.19 \\
+		$(1,1,1,100,1,1,10)$ & $(2,2,2)$$^A$ & 103,512 & 92.18 & 99.79 \\
+		$(1,1,1,100,1,1,10)$ & $(2,2,2)$$^C$ & 103,512 & 91.85 & 99.88 \\
+		$(1,1,1,20,1,1,4)$ & $(2,2,2)$$^A$ & 20,612 & 92.07 & 99.61 \\
+		$(1,1,1,20,1,1,4)$ & $(2,2,2)$$^C$ & 20,612 & 90.28 & 99.29 \\
+		$(4,1,1,20,1,1,10)$ & $(16,2,2)$$^A$ & 3,534 & 90.34 & 99.78 \\
+		$(4,1,1,20,1,1,10)$ & $(16,2,2)$$^C$ & 3,534 & 92.14 & 99.87 \\
+		$(4,1,1,10,1,1,4)$ & $(16,2,2)$$^A$ & 1,386 & 92.43 & 99.64 \\
+		$(4,1,1,10,1,1,4)$ & $(16,2,2)$$^C$ & 1,386 & 89.96 & 99.26 \\
+		\hline
+	\end{tabular}
+\end{table}
+
+	\begin{table}
+	\caption{Tiny ImageNet-200 applied to ResNet101}
+	\label{atab-6}
+	\centering
+	\begin{tabular}{c c c c c}
+		\toprule
+		\textbf{TRL} & \textbf{Split} & \textbf{Parameters} & \textbf{Top-1(\%)} & \textbf{Top-5(\%)} \\
+		\midrule
+		Baseline & & 14,745,800 & 79.81 & 92.28 \\
+		$(1024,3,3,200)$ & & 3,980,388 & 84.10 & 94.55 \\
+		$(600,3,3,200)$ & & 2,348,836 & 84.20 & 94.98 \\
+		$(500,3,3,150)$ & & 1,729,036 & 84.55 & 94.99 \\
+		$(1,1,1,500,1,1,200)$ & $(2,2,2)$$^A$ & 652,012 & 84.99 & 95.49 \\
+		$(1,1,1,500,1,1,200)$ & $(2,2,2)$$^C$ & 652,012 & 85.52 & 95.82 \\
+		$(1,1,1,100,1,1,100)$ & $(2,2,2)$$^A$ & 132,412 & 84.86 & 95.29 \\
+		$(1,1,1,100,1,1,100)$ & $(2,2,2)$$^C$ & 132,412 & 85.13 & 95.26 \\
+		$(4,1,1,100,1,1,200)$ & $(16,2,2)$$^A$ & 222,474 & 85.22 & 95.52 \\
+		$(4,1,1,100,1,1,200)$ & $(16,2,2)$$^C$ & 222,474 & 85.35 & 95.45 \\
+		$(4,1,1,50,1,1,100)$ & $(16,2,2)$$^A$ & 91,274 & 85.20 & 95.21 \\
+		$(4,1,1,50,1,1,100)$ & $(16,2,2)$$^C$ & 91,274 & 85.24 & 95.36 \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\begin{table}
+	\caption{CIFAR10 applied to classic CNN}
+	\label{atab-7}
+	\centering
+	\begin{tabular}{c c c c c c}
+		\toprule
+		\textbf{TCL} & \textbf{TRL} & \textbf{Split} & \textbf{Parameters} & \textbf{Top-1(\%)} & \textbf{Top-5(\%)} \\
+		\midrule
+		Baseline& & & 4,729,866 & 76.09 & 98.04 \\
+		$(128,6,6)$ & $(128,6,6,10)$ & & 79,092 & 75.06 & 98.32 \\
+		$(2,1,1,64,6,6)$ & $(2,1,1,64,6,6,10)$ & $(2,1,1)$$^A$ & 54,528 & 73.57 & 98.09 \\
+		$(2,1,1,64,6,6)$ & $(2,1,1,64,6,6,10)$ & $(2,1,1)$$^C$ & 54,528 & 73.03 & 98.06 \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\begin{table}
+	\caption{Tiny ImageNet-200 applied to VGG-19}
+	\label{atab-8}
+	\centering
+	\begin{tabular}{c c c c c c}
+			\toprule
+		\textbf{TCL} & \textbf{TRL} & \textbf{Split} & \textbf{Parameters} & \textbf{Top-1(\%)} & \textbf{Top-5(\%)} \\
+		\midrule
+		Baseline & & & 93,102,280 & 63.66 & 84.16 \\
+		$(512,6,6)$ & $(512,6,6,200)$ & & 4,250,832 & 67.32 & 87.87 \\
+		$(2,2,2,256,1,1)$ & $(1,1,1,256,1,1,200)$ & $(2,2,2)$$^A$ & 666,714 & 68.91 & 88.16 \\
+		$(2,2,2,256,1,1)$ & $(1,1,1,256,1,1,200)$ & $(2,2,2)$$^C$ & 666,714 & 67.68 & 88.15 \\
+		$(6,2,2,64,3,3)$ & $(4,2,2,64,1,1,200)$ & $(8,2,2)$$^A$ & 253,104 & 68.66 & 88.33 \\
+		$(6,2,2,64,3,3)$ & $(4,2,2,64,1,1,200)$ & $(8,2,2)$$^C$ & 253,104 & 68.29 & 88.34 \\
+		\hline
+	\end{tabular}
+\end{table}
+
+
+\section{Ablation Studies}
+\label{ablation-study}
+We generated synthetic samples from a Gaussian distribution $\mathcal{N}(0, 3)$ such that $\mathcal{X} \in \mathbb{R}^{S\times32}$, where $S$ is the number of samples. Given a fixed $\mathcal{W} \in \mathbb{R}^{32\times32}$, we consider $\mathcal{Y} = \mathcal{X} \times \mathcal{W}^T$. Note that $\mathcal{X}$ is the vectorization of each samples if they were higher order tensors and $\mathcal{Y} \in \mathbb{R}^{S\times 32}$. Our goal is to estimate $\mathcal{W}$ using our modules trained on noisy $\mathcal{X} + \epsilon$, where $\epsilon$ is from a Gaussian distribution $\mathcal{N}(0,1)$. We evaluated our framework, standard TRL, and standard FC using RMSE; This study is carried out with a single layer model trained on noisy data using Adam optimizer. In figure \ref{fig:ablation}, a comparison of different methods using same ranks is provided. 
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.04]{ablation.png}
+	\caption{
+		TODO
+	}
+	\label{fig:ablation}
+\end{figure}
 
 
 
