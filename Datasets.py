@@ -77,6 +77,7 @@ def main(dataset=None, save_dir=None):
     dataset : str
         choices = ['cifar10', 'minist', 'tiny_imagenet', None]
         if None, then every dataset will be downloaded
+        
     save_dir : str
         stored location
     '''
