@@ -8,6 +8,8 @@ Download ResNet50, ResNe101, and VGG19 Weights and store them in ./weights by de
 import os
 import torch
 from torchvision import models
+import argparse
+
 
 def download_resnet50_weights(save_dir):
     '''
@@ -85,7 +87,6 @@ def main(model, save_dir):
         print('Invalid model choice. Please choose from vgg19, resnet50, or resnet101.')
 
 if __name__ == '__main__':
-    import argparse
 
     parser = argparse.ArgumentParser(description='Download and save pretrained model weights.')
     parser.add_argument('--model', choices=['resnet50', 'resnet101', 'vgg19'],
