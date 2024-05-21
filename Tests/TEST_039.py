@@ -1,3 +1,5 @@
+# Author: A.M.Kharazi
+# License: BSD 3 clause
 # Check Test Plan for more details 
 # Test ResNet101 model on MNIST dataset
 # New Classifier - TCL/TRL Model

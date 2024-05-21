@@ -1,3 +1,5 @@
+# Author: A.M.Kharazi
+# License: BSD 3 clause
 # Check Test Plan for more details 
 # Test VGG19 model on Tiny-Imagenet-200  dataset
 # New Classifier - TCL/TRL Model
