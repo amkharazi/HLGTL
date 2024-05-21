@@ -1,3 +1,6 @@
+# Author: A.M.Kharazi
+# License: BSD 3 clause
+
 import os
 from PIL import Image
 from torchvision import transforms

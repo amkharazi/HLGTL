@@ -1,3 +1,6 @@
+# Author: A.M.Kharazi
+# License: BSD 3 clause
+
 import torchvision.transforms as transforms
 from torch.utils.data import DataLoader
 import torchvision.datasets as datasets
