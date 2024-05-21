@@ -1,9 +1,27 @@
+# Author: A.M.Kharazi
+# License: BSD 3 clause
+
 import torch
 import torch.nn as nn
 import torchvision.models as models
 
 
 class _resnet50(nn.Module):
+    '''
+    a classic ResNet50
+
+    ----------
+    pretrained : boolean 
+            if True, uses weights_path to pretrained the model
+            if False, ignores the weights_path
+
+    weights_path :  str
+            path to the .pth file
+
+    tensorized : boolean
+        if True, flattens the data before feeding it to the classifiers,
+        if False, keeps the current structure of the data
+    '''
     def __init__(self, pretrained = True, weights_path = '../weights/resnet50_weights.pth', tensorized = False):
         super(_resnet50, self).__init__()
         
@@ -38,6 +56,19 @@ class _resnet50(nn.Module):
         return x
 
 def out_shape_resnet50(in_shape = (224,224), batch_size = 1):
+    '''
+    calculates the shape of tensor before classifier layers
+
+    ----------
+    in_shape : tuple 
+            input size of the image , use only the width and height
+    
+    batch_size : int
+            a batch size index, default value is 1
+
+    
+    returns the shape of tensor before the classifier layers
+    '''
     dummy_input = torch.rand((batch_size, 3) + in_shape)
     model = _resnet50(pretrained=False, weights_path=None, tensorized=False)
     dummy_input = model.features(dummy_input)
@@ -51,6 +82,36 @@ def Resnet50(pretrained  = True,
              num_classes = 1000,
              avg_pool = True,
              new_classifier = None):
+    '''
+    creates a classic ResNet50
+
+    ----------
+    pretrained : boolean 
+            if True, uses weights_path to pretrained the model
+            if False, ignores the weights_path
+
+    weights_path :  str
+            path to the .pth file
+    
+    tensorized : boolean
+            if True, flattens the tensor before classifier layers,
+            if False, keeps the current structure of the data
+
+    input_shape : tuple
+            used to calculate the classifier in features
+    
+    avg_pool : boolean or nn.Module
+            if True, does not perform a adaptive average pooling
+            if False, performs the adaptive average pooling 
+            if nn.Module, replaces the adaptive average pooling layer of the model
+ 
+    new_classifier : boolean or nn.Module or None
+            if False, does not change the classifier layer of the model 
+            if nn.Module, replaces the classifier layers of the model
+
+    
+    returns an nn.Module model
+    '''
     
     model = _resnet50(pretrained= pretrained,
                         weights_path= weights_path,
