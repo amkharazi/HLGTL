@@ -1,0 +1,4 @@
+total number of parameters:
+23611544
+total number of classifier parameters:
+103512
