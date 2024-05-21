@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Authors: M.Badzohreh - A.M.Kharazi
+# Author: A.M.Kharazi
 # License: BSD 3 clause
 
 # Uncomment test cases you wish to run, then run the bash file
