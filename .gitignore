@@ -1,4 +1,6 @@
 Ignored/
 datasets/
 weights/
-results/
+results/**/model_stats/*.pth
+**/__pycache__/
+onlyfortest/
