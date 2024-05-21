@@ -1,8 +1,30 @@
+# Author: A.M.Kharazi
+# License: BSD 3 clause
+
 import torchvision.transforms as transforms
 from torch.utils.data import DataLoader
 import torchvision.datasets as datasets
 
 def get_cifar10_dataloaders(data_dir='../datasets', transform_train=None, transform_test=None, batch_size=64, image_size=192):
+    '''
+    creates pytorch dataloaders for CIFAR10 dataset
+    ----------
+    data_dir : str
+            directory of your datasets, default vaule is ../datasets
+            
+    transform_train : torchvision.transforms
+            train dataset transformations
+
+    transform_test : torchvision.transforms
+            test dataset transformations
+
+    batch_size : int
+            
+    image_size  : int
+        squared size image size 
+    
+    reutrns a data loader
+    '''
     if transform_train is None:
         transform_train = transforms.Compose([
             transforms.RandomHorizontalFlip(),

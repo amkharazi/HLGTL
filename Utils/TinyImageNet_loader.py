@@ -6,6 +6,13 @@ import torchvision.datasets as datasets
 
 
 def label_names_all(root_dir = '../datasets'):
+    '''
+    creates a python dictionary between ID's and file descriptions
+    
+    ----------
+    root_dir : str
+            root directory of your Tiny ImageNet-200, default vaule is ../datasets
+    '''
     path = os.path.join(root_dir, 'tiny-imagenet-200/words.txt')
     labels = {}
     with open(path, 'r') as file:
@@ -15,6 +22,13 @@ def label_names_all(root_dir = '../datasets'):
     return labels
 
 def label_names_train(root_dir = '../datasets'):
+    '''
+    creates a python dictionary between ID's and file descriptions and their labels
+    
+    ----------
+    root_dir : str
+            root directory of your Tiny ImageNet-200, default vaule is ../datasets
+    '''
     path = os.path.join(root_dir, 'tiny-imagenet-200/train')
     labels = {}
     indices = {}
@@ -29,6 +43,10 @@ def label_names_train(root_dir = '../datasets'):
     return labels, indices
 
 class test_dataset(Dataset):
+    '''
+    Generate test dataset from test images,
+    no target information is provided for these images
+    '''
     def __init__(self, root_dir = '../datasets', transform=None):
         self.root_dir = os.path.join(root_dir, 'tiny-imagenet-200/test/images') 
         self.transform = transform
@@ -46,6 +64,10 @@ class test_dataset(Dataset):
 
 
 class val_dataset(Dataset):
+    '''
+    Generate val dataset from validation images,
+    matches the labels from train dataset to the txt files
+    '''
     def __init__(self, root_dir='../datasets', transform=None):
         self.root_dir = os.path.join(root_dir, 'tiny-imagenet-200/val/images')
         self.labels_name, self.indices = label_names_train(root_dir = root_dir)
@@ -77,6 +99,25 @@ class val_dataset(Dataset):
 
 
 def get_tinyimagenet_dataloaders(data_dir='../datasets', transform_train=None, transform_val=None, transform_test=None, batch_size=64, image_size=192):
+    '''
+    creates pytorch dataloaders for Tiny ImageNet-200 dataset
+    ----------
+    data_dir : str
+            directory of your datasets, default vaule is ../datasets
+            
+    transform_train : torchvision.transforms
+            train dataset transformations
+
+    transform_test : torchvision.transforms
+            test dataset transformations
+
+    batch_size : int
+            
+    image_size  : int
+        squared size image size 
+    
+    reutrns a data loader
+    '''
     if transform_train is None:
         transform_train = transforms.Compose([
             transforms.RandomHorizontalFlip(),
