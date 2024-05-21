@@ -1,13 +1,22 @@
-# Download the weights for the following Networks:
-# 1. VGG19
-# 2. ResNet50
-# 3. ResNet101
+'''
+Download ResNet50, ResNe101, and VGG19 Weights and store them in ./weights by default
+'''
+
+# Author: A.M.Kharazi
+# License: BSD 3 clause
 
 import os
 import torch
 from torchvision import models
 
 def download_resnet50_weights(save_dir):
+    '''
+    download ResNet50 weights, stored at save_dir
+
+    ----------
+    save_dir : str
+        stored location
+    '''
     print('Downloading ResNet50 weights ... ')
     os.makedirs(save_dir, exist_ok=True)
     save_path = os.path.join(save_dir, 'resnet50_weights.pth')
@@ -17,6 +26,13 @@ def download_resnet50_weights(save_dir):
     print('Resnet50 weights downloaded successfully.')
     
 def download_resnet101_weights(save_dir):
+    '''
+    download ResNet101 weights, stored at save_dir
+
+    ----------
+    save_dir : str
+        stored location
+    '''
     print('Downloading ResNet101 weights ... ')
     os.makedirs(save_dir, exist_ok=True)
     save_path = os.path.join(save_dir, 'resnet101_weights.pth')
@@ -26,6 +42,13 @@ def download_resnet101_weights(save_dir):
     print('ResNet101 weights downloaded successfully.')
 
 def download_vgg19_weights(save_dir):
+    '''
+    download VGG19 weights, stored at save_dir
+
+    ----------
+    save_dir : str
+        stored location
+    '''
     print('Downloading VGG19 weights ... ')
     os.makedirs(save_dir, exist_ok=True)
     save_path = os.path.join(save_dir, 'vgg19_weights.pth')
@@ -35,6 +58,17 @@ def download_vgg19_weights(save_dir):
     print('VGG19 weights downloaded successfully.')
 
 def main(model, save_dir):
+    '''
+    download weights, stored at save_dir
+
+    ----------
+    model : str
+        choices = ['resnet50', 'resnet101', 'vgg19', None]
+        if None, then every model weights will be downloaded
+        
+    save_dir : str
+        stored location
+    '''
     if save_dir is None:
         save_dir = './weights'
     if model is None:
