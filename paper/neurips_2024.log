@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2024.5.20)  22 MAY 2024 10:55
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2024.5.20)  22 MAY 2024 11:36
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -627,31 +627,35 @@ ips/cm-super/cm-super-t1.enc}] [2] [3]
 File: fig1.png Graphic file (type png)
 <use fig1.png>
 Package pdftex.def Info: fig1.png  used on input line 300.
-(pdftex.def)             Requested size: 163.05215pt x 90.3336pt.
- [4]
-<fig2-3.png, id=227, 12978.4875pt x 4230.80624pt>
+(pdftex.def)             Requested size: 244.57823pt x 135.5004pt.
+ [4] [5 <./fig1.png>]
+<fig2-3.png, id=237, 12978.4875pt x 4230.80624pt>
 File: fig2-3.png Graphic file (type png)
 <use fig2-3.png>
 Package pdftex.def Info: fig2-3.png  used on input line 350.
-(pdftex.def)             Requested size: 324.38219pt x 105.74406pt.
- [5 <./fig1.png>]
-<fig4.png, id=240, 8627.23125pt x 3477.99374pt>
+(pdftex.def)             Requested size: 454.29349pt x 148.09334pt.
+
+Overfull \hbox (56.8085pt too wide) in paragraph at lines 350--353
+ [][] 
+ []
+
+<fig4.png, id=239, 8627.23125pt x 3477.99374pt>
 File: fig4.png Graphic file (type png)
 <use fig4.png>
 Package pdftex.def Info: fig4.png  used on input line 362.
 (pdftex.def)             Requested size: 129.40288pt x 52.16765pt.
- [6 <./fig2-3.png> <./fig4.png>]
+[6 <./fig2-3.png> <./fig4.png>]
 <fig5.png, id=259, 12963.43124pt x 5435.30624pt>
 File: fig5.png Graphic file (type png)
 <use fig5.png>
 Package pdftex.def Info: fig5.png  used on input line 443.
-(pdftex.def)             Requested size: 259.32338pt x 108.72908pt.
+(pdftex.def)             Requested size: 388.88617pt x 163.05215pt.
 <678.png, id=260, 10037.5pt x 3430.8175pt>
 File: 678.png Graphic file (type png)
 <use 678.png>
 Package pdftex.def Info: 678.png  used on input line 451.
-(pdftex.def)             Requested size: 301.11201pt x 102.92007pt.
- [7 <./fig5.png> <./678.png>] [8] (./neurips_2024.bbl
+(pdftex.def)             Requested size: 351.3484pt x 120.09088pt.
+ [7 <./fig5.png>] (./neurips_2024.bbl [8 <./678.png>] [9]
 Underfull \hbox (badness 10000) in paragraph at lines 22--26
 []\T1/ptm/m/n/10 (+20) RZdunek ACi-chocki et al.  Non-neg-a-tive-ma-trixandten-
 sor fac-tor-iza-tions:
@@ -664,54 +668,57 @@ Overfull \hbox (0.58293pt too wide) in paragraph at lines 72--76
 --
  []
 
-[9] [10]) [11] [12]
-Underfull \hbox (badness 3907) in paragraph at lines 1049--1050
+[10]) [11] [12]
+Underfull \vbox (badness 2181) has occurred while \output is active []
+
+ [13]
+Underfull \hbox (badness 3907) in paragraph at lines 1061--1062
 \T1/ptm/m/n/10 (+20) As stated in sub-sec-tion []4.3[], equa-tion []14[], the n
 um-ber of re-quired pa-ram-e-ters for a
  []
 
 
-Underfull \hbox (badness 1533) in paragraph at lines 1049--1050
+Underfull \hbox (badness 1533) in paragraph at lines 1061--1062
 \T1/ptm/m/n/10 (+20) TRL on our frame-work is ide-ally less than equa-tions []1
 0[]. Given $\OMS/cmsy/m/n/10 T 2 \U/msb/m/n/10 R[]$
  []
 
 
-Underfull \hbox (badness 6461) in paragraph at lines 1049--1050
+Underfull \hbox (badness 6461) in paragraph at lines 1061--1062
 \T1/ptm/m/n/10 (+20) and $[] \OMS/cmsy/m/n/10 2 \U/msb/m/n/10 R[]$\T1/ptm/m/n/1
 0 (+20) , and out-put $\OMS/cmsy/m/n/10 Y 2 \U/msb/m/n/10 R[]$\T1/ptm/m/n/10 (+
 20) , ide-ally a rank
  []
 
-[13] [14] [15] [16]
-Overfull \hbox (4.27133pt too wide) in paragraph at lines 1490--1502
+[14] [15] [16] [17]
+Overfull \hbox (4.27133pt too wide) in paragraph at lines 1502--1514
  [][] 
  []
 
-<ablation.png, id=450, 9726.3375pt x 13249.5pt>
-File: ablation.png Graphic file (type png)
-<use ablation.png>
-Package pdftex.def Info: ablation.png  used on input line 1513.
-(pdftex.def)             Requested size: 388.98724pt x 529.88976pt.
-[17] [18] [19] [20 <./ablation.png>]
+<ablation_study.png, id=456, 6424.0pt x 8843.0375pt>
+File: ablation_study.png Graphic file (type png)
+<use ablation_study.png>
+Package pdftex.def Info: ablation_study.png  used on input line 1525.
+(pdftex.def)             Requested size: 256.91624pt x 353.66127pt.
+[18] [19] [20] [21 <./ablation_study.png>]
 LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 1
-562.
+574.
 
 (c:/texlive/2023/texmf-dist/tex/latex/psnfss/ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
-) [21] [22] [23] [24]
-[25] [26] [27] (./neurips_2024.aux)
+) [22] [23] [24] [25]
+[26] [27] (./neurips_2024.aux)
 Package rerunfilecheck Info: File `neurips_2024.out' has not changed.
 (rerunfilecheck)             Checksum: FAC21B3A95DF1A814AA402FEBB9B5D11;3259.
  ) 
 Here is how much of TeX's memory you used:
- 14271 strings out of 476025
- 221632 string characters out of 5794015
+ 14270 strings out of 476025
+ 221671 string characters out of 5794015
  1907382 words of memory out of 5000000
- 34056 multiletter control sequences out of 15000+600000
- 557300 words of font info for 222 fonts, out of 8000000 for 9000
+ 34057 multiletter control sequences out of 15000+600000
+ 557173 words of font info for 220 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,13n,76p,1640b,775s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,13n,76p,1639b,725s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/tex
 live/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2023
 /texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2023/texmf-di
@@ -728,10 +735,10 @@ rw/helvetic/uhvr8a.pfb><c:/texlive/2023/texmf-dist/fonts/type1/urw/times/utmb8a
 .pfb><c:/texlive/2023/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb><c:/texlive/
 2023/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><c:/texlive/2023/texmf-dist/fo
 nts/type1/urw/times/utmri8a.pfb>
-Output written on neurips_2024.pdf (27 pages, 32815940 bytes).
+Output written on neurips_2024.pdf (27 pages, 31605033 bytes).
 PDF statistics:
- 663 PDF objects out of 1000 (max. 8388607)
- 549 compressed objects within 6 object streams
- 190 named destinations out of 1000 (max. 500000)
+ 665 PDF objects out of 1000 (max. 8388607)
+ 551 compressed objects within 6 object streams
+ 191 named destinations out of 1000 (max. 500000)
  48847 words of extra memory for PDF output out of 51595 (max. 10000000)
 

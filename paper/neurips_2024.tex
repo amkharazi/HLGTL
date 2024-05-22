@@ -297,7 +297,7 @@ The Tucker decomposition \cite{r4} is a powerful method in tensor algebra that b
 The combination of tensor regression and tensor contractions has been used in an end-to-end trainable model by Kossaifi \cite{r1}, as discussed in Section \ref{sec:related-works}. Given an MLP, there are two ways to interpret FC layers: one is to consider them as a feature extraction layer where they map a latent or feature space to another latent space. Another approach is to consider them as regression layers, which are basically the classifier layers. Given the purpose of the network, they can be used interchangeably. In Figure \ref{fig:1}, a very simple MLP that is used after some convolution layers is provided. In this case, the first FC layer can be considered a dimension reduction layer, while the second FC layer maps the feature space to the target space. In the following text, we will discuss two main approaches to replace such FC layers:
 \begin{figure}
 	\centering
-	\includegraphics[scale=0.03]{fig1.png}
+	\includegraphics[scale=0.045]{fig1.png}
 	\caption{A simple MLP after some convolution layers.}
 	\label{fig:1}
 \end{figure}
@@ -347,7 +347,7 @@ and $\mathcal{G} \in \mathbb{R}^{R_1\times\dots\times R_N\times O}$; The number 
 Compared to the FC version where the number of parameters is $O\times\prod_{i=1}^{N}I_i$.
 \begin{figure}
 	\centering
-	\includegraphics[scale=0.025]{fig2-3.png}
+	\includegraphics[scale=0.035]{fig2-3.png}
 	\caption{Tensor regression networks, replacement for FC layers. In $(a)$, A simple TCL is applied; Each mode $i$ of tensor $\mathcal{T}$ is multiplied by factor $\mathbf{A}^{(i)}$.
 	In $(b)$, A TRL is applied; Generalized inner product of input tensor $\mathcal{T}$ and weight tensor $\mathcal{W}$ is calculated as the output tensor while considering a low rank approximation of weight tensor $\mathcal{W}$ in a tucker decomposed form. 
 	}
@@ -440,15 +440,15 @@ TRL, the same logic as TCL \ref{eq:reshape-parameter-tcl}could also be applied. 
 which is ideally less than equation \ref{eq:trl-parmeter} (Appendix \ref{proof-2} and \ref{subspace-trl}).
 \begin{figure}
 	\centering
-	\includegraphics[scale=0.02]{fig5.png}
+	\includegraphics[scale=0.03]{fig5.png}
 	\caption{
-		$(a)$ attached splitting of a 2-order tensor. $(b)$ compressed splitting of a 2-order tensor. $(c)$ demonstration of stacking split chunks of a 2-order tensor into a 4-order tensor.
+		$(a)$ attached splitting of a second-order tensor. $(b)$ compressed splitting of a second-order tensor. $(c)$ demonstration of stacking split chunks of a second-order tensor into a 4-order tensor.
 	}
 	\label{fig:5}
 \end{figure}
 \begin{figure}
 	\centering
-	\includegraphics[scale=0.03]{678.png}
+	\includegraphics[scale=0.035]{678.png}
 	\caption{
 		$(a)$ original sample image. $(b)$ reshaped sample image using attached approach. $(c)$ reshaped sample image using compressed approach. Input Image $\mathcal{T}\in \mathbb{R}^{C,H,W}$, only $H$ and $W$ indices have been split. 
 	}
@@ -457,14 +457,27 @@ which is ideally less than equation \ref{eq:trl-parmeter} (Appendix \ref{proof-2
 \section{Experiments}
 \label{sec:experiments}
 
-	We conducted a series of experiments to assess the performance of our proposed framework.Our experiments were performed on GeForce RTX 4090;
-	Datasetes MNIST, CIFAR10, Tiny ImageNet-200 applied to ResNet50, ResNet101, VGG-19, and classic CNN demonstrate that our methods can significantly reduce the number of parameters while maintaining or even improving classification accuracy. In Tables
-	\ref{table:resnet_mnist_cifar10}
-	,
-	\ref{table:vgg_tiny}
-	, and 
-	\ref{table:cnn_mnist}
-	parameters include only the classifier parameters. For a better representation of our methods, we ignored adaptive average pooling layers in all models. \(^A\) and \(^C\) are splitting approaches.
+	We conducted a series of experiments to assess the performance of our proposed framework. Our experiments were performed on a GeForce RTX 4090. Datasets \ref{table:datasets} MNIST, CIFAR10, and Tiny ImageNet-200 applied to ResNet50, ResNet101, VGG-19, and a classic CNN demonstrate that our methods can significantly reduce the number of parameters while maintaining or even improving classification accuracy. In Tables \ref{table:resnet_mnist_cifar10}, \ref{table:vgg_tiny}, and \ref{table:cnn_mnist}, parameters include only the classifier parameters. For a better representation of our methods, we ignored adaptive average pooling layers in all models. $^A$ and $^C$ are splitting approaches.
+	
+		\begin{table}
+		\centering
+		\caption{
+			Datasets information
+		}
+		\label{table:datasets}
+		\begin{tabular}{c c c c}
+			\toprule
+			\textbf{Dataset} & \textbf{\# classes} & \textbf{\# training samples} & \textbf{\# testing samples} 
+			\\
+			\midrule
+			 MNIST	& 10    &  60,000   &  10,000  \\
+			\midrule
+			CIFAR10	& 10  & 50,000   & 10,000   \\
+			\midrule
+			Tiny ImageNet	& 200  & 100,000  &  10,000 \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
 	\begin{table}
 		\centering
 		\caption{
@@ -547,8 +560,7 @@ which is ideally less than equation \ref{eq:trl-parmeter} (Appendix \ref{proof-2
 %	
 \section{Conclusion}
 \label{sec:conclusion}
-Deep neural networks, especially CNNs, often work with multi-dimensional tensors. Despite their empirical success, these architectures usually contain one or more fully connected layers which not only destroy the natural multi-linear structure of the data, but also over parameterize the model. By introducing tensorized layers such TRL and TCL we can achieve near similar accuracy while preserving the multi-modal structure of the data and reducing the number of classifier parameters; However, these methods perform poorly when the approximated rank is too low. We introduced SATURN, a framework which maintains the quality of the network and reduces the number of classifier parameter by more than 95 \%. Our experiment, evaluated on CIFAR10, MNIST, and Tiny ImageNet-200, applied to RestNet50, RestNet101, VGG19 , and classic CNNs demonstrate that by splitting the input tensor via an approach that does not disturb the multi-linear structure of the data, a TCL or TRL with fewer parameters can be performed which also maintains the accuracy. Based on our observations, many popular CNNs  learn their convolutional layers based on the flattening operation and their following FC layers. Therefore, for our framework to achieve best accuracy, all layers of the models need to be trained  for at least a few iterations. While our framework and similar approaches offer theoretical advantages, they currently do not exhibit the expected speed. This limitation underscores the primary challenge in applying tensor methods to models, as the development of optimal implementations remains a pending task. 
-
+Deep neural networks, especially CNNs, often work with multi-dimensional tensors. Despite their empirical success, these architectures usually contain one or more fully connected layers, which not only destroy the natural multi-linear structure of the data but also over-parameterize the model. By introducing tensorized layers such as TRL and TCL, we can achieve nearly similar accuracy while preserving the multi-modal structure of the data and reducing the number of classifier parameters. However, these methods perform poorly when the approximated rank is too low. We introduced SATURN, a framework that maintains the quality of the network and reduces the number of classifier parameters by more than 95\%. Our experiment, evaluated on CIFAR10, MNIST, and Tiny ImageNet-200, applied to ResNet50, ResNet101, VGG19, and classic CNNs, demonstrates that by splitting the input tensor via an approach that does not disturb the multi-linear structure of the data, a TCL or TRL with fewer parameters can be performed while maintaining accuracy. Based on our observations, many popular CNNs learn their convolutional layers based on the flattening operation and their following FC layers. Therefore, for our framework to achieve the best accuracy, all layers of the models need to be trained for at least a few iterations. While our framework and similar approaches offer theoretical advantages, they currently do not exhibit the expected speed. This limitation underscores the primary challenge in applying tensor methods to models, as the development of optimal implementations remains a pending task.
 
 %\section{General formatting instructions}
 %\label{gen_inst}
@@ -1510,9 +1522,9 @@ We generated synthetic samples from a Gaussian distribution $\mathcal{N}(0, 3)$ 
 
 \begin{figure}
 	\centering
-	\includegraphics[scale=0.04]{ablation.png}
+	\includegraphics[scale=0.04]{ablation_study.png}
 	\caption{
-		Our framework performs better with similar ranks compared to standard TRL or original FC. Ground Truth is the weight tensor (2-order tensor) displayed as an image, other modules tried to estimate $\mathcal{W}$ using noisy data. 
+		Our framework performs better with similar ranks compared to standard TRL or original FC. Ground Truth is the weight tensor (second-order tensor) displayed as an image, other modules tried to estimate $\mathcal{W}$ using noisy data. 
 	}
 	\label{fig:ablation}
 \end{figure}
