@@ -356,9 +356,7 @@ Compared to the FC version where the number of parameters is $O\times\prod_{i=1}
 \section{Splitting approach}
 \label{sec:splitting-approach}
 
-Impressed by the vision transformers patching and down sampling methods, we can transform our input tensor into a thinner and higher dimensional tensor that not only reduces the number of parameters for a TRL or TCL layer but also maintain the accuracy. However, not any reshaping scheme to arbitrary higher orders and dimensions guarantee that
-the multi-linear structure is preserved and the accuracy is maintained
-With a proper splitting scheme, the newly made tenser has better physical interpretation than the flattened data. We introduced two splitting schemes, both of which are useful and could be used differently according to the network architect. Figure \ref{fig:4} demonstrate the general splitting outline. Given a 3-order tensor, if we split across each mode, the output is a 6-order tensor where the first 3 modes correspond the split index, and the next 3 modes are the split data.
+Impressed by the Vision Transformer's patching and down-sampling methods, we can transform our input tensor into a thinner and higher-dimensional tensor that not only reduces the number of parameters for a TRL or TCL layer but also maintains accuracy. However, not every reshaping scheme to arbitrary higher orders and dimensions guarantees that the multi-linear structure is preserved and the accuracy is maintained. With a proper splitting scheme, the newly made tensor has a better physical interpretation than the flattened data. We introduced two splitting schemes, both of which are useful and could be used differently according to the network architecture. Figure \ref{fig:4} demonstrates the general splitting outline. Given a third-order tensor, if we split across each mode, the output is a sixth-order tensor where the first three modes correspond to the split index, and the next three modes are the split data.
 \begin{figure}
 	\centering
 	\includegraphics[scale=0.015]{fig4.png}
@@ -370,7 +368,7 @@ With a proper splitting scheme, the newly made tenser has better physical interp
 \subsection{Attached splitting}
 \label{subsec:attached-approach}
 
-In attached splitting, every split is continues, that is if mode  $I_i$ of the input tensor $\mathcal{X}$ with length $n$ is to be split into $2$ parts, then the split indices are $(0,\frac{n}{2})$ and $(\frac{n}{2}, n)$.
+In attached splitting, every split is continues; That is if mode  $I_i$ of the input tensor $\mathcal{X}$ with length $n$ is to be split into two parts, then the split indices are $(0,\frac{n}{2})$ and $(\frac{n}{2}, n)$.
 Figure 
 \ref{fig:5} 
 demonstrate the splitting process on a matrix. 
@@ -393,7 +391,7 @@ where $\mathcal{T}_a \in \mathbb{R}^{L_1\times\dots\times L_N\times \frac{I_1}{L
 \subsection{Compressed splitting}
 \label{subsec:copressed-splitting}
 
-In compressed splitting, we incorporate the idea behind down sampling, that is if mode $I_i$ of input tensor $\mathcal{X}$ with length $n$ is to be split into $2$ part , different to the attached splitting, the indices are even-odd combinations; That is $\left\{
+In compressed splitting, we incorporate the idea behind down sampling. If mode $I_i$ of input tensor $\mathcal{X}$ with length $n$ is to be split into $2$ part , different to the attached splitting, the indices are even-odd combinations; That is $\left\{
 t | t \in (0,n) \land 
 \left(t\bmod{2} = 0\right)
 \right\}$
@@ -423,7 +421,7 @@ where $\mathcal{T}_c \in \mathbb{R}^{L_1\times\dots\times L_N\times \frac{I_1}{L
 Considering an input tensor $\mathcal{X}$ of size
 $(S_0,I_1,\dots,I_N)$
 , either reshaping would result in the tensor $\hat{\mathcal{X}}$ of size
-$(S_0,L_1,\dots,L_N,\frac{I_1}{L_1}, \dots, \frac{I_N}{L_N})$. An example of each reshaping approach is done in figure \ref{fig:6-7-8} on a sample image.
+$(S_0,L_1,\dots,L_N,\frac{I_1}{L_1}, \dots, \frac{I_N}{L_N})$. An example of each reshaping approach is shown in Figure \ref{fig:6-7-8} on a sample image.
 
 In case of a $(r_1\dots,r_N, R_i,\dots,R_N)$ TCL, Since $L_i$s are usually small, the number of parameters required for them $\sum_{i=0}^{N}L_i\times r_i$ is also small; Similarly, $\frac{I_i}{L_i}$ is smaller than $I_i$ so the new desired $R_i$s is smaller than the previous $R_i$s and the total number of parameters can be calculated as:
 \begin{align}
@@ -434,7 +432,7 @@ which is ideally less than equation \ref{eq:tcl-parmeter} (Appendix \ref{proof-1
 
 In case of 
 $(r_1,\dots,r_N, R_1,\dots,R_N,R_{N+1})$
-TRL, the same logic as TCL could also be applied. The total number of parameters in a new TRL is calculated as:
+TRL, the same logic as TCL \ref{eq:reshape-parameter-tcl}could also be applied. The total number of parameters in a new TRL is calculated as:
 \begin{align}
 	\label{eq:reshape-parameter-trl}
 	\left(\prod_{i=1}^{N}r_i \prod_{i=1}^{N+1}R_i\right) + \left(\sum_{i=1}^{N}L_i\times r_i + \sum_{i=1}^{N} R_i \times \frac{I_i}{L_i} + R_{N+1}\times O\right)
