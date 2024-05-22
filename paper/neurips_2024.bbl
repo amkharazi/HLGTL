@@ -6,43 +6,8 @@ Jean Kossaifi, Zachary~C Lipton, Arinbjorn Kolbeinsson, Aran Khanna, Tommaso
 \newblock Tensor regression networks.
 \newblock {\em Journal of Machine Learning Research}, 21(123):1--21, 2020.
 
-\bibitem{r4}
-Tamara~G Kolda and Brett~W Bader.
-\newblock Tensor decompositions and applications.
-\newblock {\em SIAM review}, 51(3):455--500, 2009.
-
 \bibitem{r2}
-Nicholas~D Sidiropoulos, Lieven De~Lathauwer, Xiao Fu, Kejun Huang, Evangelos~E
-  Papalexakis, and Christos Faloutsos.
-\newblock Tensor decomposition for signal processing and machine learning.
-\newblock {\em IEEE Transactions on signal processing}, 65(13):3551--3582,
-  2017.
 
-\bibitem{r3}
-RZdunek ACichocki et~al.
-\newblock Nonnegativematrixandtensor factorizations:
-  Applicationstoexploratorymulti-waydata analysisandblindsourceseparation,
-  2009.
-
-\bibitem{r5}
-Evangelos~E Papalexakis, Christos Faloutsos, and Nicholas~D Sidiropoulos.
-\newblock Tensors for data mining and data fusion: Models, applications, and
-  scalable algorithms.
-\newblock {\em ACM Transactions on Intelligent Systems and Technology (TIST)},
-  8(2):1--44, 2016.
-
-\bibitem{r6}
-Martijn Bousse, Otto Debals, and Lieven De~Lathauwer.
-\newblock A tensor-based method for large-scale blind source separation using
-  segmentation.
-\newblock {\em IEEE Transactions on Signal Processing}, 65(2):346--358, 2016.
-
-\bibitem{r7}
-M~Alex~O Vasilescu and Demetri Terzopoulos.
-\newblock Multilinear analysis of image ensembles: Tensorfaces.
-\newblock In {\em Computer Vision—ECCV 2002: 7th European Conference on
-  Computer Vision Copenhagen, Denmark, May 28--31, 2002 Proceedings, Part I 7},
-  pages 447--460. Springer, 2002.
 
 \bibitem{r8}
 Vadim Lebedev, Yaroslav Ganin, Maksim Rakhuba, Ivan Oseledets, and Victor
@@ -202,5 +167,10 @@ Hanie Sedghi and Anima Anandkumar.
 \newblock Training input-output recurrent neural networks through spectral
   methods.
 \newblock {\em arXiv preprint arXiv:1603.00954}, 2016.
+
+\bibitem{r4}
+Tamara~G Kolda and Brett~W Bader.
+\newblock Tensor decompositions and applications.
+\newblock {\em SIAM review}, 51(3):455--500, 2009.
 
 \end{thebibliography}

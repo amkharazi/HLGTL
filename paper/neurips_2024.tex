@@ -120,19 +120,31 @@ Convolutional Neural Networks often contain fully connected layers after their c
 \section{Introduction}
 \label{sec:introduction}
 
-Neural Networks, especially those that are applied to images such as \textit{Convolutional Neural Networks} (CNNs), often consist of two main parts: one that is responsible for extracting features from the input data, and the other part is a \textit{MultiLayer Perceptron} (MLP) which maps the extracted features to the desired space. Despite empirical success, many known models, such as VGG, use \textit{Fully Connected} (FC) layers, which not only flatten the data but also require too many parameters.
+%Convolutional networks are one of the most important architectures in deep learning, forming the basis for machine vision applications. Between 2012 and 2018, various architectures based on convolutional networks were introduced, resulting in significant advancements in various applications. The most important point in the efficient architectures of convolutional networks is their high number of layers and, naturally, their large number of parameters. This large number of parameters, in addition to requiring a large number of data for learning, which is not necessarily available in some applications, makes it impossible to use these architectures even in the testing phase on medium or weak processing devices. Therefore, in recent years, many efforts have been made to reduce the number of parameters while maintaining the quality of these networks \cite{r1,r2}. Convolutional networks consist of two main parts: the convolutional layers for feature extraction followed by the MLP layers. Both of these parts play a role in increasing the number of parameters. In recent years, various efforts have been made for the convolutional part. Some methods, after training, aim to reduce the number of parameters and approximate the network for the testing part. But some approaches initially aim to replace the network layers with lighter layers, which in recent years, the second approach has been more attention due to its more practicality. Since in each convolutional layer, the input and output channels of the three-dimensional tensors, the parameters between these two layers are a four-dimensional tensor, the use of tensor approximations has a better match with the network structure and in both of the mentioned approaches above, it is one of the most common and effective methods in this field.
 
-Most natural datasets can be represented as a tensor due to their multi-linear or multi-modal structure; images can be considered as third-order tensors with width, height, and color channels as their corresponding three modes, and videos as fourth-order tensors with an additional time mode. In practice, most of the data used in current machine learning and artificial intelligence tasks can be encoded as tensors, necessitating their expansion to linear algebra.
+%On the other hand, every convolutional neural network ultimately ends with MLP layers for classification. Therefore, in this phase, the three-dimensional tensor, which is the output of the last convolutional channel, is converted into a vector, and the MLP network continues thereafter. This structural change from a three-dimensional tensor to a vector, in addition to eliminating the three-dimensional structure of the data, leads to a significant increase in the number of parameters.
+%In certain architectures, such as VGG, the parameters of the MLP layers make up a significant portion of the overall architecture parameters.
+%To address this problem, we need to look for methods that can perform feature extraction and ultimately classification without changing the format of tensor data to vectors. Although not much work has been done in the field of deep networks, in recent years, many efforts have been made for versions of machine learning methods that are referred to as tensor or multilinear methods, which can work with multi-dimensional data without converting them to vectors. For example, STM, the tensor version of the support vector method, the tensor logistic classification method, or versions of dimension reduction methods such as the multilinear principal component method, the GLRAM method, or the non-negative tensor decomposition were introduced. Unlike linear methods, multilinear learning methods can work with the original data format and, while preserving the multi-dimensional features of the data, help to significantly reduce the parameters of these methods compared to their linear versions. For example, for an $m \times n$ matrix as a sample, the number of parameters for the Support Vector Machine (SVM) and the Tensor Support Machine (STM) are $mn$ and $m+n$, respectively.
+%
+%To replace the MLP layers with tensor methods that can perform feature extraction and classification in the same tensor format, the well-known Tensor Contraction Layer (TCL) and Tensor Regression Layer (TRL) were introduced. In the TCL method, at the end of the convolutional layers, instead of converting the entire layer output to a vector and applying MLP, a matrix is multiplied for dimension reduction from each mode (dimension) of the tensor. This method allows the neural network to perform faster inference with fewer parameters, considering the advantages mentioned above. This layer can continue for several layers depending on the architecture. Also, for the final layer, a method called TRL is used. The idea is that to obtain an element in the output layer a vector of an MLP layer is internally multiplied by a vector to obtain a number. Now, since in TRL there is a tensor instead of a vector, to obtain a number in the last layer, the regression parameter must be a tensor instead of a vector, and the inner product of two tensors gives this output. Now, to create more compression, the authors in TCL assume that the regression parameter is obtained from the multiplication of three matrices from each of the three modes in a small three-dimensional tensor. In fact, they consider the regression parameter as a Tucker decomposition, which again plays an important role in reducing parameters. Experiments show that the use of TCL and TRL reduces the number of parameters by more than 65\% compared to fully connected layers, without much change in the accuracy in architectures like VGG and ResNet.
+%
+%In this paper, we propose a method that can achieve better or equivalent accuracy with a greater reduction in parameters compared to the TRL method. Here, the three-dimensional tensor of each data, resulting from the last layer of the convolutional part, is transferred to a higher 6-dimensional tensor, and the TRL and TCL methods are applied to this tensor. We further demonstrate that just as the search space of the TRL method is a subset of the original method, the search space of the proposed method is also a subset of the TRL method and has a lower rank. The implementation results on introduced networks such as ResNet50, ResNet101, VGG19, and a typical CNN , on benchmark datasets likw  CIFAR-10, MNIST, and Tiny-ImageNet-200,  show the quality of the proposed method compared to TRL and regular regression. Also, in these models, the proposed method usually shows about a 90 reduction in the number of parameters of the fully connected part.
 
-In machine learning, data is typically represented as vectors, and datasets are considered sets of vectors, ideally forming a matrix. Numerous matrix decomposition methods have been developed for such matrices. Tensor methods extend these techniques to higher-dimensional spaces. Mathematically, tensors have been extensively studied. A prominent example within tensor methods is Tensor Decomposition, which serves as a fundamental framework for various tensorized layers and approximations in deep learning \cite{r1, r4}, signal processing \cite{r2, r3}, data fusion \cite{r5}, blind source separation \cite{r3, r6}, and computer vision \cite{r7}.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-The FC layers used in many architectures are the main culprit behind vectorizing the data and the large number of parameters. To alleviate this issue, a better replacement for FC layers is needed, one that not only preserves the current model's accuracy but also reduces the number of parameters and does not destroy the structure of the data.
-
-A potential solution for tensorizing FC layers involves utilizing the low-rank approximation of the weight tensor. Various approaches addressing this issue will be discussed in Section \ref{sec:related-works}. However, these methods often underperform when the approximated rank is too low, which is suboptimal for larger models. The computational cost of these models typically depends on the tensor size. Our experiments demonstrate that a thinner, higher-dimensional reshaped tensor of the original input tensor performs significantly better at lower ranks. By employing a unique splitting and stacking technique, we preserved the model's accuracy.
-
-In this paper, we present two splitting approaches tailored to the specific task of the model. These methods reshape the tensor into a higher-dimensional space, reducing computational costs and improving the capability to handle lower approximated ranks. Our methods, evaluated on CIFAR-10, MNIST, and Tiny-ImageNet-200 datasets using established CNN models such as ResNet50, ResNet101, VGG19, and a typical CNN, achieved comparable accuracy with over 95\% fewer parameters compared to traditional FC layers, and even mitigated overfitting in some cases.
-
-Our main contribution is the introduction of splitting approaches that transform an $n$-order tensor into a $2n$-order tensor (doubling the dimensions). We then discuss the number of parameters required for a typical \textit{Tensor Regression Layer} (TRL) or \textit{Tensor Contraction Layer} (TCL) on these newly generated tensors. In the Appendix \ref{subspace-tcl}\ref{subspace-trl}, we prove that our methods are a subspace of TCL and TRL methods and that our parameters are ideally fewer than those required by other work.
+%Neural Networks, especially those that are applied to images such as \textit{Convolutional Neural Networks} (CNNs), often consist of two main parts: one that is responsible for extracting features from the input data, and the other part is a \textit{MultiLayer Perceptron} (MLP) which maps the extracted features to the desired space. Despite empirical success, many known models, such as VGG, use \textit{Fully Connected} (FC) layers, which not only flatten the data but also require too many parameters.
+%
+%Most natural datasets can be represented as a tensor due to their multi-linear or multi-modal structure; images can be considered as third-order tensors with width, height, and color channels as their corresponding three modes, and videos as fourth-order tensors with an additional time mode. In practice, most of the data used in current machine learning and artificial intelligence tasks can be encoded as tensors, necessitating their expansion to linear algebra.
+%
+%In machine learning, data is typically represented as vectors, and datasets are considered sets of vectors, ideally forming a matrix. Numerous matrix decomposition methods have been developed for such matrices. Tensor methods extend these techniques to higher-dimensional spaces. Mathematically, tensors have been extensively studied. A prominent example within tensor methods is Tensor Decomposition, which serves as a fundamental framework for various tensorized layers and approximations in deep learning \cite{r1, r4}, signal processing \cite{r2, r3}, data fusion \cite{r5}, blind source separation \cite{r3, r6}, and computer vision \cite{r7}.
+%
+%The FC layers used in many architectures are the main culprit behind vectorizing the data and the large number of parameters. To alleviate this issue, a better replacement for FC layers is needed, one that not only preserves the current model's accuracy but also reduces the number of parameters and does not destroy the structure of the data.
+%
+%A potential solution for tensorizing FC layers involves utilizing the low-rank approximation of the weight tensor. Various approaches addressing this issue will be discussed in Section \ref{sec:related-works}. However, these methods often underperform when the approximated rank is too low, which is suboptimal for larger models. The computational cost of these models typically depends on the tensor size. Our experiments demonstrate that a thinner, higher-dimensional reshaped tensor of the original input tensor performs significantly better at lower ranks. By employing a unique splitting and stacking technique, we preserved the model's accuracy.
+%
+%In this paper, we present two splitting approaches tailored to the specific task of the model. These methods reshape the tensor into a higher-dimensional space, reducing computational costs and improving the capability to handle lower approximated ranks. Our methods, evaluated on CIFAR-10, MNIST, and Tiny-ImageNet-200 datasets using established CNN models such as ResNet50, ResNet101, VGG19, and a typical CNN, achieved comparable accuracy with over 95\% fewer parameters compared to traditional FC layers, and even mitigated overfitting in some cases.
+%
+%Our main contribution is the introduction of splitting approaches that transform an $n$-order tensor into a $2n$-order tensor (doubling the dimensions). We then discuss the number of parameters required for a typical \textit{Tensor Regression Layer} (TRL) or \textit{Tensor Contraction Layer} (TCL) on these newly generated tensors. In the Appendix \ref{subspace-tcl}\ref{subspace-trl}, we prove that our methods are a subspace of TCL and TRL methods and that our parameters are ideally fewer than those required by other work.
 
 %
 %Please read the instructions below carefully and follow them faithfully.
@@ -1190,7 +1202,7 @@ Assuming $V^{(i)} \in \mathbb{R}^{R_i\times I_i}$, then a TCL with factors $V^{(
 	\label{eq:subspace-tcl-47}
 	\hat{\mathcal{X}}_{[0]} &= \mathcal{X}_{[0]} (V^{(1)}\otimes\dots\otimes V^{(N)})^T
 	\nonumber\\
-	&=\bar{\mathcal{X}} \hat{V}^T
+	&=\bar{\mathcal{X}}_{[0]} \hat{V}^T
 \end{align}
 where $\hat{V} = \left(V^{(1)}\otimes V^{(2)}\otimes \dots\otimes V^{(N)} \right) \in \mathbb{R}^{R\times I}$.
 
@@ -1209,18 +1221,26 @@ Let $\Gamma$ be a reshape function introduced in section \ref{sec:splitting-appr
 Consider $U^{(i)} \in \mathbb{R}^{R_i\times \frac{I_i}{L_i}}$ and $W^{(i)} \in \mathbb{R}^{r_i\times L_i}$, then a TCL with factors $U^{(i)}$ and $W^{(i)}$ can be defined as :
 \begin{align}
 	\label{eq:subspace-tcl-50}
-	\hat{\mathcal{X}} &= \left(W^{(1)},\dots,W^{(N)}, U^{(1)},\dots,U^{(N)}\right)_{1:2N} .\tilde{\mathcal{X}}
-	\nonumber \\
-	& = \left(W^{(1)} \otimes U^{(1)} ,\dots,W^{(N)} \otimes U^{(N)}\right)_{1:N} .\Gamma^{-1}(\tilde{\mathcal{X}})
+	\overline{\mathcal{X}} &= \left(W^{(1)},\dots,W^{(N)}, U^{(1)},\dots,U^{(N)}\right)_{1:2N} .\tilde{\mathcal{X}}
+%	\nonumber \\
+%	& = \left(W^{(1)} \otimes U^{(1)} ,\dots,W^{(N)} \otimes U^{(N)}\right)_{1:N} .\Gamma^{-1}(\tilde{\mathcal{X}})
+%	\nonumber\\
+%	& = \left(V^{(1)} ,\dots,V^{(N)}\right)_{1:N} .\Gamma^{-1}(\mathcal{X})
+%	\nonumber\\
+%	& = 
+%	&= \bar{\mathcal{X}} \tilde{V}^T 
+\end{align}
+So, 
+\begin{align}
+	\label{eq:subspace-tcl-50-2}
+	\Gamma^{-1}\left(\overline{\mathcal{X}}\right) &= \left(W^{(1)} \otimes U^{(1)} ,\dots,W^{(N)} \otimes U^{(N)}\right)_{1:N} .\Gamma^{-1}(\tilde{\mathcal{X}})
 	\nonumber\\
-	& = \left(V^{(1)} ,\dots,V^{(N)}\right)_{1:N} .\mathcal{X}
-	\nonumber\\
-	&= \bar{\mathcal{X}} \tilde{V}^T 
+	&= \left(V^{(1)} ,\dots,V^{(N)}\right)_{1:N} .\mathcal{X}
 \end{align}
 Therefore, similar to equation \ref{eq:tcl} : 
 \begin{align}
-	\hat{\mathcal{X}}_{[0]} = 
-	\bar{\mathcal{X}} \times (\tilde{V})^T 
+\Gamma^{-1}(\overline{\mathcal{X}})_{[0]} = 
+	\bar{\mathcal{X}}_{[0]} \times (\tilde{V})^T 
 \end{align}
 where $\Gamma^{-1}$ is the inverse of the reshape operation; $\tilde{V} = \left(V^{(1)}\otimes V^{(2)}\otimes \dots\otimes V^{(N)} \right) \in \mathbb{R}^{R^\prime\times I}$, $V^{(i)} = W^{(i)} \otimes U^{(i)}$, and $R^\prime = \prod_{i=1}^{N} R_i r_i$
 
@@ -1229,12 +1249,10 @@ Consider the solution space $\Omega$ such that:
 \begin{align}
 	\label{eq:subspace-tcl-51}
 	\Omega &= \left\{
-	\bar{\mathcal{X}} \tilde{V}^T | 
-	\tilde{V} = \left(V^{(1)}\otimes V^{(2)}\otimes \dots\otimes V^{(N)}\right)  \in \mathbb{R}^{R^\prime\times I} \right\}
+	\bar{\mathcal{X}}_{[0]} \tilde{V}^T | 
+	\tilde{V} = \left(V^{(1)}\otimes V^{(2)}\otimes \dots\otimes V^{(N)}\right)  \in \mathbb{R}^{R^\prime\times I}, V^{(i)}  = W^{(i)} \otimes U^{(i)} \right\}
 	\nonumber \\
 	&\text{s.t.}\nonumber\\
-	 &\forall i \hspace{2mm} V^{(i)} = W^{(i)} \otimes U^{(i)} \in \mathbb{R}^{R_ir_i\times I_i} 
-	 \nonumber \\
 	 &\forall i \hspace{2mm} U^{(i)} \in \mathbb{R}^{R_i \times \frac{I_i}{L_i}}, W^{(i)} \in \mathbb{R}^{r_i\times L_i}
 \end{align}
 It is clear that $\Omega \subseteq \Psi \subseteq \Phi$. So the solution of a TCL on our framework is a subset of standard TCL and MLP but with less parameters. 

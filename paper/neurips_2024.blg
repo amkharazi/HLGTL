@@ -3,44 +3,74 @@ Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: neurips_2024.aux
 The style file: unsrt.bst
 Database file #1: ref.bib
-You've used 34 entries,
+You're missing a field name---line 23 of file ref.bib
+ : 
+ : % title={Tensor decomposition for signal processing and machine learning},
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+You're missing a field name---line 45 of file ref.bib
+ : 
+ : % title={NonnegativeMatrixandTensor Factorizations: ApplicationstoExploratoryMulti-wayData AnalysisandBlindSourceSeparation},
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+You're missing a field name---line 81 of file ref.bib
+ : 
+ : % title={Tensors for data mining and data fusion: Models, applications, and scalable algorithms},
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+You're missing a field name---line 103 of file ref.bib
+ : 
+ : % title={A tensor-based method for large-scale blind source separation using segmentation},
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+You're missing a field name---line 125 of file ref.bib
+ : 
+ : % title={Multilinear analysis of image ensembles: Tensorfaces},
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+Warning--empty author in r2
+Warning--empty title in r2
+Warning--empty journal in r2
+Warning--empty year in r2
+You've used 30 entries,
             1791 wiz_defined-function locations,
-            628 strings with 9448 characters,
-and the built_in function-call counts, 8105 in all, are:
-= -- 707
-> -- 440
-< -- 6
-+ -- 158
-- -- 124
-* -- 532
-:= -- 1313
-add.period$ -- 105
-call.type$ -- 34
-change.case$ -- 34
+            599 strings with 8355 characters,
+and the built_in function-call counts, 6909 in all, are:
+= -- 589
+> -- 383
+< -- 5
++ -- 138
+- -- 108
+* -- 453
+:= -- 1126
+add.period$ -- 91
+call.type$ -- 30
+change.case$ -- 29
 chr.to.int$ -- 0
 cite$ -- 34
-duplicate$ -- 361
-empty$ -- 735
-format.name$ -- 124
-if$ -- 1797
+duplicate$ -- 316
+empty$ -- 622
+format.name$ -- 108
+if$ -- 1523
 int.to.chr$ -- 0
-int.to.str$ -- 34
-missing$ -- 33
-newline$ -- 172
-num.names$ -- 34
-pop$ -- 94
+int.to.str$ -- 30
+missing$ -- 30
+newline$ -- 151
+num.names$ -- 29
+pop$ -- 86
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 189
+skip$ -- 166
 stack$ -- 0
-substring$ -- 466
-swap$ -- 96
-text.length$ -- 6
+substring$ -- 362
+swap$ -- 81
+text.length$ -- 5
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
-warning$ -- 0
-while$ -- 75
-width$ -- 36
-write$ -- 365
+warning$ -- 4
+while$ -- 61
+width$ -- 32
+write$ -- 316
+(There were 5 error messages)
