@@ -2,10 +2,13 @@
 \providecommand\hyper@newdestlabel[2]{}
 \providecommand\HyperFirstAtBeginDocument{\AtBeginDocument}
 \HyperFirstAtBeginDocument{\ifx\hyper@anchor\@undefined
+\global\let\oldcontentsline\contentsline
+\gdef\contentsline#1#2#3#4{\oldcontentsline{#1}{#2}{#3}}
 \global\let\oldnewlabel\newlabel
 \gdef\newlabel#1#2{\newlabelxx{#1}#2}
 \gdef\newlabelxx#1#2#3#4#5#6{\oldnewlabel{#1}{{#2}{#3}}}
 \AtEndDocument{\ifx\hyper@anchor\@undefined
+\let\contentsline\oldcontentsline
 \let\newlabel\oldnewlabel
 \fi}
 \fi}
@@ -13,7 +16,6 @@
 \gdef\HyperFirstAtBeginDocument#1{#1}
 \providecommand\HyField@AuxAddToFields[1]{}
 \providecommand\HyField@AuxAddToCoFields[2]{}
-<<<<<<< HEAD
 \citation{r35}
 \citation{r1,r2,r3,r4}
 \citation{r36}
@@ -22,8 +24,6 @@
 \citation{r1}
 \@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1}\protected@file@percent }
 \newlabel{sec:introduction}{{1}{1}{Introduction}{section.1}{}}
-=======
->>>>>>> c5d68b19f960ff8748710e499b0a56af257d7642
 \citation{r8}
 \citation{r9}
 \citation{r10}
@@ -34,15 +34,8 @@
 \citation{r24}
 \citation{r25,r26,r27}
 \citation{r27}
-<<<<<<< HEAD
 \@writefile{toc}{\contentsline {section}{\numberline {2}Related works}{2}{section.2}\protected@file@percent }
 \newlabel{sec:related-works}{{2}{2}{Related works}{section.2}{}}
-=======
-\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1}\protected@file@percent }
-\newlabel{sec:introduction}{{1}{1}{Introduction}{section.1}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {2}Related works}{1}{section.2}\protected@file@percent }
-\newlabel{sec:related-works}{{2}{1}{Related works}{section.2}{}}
->>>>>>> c5d68b19f960ff8748710e499b0a56af257d7642
 \citation{r28}
 \citation{r29}
 \citation{r30}
@@ -57,7 +50,6 @@
 \citation{r14}
 \citation{r15}
 \citation{r16}
-<<<<<<< HEAD
 \@writefile{toc}{\contentsline {section}{\numberline {3}Mathematical background}{3}{section.3}\protected@file@percent }
 \newlabel{sec:mathematical-background}{{3}{3}{Mathematical background}{section.3}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Notations}{3}{subsection.3.1}\protected@file@percent }
@@ -95,84 +87,38 @@
 \newlabel{subsubsec:tcl}{{3.5.1}{5}{Tensor contraction layer}{subsubsection.3.5.1}{}}
 \newlabel{eq:tcl}{{7}{5}{Tensor contraction layer}{equation.3.7}{}}
 \newlabel{eq:tcl-parmeter}{{8}{5}{Tensor contraction layer}{equation.3.8}{}}
-=======
-\@writefile{toc}{\contentsline {section}{\numberline {3}Mathematical background}{2}{section.3}\protected@file@percent }
-\newlabel{sec:mathematical-background}{{3}{2}{Mathematical background}{section.3}{}}
-\citation{r4}
-\citation{r4}
-\citation{r4}
-\citation{r4}
-\citation{r4}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Notations}{3}{subsection.3.1}\protected@file@percent }
-\newlabel{subsec:notations}{{3.1}{3}{Notations}{subsection.3.1}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Tensor folding and unfolding}{3}{subsection.3.2}\protected@file@percent }
-\newlabel{subsec:tensor-folding-unfolding}{{3.2}{3}{Tensor folding and unfolding}{subsection.3.2}{}}
-\newlabel{par:mode-n-unfolding}{{3.2}{3}{Mode-$n$ unfolding :}{section*.1}{}}
-\@writefile{toc}{\contentsline {paragraph}{Mode-$n$ unfolding :}{3}{section*.1}\protected@file@percent }
-\newlabel{eq:unfolding}{{1}{3}{Mode-$n$ unfolding :}{equation.3.1}{}}
-\newlabel{par:vectorization}{{3.2}{3}{Vectorization :}{section*.2}{}}
-\@writefile{toc}{\contentsline {paragraph}{Vectorization : }{3}{section*.2}\protected@file@percent }
-\newlabel{eq:vectorization}{{2}{3}{Vectorization :}{equation.3.2}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Tensor contraction}{3}{subsection.3.3}\protected@file@percent }
-\newlabel{subsec:tensor-contraction}{{3.3}{3}{Tensor contraction}{subsection.3.3}{}}
-\@writefile{toc}{\contentsline {paragraph}{Tensor $n$-mode product : }{3}{section*.3}\protected@file@percent }
-\newlabel{eq:contraction}{{3}{3}{Tensor $n$-mode product :}{equation.3.3}{}}
-\newlabel{eq:contraction2}{{4}{3}{Tensor $n$-mode product :}{equation.3.4}{}}
-\@writefile{toc}{\contentsline {paragraph}{Generalized inner product : }{3}{section*.4}\protected@file@percent }
-\citation{r1}
-\citation{r1}
-\citation{r1}
-\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces A simple MLP after some convolution layers.}}{4}{figure.1}\protected@file@percent }
-\newlabel{fig:1}{{1}{4}{A simple MLP after some convolution layers}{figure.1}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.4}Tucker decomposition}{4}{subsection.3.4}\protected@file@percent }
-\newlabel{subsec:tucker-decomposition}{{3.4}{4}{Tucker decomposition}{subsection.3.4}{}}
-\newlabel{eq:tucker-decomposition}{{6}{4}{Tucker decomposition}{equation.3.6}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.5}Tensor regression networks}{4}{subsection.3.5}\protected@file@percent }
-\newlabel{subsec:tensor-regression-network}{{3.5}{4}{Tensor regression networks}{subsection.3.5}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.5.1}Tensor contraction layer}{4}{subsubsection.3.5.1}\protected@file@percent }
-\newlabel{subsubsec:tcl}{{3.5.1}{4}{Tensor contraction layer}{subsubsection.3.5.1}{}}
-\newlabel{eq:tcl}{{7}{4}{Tensor contraction layer}{equation.3.7}{}}
-\newlabel{eq:tcl-parmeter}{{8}{4}{Tensor contraction layer}{equation.3.8}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Tensor regression networks, replacement for FC layers. In $(a)$, A simple TCL is applied; Each mode $i$ of tensor $\mathcal  {T}$ is multiplied by factor $\mathbf  {A}^{(i)}$. In $(b)$, A TRL is applied; Generalized inner product of input tensor $\mathcal  {T}$ and weight tensor $\mathcal  {W}$ is calculated as the output tensor while considering a low rank approximation of weight tensor $\mathcal  {W}$ in a tucker decomposed form. }}{5}{figure.2}\protected@file@percent }
-\newlabel{fig:2-3}{{2}{5}{Tensor regression networks, replacement for FC layers. In $(a)$, A simple TCL is applied; Each mode $i$ of tensor $\mathcal {T}$ is multiplied by factor $\mathbf {A}^{(i)}$. In $(b)$, A TRL is applied; Generalized inner product of input tensor $\mathcal {T}$ and weight tensor $\mathcal {W}$ is calculated as the output tensor while considering a low rank approximation of weight tensor $\mathcal {W}$ in a tucker decomposed form}{figure.2}{}}
->>>>>>> c5d68b19f960ff8748710e499b0a56af257d7642
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {3.5.2}Tensor regression layer}{5}{subsubsection.3.5.2}\protected@file@percent }
 \newlabel{subsubsec:trl}{{3.5.2}{5}{Tensor regression layer}{subsubsection.3.5.2}{}}
 \newlabel{eq:trl}{{9}{5}{Tensor regression layer}{equation.3.9}{}}
-\newlabel{eq:trl-parmeter}{{10}{5}{Tensor regression layer}{equation.3.10}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {4}Splitting approach}{5}{section.4}\protected@file@percent }
-\newlabel{sec:splitting-approach}{{4}{5}{Splitting approach}{section.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Tensor regression networks, replacement for FC layers. In $(a)$, A simple TCL is applied; Each mode $i$ of tensor $\mathcal  {T}$ is multiplied by factor $\mathbf  {A}^{(i)}$. In $(b)$, A TRL is applied; Generalized inner product of input tensor $\mathcal  {T}$ and weight tensor $\mathcal  {W}$ is calculated as the output tensor while considering a low rank approximation of weight tensor $\mathcal  {W}$ in a tucker decomposed form. }}{6}{figure.2}\protected@file@percent }
+\newlabel{fig:2-3}{{2}{6}{Tensor regression networks, replacement for FC layers. In $(a)$, A simple TCL is applied; Each mode $i$ of tensor $\mathcal {T}$ is multiplied by factor $\mathbf {A}^{(i)}$. In $(b)$, A TRL is applied; Generalized inner product of input tensor $\mathcal {T}$ and weight tensor $\mathcal {W}$ is calculated as the output tensor while considering a low rank approximation of weight tensor $\mathcal {W}$ in a tucker decomposed form}{figure.2}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces  An outline of reshaping to higher orders tensor. }}{6}{figure.3}\protected@file@percent }
 \newlabel{fig:4}{{3}{6}{An outline of reshaping to higher orders tensor}{figure.3}{}}
+\newlabel{eq:trl-parmeter}{{10}{6}{Tensor regression layer}{equation.3.10}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Splitting approach}{6}{section.4}\protected@file@percent }
+\newlabel{sec:splitting-approach}{{4}{6}{Splitting approach}{section.4}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Attached splitting}{6}{subsection.4.1}\protected@file@percent }
 \newlabel{subsec:attached-approach}{{4.1}{6}{Attached splitting}{subsection.4.1}{}}
 \newlabel{eq:map1}{{11}{6}{Attached splitting}{equation.4.11}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Compressed splitting}{6}{subsection.4.2}\protected@file@percent }
-\newlabel{subsec:copressed-splitting}{{4.2}{6}{Compressed splitting}{subsection.4.2}{}}
-\newlabel{eq:map2}{{12}{6}{Compressed splitting}{equation.4.12}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Method analysis}{6}{subsection.4.3}\protected@file@percent }
-\newlabel{subsec:method-analysis}{{4.3}{6}{Method analysis}{subsection.4.3}{}}
-\newlabel{eq:reshape-parameter-tcl}{{13}{6}{Method analysis}{equation.4.13}{}}
-\newlabel{eq:reshape-parameter-trl}{{14}{6}{Method analysis}{equation.4.14}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces  $(a)$ attached splitting of a second-order tensor. $(b)$ compressed splitting of a second-order tensor. $(c)$ demonstration of stacking split chunks of a second-order tensor into a 4-order tensor. }}{7}{figure.4}\protected@file@percent }
 \newlabel{fig:5}{{4}{7}{$(a)$ attached splitting of a second-order tensor. $(b)$ compressed splitting of a second-order tensor. $(c)$ demonstration of stacking split chunks of a second-order tensor into a 4-order tensor}{figure.4}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces  $(a)$ original sample image. $(b)$ reshaped sample image using attached approach. $(c)$ reshaped sample image using compressed approach. Input Image $\mathcal  {T}\in \mathbb  {R}^{C,H,W}$, only $H$ and $W$ indices have been split. }}{7}{figure.5}\protected@file@percent }
-\newlabel{fig:6-7-8}{{5}{7}{$(a)$ original sample image. $(b)$ reshaped sample image using attached approach. $(c)$ reshaped sample image using compressed approach. Input Image $\mathcal {T}\in \mathbb {R}^{C,H,W}$, only $H$ and $W$ indices have been split}{figure.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Compressed splitting}{7}{subsection.4.2}\protected@file@percent }
+\newlabel{subsec:copressed-splitting}{{4.2}{7}{Compressed splitting}{subsection.4.2}{}}
+\newlabel{eq:map2}{{12}{7}{Compressed splitting}{equation.4.12}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Method analysis}{7}{subsection.4.3}\protected@file@percent }
+\newlabel{subsec:method-analysis}{{4.3}{7}{Method analysis}{subsection.4.3}{}}
+\newlabel{eq:reshape-parameter-tcl}{{13}{7}{Method analysis}{equation.4.13}{}}
+\newlabel{eq:reshape-parameter-trl}{{14}{7}{Method analysis}{equation.4.14}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {5}Experiments}{7}{section.5}\protected@file@percent }
 \newlabel{sec:experiments}{{5}{7}{Experiments}{section.5}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces  Datasets information }}{7}{table.1}\protected@file@percent }
-\newlabel{table:datasets}{{1}{7}{Datasets information}{table.1}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces  \textbf  {Performance evaluation of ResNet50 and ResNet101}, Our methods reduce the number of parameters by more than 90 \% while achieving near similar accuracy. More detailed Table(s) at (Appendix \ref {additional-tables}). }}{8}{table.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces  $(a)$ original sample image. $(b)$ reshaped sample image using attached approach. $(c)$ reshaped sample image using compressed approach. Input Image $\mathcal  {T}\in \mathbb  {R}^{C,H,W}$, only $H$ and $W$ indices have been split. }}{8}{figure.5}\protected@file@percent }
+\newlabel{fig:6-7-8}{{5}{8}{$(a)$ original sample image. $(b)$ reshaped sample image using attached approach. $(c)$ reshaped sample image using compressed approach. Input Image $\mathcal {T}\in \mathbb {R}^{C,H,W}$, only $H$ and $W$ indices have been split}{figure.5}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces  Datasets information }}{8}{table.1}\protected@file@percent }
+\newlabel{table:datasets}{{1}{8}{Datasets information}{table.1}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces  \textbf  {Performance evaluation of ResNet50 and ResNet101}, Our methods reduce the number of parameters by more than 90 \% while achieving near similar accuracy. More detailed Table(s) at (Appendix \ref  {additional-tables}). }}{8}{table.2}\protected@file@percent }
 \newlabel{table:resnet_mnist_cifar10}{{2}{8}{\textbf {Performance evaluation of ResNet50 and ResNet101}, Our methods reduce the number of parameters by more than 90 \% while achieving near similar accuracy. More detailed Table(s) at (Appendix \ref {additional-tables})}{table.2}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces  \textbf  {Tiny ImageNet-200 performance on VGG-19}, Given extreme number of classifier parameters for a VGG-19 model, we applied TCL layers before TRL layers. More detailed Table(s) at (Appendix \ref {additional-tables}). }}{8}{table.3}\protected@file@percent }
-\newlabel{table:vgg_tiny}{{3}{8}{\textbf {Tiny ImageNet-200 performance on VGG-19}, Given extreme number of classifier parameters for a VGG-19 model, we applied TCL layers before TRL layers. More detailed Table(s) at (Appendix \ref {additional-tables})}{table.3}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces  \textbf  {Classic CNN on MNIST}, Our methods are dependent on a good convolutional foundation. More detailed Table(s) at (Appendix \ref {additional-tables}). }}{8}{table.4}\protected@file@percent }
-\newlabel{table:cnn_mnist}{{4}{8}{\textbf {Classic CNN on MNIST}, Our methods are dependent on a good convolutional foundation. More detailed Table(s) at (Appendix \ref {additional-tables})}{table.4}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Accuracy and loss plots (Baseline, TCL TRL, Our Method), more detailed plots at (Appendix \ref {additional-plots})}}{8}{figure.6}\protected@file@percent }
-\newlabel{fig:9}{{6}{8}{Accuracy and loss plots (Baseline, TCL TRL, Our Method), more detailed plots at (Appendix \ref {additional-plots})}{figure.6}{}}
 \bibstyle{unsrt}
 \bibdata{ref}
-<<<<<<< HEAD
 \bibcite{r35}{{1}{}{{}}{{}}}
 \@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces  \textbf  {Tiny ImageNet-200 performance on VGG-19}, Given extreme number of classifier parameters for a VGG-19 model, we applied TCL layers before TRL layers. More detailed Table(s) at (Appendix \ref  {additional-tables}). }}{9}{table.3}\protected@file@percent }
 \newlabel{table:vgg_tiny}{{3}{9}{\textbf {Tiny ImageNet-200 performance on VGG-19}, Given extreme number of classifier parameters for a VGG-19 model, we applied TCL layers before TRL layers. More detailed Table(s) at (Appendix \ref {additional-tables})}{table.3}{}}
@@ -216,6 +162,7 @@
 \bibcite{r14}{{33}{}{{}}{{}}}
 \bibcite{r15}{{34}{}{{}}{{}}}
 \bibcite{r16}{{35}{}{{}}{{}}}
+\bibcite{r4}{{36}{}{{}}{{}}}
 \@writefile{toc}{\contentsline {section}{\numberline {A}Method analysis on TCL}{12}{appendix.A}\protected@file@percent }
 \newlabel{proof-1}{{A}{12}{Method analysis on TCL}{appendix.A}{}}
 \newlabel{eq:proof-1-14}{{15}{12}{Method analysis on TCL}{equation.A.15}{}}
@@ -243,17 +190,18 @@
 \newlabel{eq:subspace-tcl-48}{{33}{14}{Subspace of MLP : TCL}{equation.C.33}{}}
 \newlabel{eq:subspace-tcl-49}{{34}{14}{Subspace of MLP : TCL}{equation.C.34}{}}
 \newlabel{eq:subspace-tcl-50}{{35}{14}{Subspace of MLP : TCL}{equation.C.35}{}}
-\newlabel{eq:subspace-tcl-51}{{37}{14}{Subspace of MLP : TCL}{equation.C.37}{}}
+\newlabel{eq:subspace-tcl-50-2}{{36}{14}{Subspace of MLP : TCL}{equation.C.36}{}}
+\newlabel{eq:subspace-tcl-51}{{38}{14}{Subspace of MLP : TCL}{equation.C.38}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {D}Subspace of MLP : TRL}{15}{appendix.D}\protected@file@percent }
 \newlabel{subspace-trl}{{D}{15}{Subspace of MLP : TRL}{appendix.D}{}}
-\newlabel{eq:subspace-tr1-53}{{38}{15}{Subspace of MLP : TRL}{equation.D.38}{}}
-\newlabel{eq:subspace-tr1-54}{{39}{15}{Subspace of MLP : TRL}{equation.D.39}{}}
-\newlabel{eq:subspace-tr1-55}{{40}{15}{Subspace of MLP : TRL}{equation.D.40}{}}
-\newlabel{eq:subspace-tr1-56}{{41}{15}{Subspace of MLP : TRL}{equation.D.41}{}}
-\newlabel{eq:subspace-tr1-57}{{42}{15}{Subspace of MLP : TRL}{equation.D.42}{}}
-\newlabel{eq:subspace-tr1-58}{{43}{15}{Subspace of MLP : TRL}{equation.D.43}{}}
-\newlabel{eq:subspace-tr1-59}{{44}{15}{Subspace of MLP : TRL}{equation.D.44}{}}
-\newlabel{eq:subspace-tr1-60}{{45}{15}{Subspace of MLP : TRL}{equation.D.45}{}}
+\newlabel{eq:subspace-tr1-53}{{39}{15}{Subspace of MLP : TRL}{equation.D.39}{}}
+\newlabel{eq:subspace-tr1-54}{{40}{15}{Subspace of MLP : TRL}{equation.D.40}{}}
+\newlabel{eq:subspace-tr1-55}{{41}{15}{Subspace of MLP : TRL}{equation.D.41}{}}
+\newlabel{eq:subspace-tr1-56}{{42}{15}{Subspace of MLP : TRL}{equation.D.42}{}}
+\newlabel{eq:subspace-tr1-57}{{43}{15}{Subspace of MLP : TRL}{equation.D.43}{}}
+\newlabel{eq:subspace-tr1-58}{{44}{15}{Subspace of MLP : TRL}{equation.D.44}{}}
+\newlabel{eq:subspace-tr1-59}{{45}{15}{Subspace of MLP : TRL}{equation.D.45}{}}
+\newlabel{eq:subspace-tr1-60}{{46}{15}{Subspace of MLP : TRL}{equation.D.46}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {E}Additional tables}{15}{appendix.E}\protected@file@percent }
 \newlabel{additional-tables}{{E}{15}{Additional tables}{appendix.E}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {F}Ablation studies}{15}{appendix.F}\protected@file@percent }
@@ -278,119 +226,3 @@
 \newlabel{fig:ablation}{{7}{18}{Our framework performs better with similar ranks compared to standard TRL or original FC. Ground Truth is the weight tensor (second-order tensor) displayed as an image, other modules tried to estimate $\mathcal {W}$ using noisy data}{figure.7}{}}
 \providecommand\NAT@force@numbers{}\NAT@force@numbers
 \gdef \@abspage@last{25}
-=======
-\bibcite{r1}{{1}{}{{}}{{}}}
-\bibcite{r2}{{2}{}{{}}{{}}}
-\bibcite{r8}{{3}{}{{}}{{}}}
-\bibcite{r9}{{4}{}{{}}{{}}}
-\bibcite{r10}{{5}{}{{}}{{}}}
-\bibcite{r11}{{6}{}{{}}{{}}}
-\bibcite{r21}{{7}{}{{}}{{}}}
-\bibcite{r22}{{8}{}{{}}{{}}}
-\bibcite{r23}{{9}{}{{}}{{}}}
-\bibcite{r24}{{10}{}{{}}{{}}}
-\bibcite{r25}{{11}{}{{}}{{}}}
-\bibcite{r26}{{12}{}{{}}{{}}}
-\bibcite{r27}{{13}{}{{}}{{}}}
-\@writefile{toc}{\contentsline {section}{\numberline {6}Conclusion}{9}{section.6}\protected@file@percent }
-\newlabel{sec:conclusion}{{6}{9}{Conclusion}{section.6}{}}
-\bibcite{r28}{{14}{}{{}}{{}}}
-\bibcite{r29}{{15}{}{{}}{{}}}
-\bibcite{r30}{{16}{}{{}}{{}}}
-\bibcite{r31}{{17}{}{{}}{{}}}
-\bibcite{r32}{{18}{}{{}}{{}}}
-\bibcite{r17}{{19}{}{{}}{{}}}
-\bibcite{r18}{{20}{}{{}}{{}}}
-\bibcite{r19}{{21}{}{{}}{{}}}
-\bibcite{r20}{{22}{}{{}}{{}}}
-\bibcite{r33}{{23}{}{{}}{{}}}
-\bibcite{r34}{{24}{}{{}}{{}}}
-\bibcite{r12}{{25}{}{{}}{{}}}
-\bibcite{r13}{{26}{}{{}}{{}}}
-\bibcite{r14}{{27}{}{{}}{{}}}
-\bibcite{r15}{{28}{}{{}}{{}}}
-\bibcite{r16}{{29}{}{{}}{{}}}
-\bibcite{r4}{{30}{}{{}}{{}}}
-\@writefile{toc}{\contentsline {section}{\numberline {A}Method analysis on TCL}{11}{appendix.A}\protected@file@percent }
-\newlabel{proof-1}{{A}{11}{Method analysis on TCL}{appendix.A}{}}
-\newlabel{eq:proof-1-14}{{15}{11}{Method analysis on TCL}{equation.A.15}{}}
-\newlabel{eq:proof-1-15}{{16}{11}{Method analysis on TCL}{equation.A.16}{}}
-\newlabel{eq:proof-1-16}{{17}{11}{Method analysis on TCL}{equation.A.17}{}}
-\newlabel{eq:proof-1-17}{{18}{11}{Method analysis on TCL}{equation.A.18}{}}
-\newlabel{eq:proof-1-18}{{19}{11}{Method analysis on TCL}{equation.A.19}{}}
-\newlabel{eq:proof-1-19}{{20}{11}{Method analysis on TCL}{equation.A.20}{}}
-\newlabel{eq:proof-1-20}{{21}{11}{Method analysis on TCL}{equation.A.21}{}}
-\newlabel{eq:proof-1-21}{{22}{12}{Method analysis on TCL}{equation.A.22}{}}
-\newlabel{eq:proof-1-22}{{23}{12}{Method analysis on TCL}{equation.A.23}{}}
-\newlabel{eq:proof-1-23}{{24}{12}{Method analysis on TCL}{equation.A.24}{}}
-\newlabel{eq:proof-1-24}{{25}{12}{Method analysis on TCL}{equation.A.25}{}}
-\newlabel{eq:proof-1-25}{{26}{12}{Method analysis on TCL}{equation.A.26}{}}
-\newlabel{eq:proof-1-26}{{27}{13}{Method analysis on TCL}{equation.A.27}{}}
-\newlabel{eq:proof-1-27}{{28}{13}{Method analysis on TCL}{equation.A.28}{}}
-\newlabel{eq:proof-1-28}{{29}{13}{Method analysis on TCL}{equation.A.29}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {B}Method analysis on TRL}{13}{appendix.B}\protected@file@percent }
-\newlabel{proof-2}{{B}{13}{Method analysis on TRL}{appendix.B}{}}
-\newlabel{eq:proof-2-29}{{30}{13}{Method analysis on TRL}{equation.B.30}{}}
-\newlabel{eq:proof-2-30}{{31}{13}{Method analysis on TRL}{equation.B.31}{}}
-\newlabel{eq:proof-2-31}{{32}{14}{Method analysis on TRL}{equation.B.32}{}}
-\newlabel{eq:proof-2-32}{{33}{14}{Method analysis on TRL}{equation.B.33}{}}
-\newlabel{eq:proof-2-33}{{34}{14}{Method analysis on TRL}{equation.B.34}{}}
-\newlabel{eq:proof-2-34}{{35}{14}{Method analysis on TRL}{equation.B.35}{}}
-\newlabel{eq:proof-2-35}{{36}{14}{Method analysis on TRL}{equation.B.36}{}}
-\newlabel{eq:proof-2-36}{{37}{14}{Method analysis on TRL}{equation.B.37}{}}
-\newlabel{eq:proof-2-37}{{38}{14}{Method analysis on TRL}{equation.B.38}{}}
-\newlabel{eq:proof-2-38}{{39}{15}{Method analysis on TRL}{equation.B.39}{}}
-\newlabel{eq:proof-2-39}{{40}{15}{Method analysis on TRL}{equation.B.40}{}}
-\newlabel{eq:proof-2-40}{{41}{15}{Method analysis on TRL}{equation.B.41}{}}
-\newlabel{eq:proof-2-41}{{42}{15}{Method analysis on TRL}{equation.B.42}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {C}Subspace of MLP : TCL}{15}{appendix.C}\protected@file@percent }
-\newlabel{subspace-tcl}{{C}{15}{Subspace of MLP : TCL}{appendix.C}{}}
-\newlabel{eq:subspace-tcl-44}{{43}{15}{Subspace of MLP : TCL}{equation.C.43}{}}
-\newlabel{eq:subspace-tcl-45}{{44}{15}{Subspace of MLP : TCL}{equation.C.44}{}}
-\newlabel{eq:subspace-tcl-46}{{45}{15}{Subspace of MLP : TCL}{equation.C.45}{}}
-\newlabel{eq:subspace-tcl-47}{{46}{15}{Subspace of MLP : TCL}{equation.C.46}{}}
-\newlabel{eq:subspace-tcl-48}{{47}{15}{Subspace of MLP : TCL}{equation.C.47}{}}
-\newlabel{eq:subspace-tcl-49}{{48}{15}{Subspace of MLP : TCL}{equation.C.48}{}}
-\newlabel{eq:subspace-tcl-50}{{49}{16}{Subspace of MLP : TCL}{equation.C.49}{}}
-\newlabel{eq:subspace-tcl-50-2}{{50}{16}{Subspace of MLP : TCL}{equation.C.50}{}}
-\newlabel{eq:subspace-tcl-51}{{52}{16}{Subspace of MLP : TCL}{equation.C.52}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {D}Subspace of MLP : TRL}{16}{appendix.D}\protected@file@percent }
-\newlabel{subspace-trl}{{D}{16}{Subspace of MLP : TRL}{appendix.D}{}}
-\newlabel{eq:subspace-tcl-52}{{53}{16}{Subspace of MLP : TRL}{equation.D.53}{}}
-\newlabel{eq:subspace-tcl-53}{{54}{16}{Subspace of MLP : TRL}{equation.D.54}{}}
-\newlabel{eq:subspace-tcl-54}{{55}{16}{Subspace of MLP : TRL}{equation.D.55}{}}
-\newlabel{eq:subspace-tcl-55}{{56}{16}{Subspace of MLP : TRL}{equation.D.56}{}}
-\newlabel{eq:subspace-tcl-56}{{57}{16}{Subspace of MLP : TRL}{equation.D.57}{}}
-\newlabel{eq:subspace-tcl-57}{{58}{17}{Subspace of MLP : TRL}{equation.D.58}{}}
-\newlabel{eq:subspace-tcl-58}{{59}{17}{Subspace of MLP : TRL}{equation.D.59}{}}
-\newlabel{eq:subspace-tcl-59}{{60}{17}{Subspace of MLP : TRL}{equation.D.60}{}}
-\newlabel{eq:subspace-tcl-60}{{61}{17}{Subspace of MLP : TRL}{equation.D.61}{}}
-\newlabel{eq:subspace-tcl-61}{{62}{17}{Subspace of MLP : TRL}{equation.D.62}{}}
-\newlabel{eq:subspace-tcl-62}{{63}{17}{Subspace of MLP : TRL}{equation.D.63}{}}
-\newlabel{eq:subspace-tcl-63}{{64}{17}{Subspace of MLP : TRL}{equation.D.64}{}}
-\newlabel{eq:subspace-tcl-64}{{65}{17}{Subspace of MLP : TRL}{equation.D.65}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {E}Additional tables}{17}{appendix.E}\protected@file@percent }
-\newlabel{additional-tables}{{E}{17}{Additional tables}{appendix.E}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {F}Ablation studies}{17}{appendix.F}\protected@file@percent }
-\newlabel{ablation-study}{{F}{17}{Ablation studies}{appendix.F}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces MNIST applied to resnet50}}{18}{table.5}\protected@file@percent }
-\newlabel{atab-1}{{5}{18}{MNIST applied to resnet50}{table.5}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces CIFAR10 applied to ResNet50}}{18}{table.6}\protected@file@percent }
-\newlabel{atab-2}{{6}{18}{CIFAR10 applied to ResNet50}{table.6}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {7}{\ignorespaces Tiny ImageNet-200 applied to ResNet50}}{18}{table.7}\protected@file@percent }
-\newlabel{atab-3}{{7}{18}{Tiny ImageNet-200 applied to ResNet50}{table.7}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {8}{\ignorespaces MNIST applied to ResNet101}}{19}{table.8}\protected@file@percent }
-\newlabel{atab-4}{{8}{19}{MNIST applied to ResNet101}{table.8}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {9}{\ignorespaces CIFAR10 applied to ResNet101}}{19}{table.9}\protected@file@percent }
-\newlabel{atab-5}{{9}{19}{CIFAR10 applied to ResNet101}{table.9}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {10}{\ignorespaces Tiny ImageNet-200 applied to ResNet101}}{19}{table.10}\protected@file@percent }
-\newlabel{atab-6}{{10}{19}{Tiny ImageNet-200 applied to ResNet101}{table.10}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {11}{\ignorespaces CIFAR10 applied to classic CNN}}{19}{table.11}\protected@file@percent }
-\newlabel{atab-7}{{11}{19}{CIFAR10 applied to classic CNN}{table.11}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {12}{\ignorespaces Tiny ImageNet-200 applied to VGG-19}}{20}{table.12}\protected@file@percent }
-\newlabel{atab-8}{{12}{20}{Tiny ImageNet-200 applied to VGG-19}{table.12}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces  Our framework performs better with similar ranks compared to standard TRL or original FC. Ground Truth is the weight tensor (second-order tensor) displayed as an image, other modules tried to estimate $\mathcal  {W}$ using noisy data. }}{20}{figure.7}\protected@file@percent }
-\newlabel{fig:ablation}{{7}{20}{Our framework performs better with similar ranks compared to standard TRL or original FC. Ground Truth is the weight tensor (second-order tensor) displayed as an image, other modules tried to estimate $\mathcal {W}$ using noisy data}{figure.7}{}}
-\providecommand\NAT@force@numbers{}\NAT@force@numbers
-\gdef \@abspage@last{27}
->>>>>>> c5d68b19f960ff8748710e499b0a56af257d7642
