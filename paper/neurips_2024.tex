@@ -119,20 +119,27 @@ Convolutional Neural Networks often contain fully connected layers after their c
 %\section{Submission of papers to NeurIPS 2024}
 \section{Introduction}
 \label{sec:introduction}
+Convolutional networks are one of the most important architectures in deep learning, forming the basis for machine vision applications \cite{r35}. The most important point in the efficient architectures of convolutional networks is their high number of layers and, naturally, their large number of parameters, which in addition to requiring a large number of data for learning, makes it impossible to use these architectures even in the testing phase on medium or weak processing devices. Therefore, in recent years, many efforts have been made to reduce the number of parameters while maintaining the quality of these networks \cite{r1,r2,r3,r4}. Convolutional networks consist of two main parts: the convolutional layers for feature extraction followed by the MLP layers. Both of these parts play a role in increasing the number of parameters. In recent years, various efforts have been made for the convolutional part. Some methods, after training, aim to reduce the number of parameters and approximate the network for the testing part \cite{r36}. But some approaches initially aim to replace the network layers with lighter layers, which in recent years, the second approach has been more attention due to its more practicality\cite{r32}. Since in each convolutional layer, the input and output channels  and the parameters are tensors, the use of tensor approximations has a better match with the network structure and in both of the mentioned approaches above, it is one of the most common and effective methods in this field.
 
-Neural Networks, especially those that are applied to images such as \textit{Convolutional Neural Networks} (CNNs), often consist of two main parts: one that is responsible for extracting features from the input data, and the other part is a \textit{MultiLayer Perceptron} (MLP) which maps the extracted features to the desired space. Despite empirical success, many known models, such as VGG, use \textit{Fully Connected} (FC) layers, which not only flatten the data but also require too many parameters.
+On the other hand, every convolutional neural network ultimately ends with MLP layers for classification. Therefore, in this phase, the three-dimensional tensor, which is the output of the last convolutional channel, is converted into a vector, and the MLP network continues thereafter. This structural change from a three-dimensional tensor to a vector, in addition to eliminating the three-dimensional structure of the data, leads to a significant increase in the number of parameters.In certain architectures, such as VGG, the parameters of the MLP layers make up a significant portion of the overall architecture parameters.
+To address this problem, we need to look for methods that can perform feature extraction and ultimately classification without changing the format of tensor data to vectors. Although not much work has been done in the field of deep networks, in recent years, many efforts have been made for versions of machine learning methods that are referred to as tensor or multi-linear methods, which can work with multi-dimensional data without converting them to vectors \cite{r1,r2,r3,r4,r5,r6,r7}.
+To replace the MLP layers with tensor methods that can perform feature extraction and classification in the same tensor format, the well-known Tensor Contraction Layer (TCL) and Tensor Regression Layer (TRL) were introduced \cite{r1}. In the TCL method, at the end of the convolutional layers, instead of converting the entire layer output to a vector and applying MLP, a matrix is multiplied for dimension reduction from each mode (dimension) of the tensor. This method allows the neural network to perform faster inference with fewer parameters, considering the advantages mentioned above. This layer can continue for several layers depending on the architecture. Also, for the final layer, a method called TRL is used. The idea is that to obtain an element in the output layer a vector of an MLP layer is internally multiplied by a vector to obtain a number. Now, since in TRL there is a tensor instead of a vector, to obtain a number in the last layer, the regression parameter must be a tensor instead of a vector, and the inner product of two tensors gives this output. Now, to create more compression, the authors in TCL assume that the regression parameter is obtained from the multiplication of three matrices from each of the three modes in a small three-dimensional tensor. In fact, they consider the regression parameter as a Tucker decomposition, which again plays an important role in reducing parameters. Experiments show that the use of TCL and TRL reduces the number of parameters by more than 65\% compared to fully connected layers, without much change in the accuracy in architectures like VGG and ResNet.
 
-Most natural datasets can be represented as a tensor due to their multi-linear or multi-modal structure; images can be considered as third-order tensors with width, height, and color channels as their corresponding three modes, and videos as fourth-order tensors with an additional time mode. In practice, most of the data used in current machine learning and artificial intelligence tasks can be encoded as tensors, necessitating their expansion to linear algebra.
+In this paper, we propose a method that can achieve better or equivalent accuracy with a greater reduction in parameters compared to the TRL method. Here, the three-dimensional tensor of each data, resulting from the last layer of the convolutional part, is transferred to a higher sixth-order tensor, and the TRL and TCL methods are applied to this tensor. We further demonstrate that just as the search space of the TRL method is a subset of the original method, the search space of the proposed method is also a subset of the TRL method and has a lower rank. The implementation results on introduced networks such as ResNet50, ResNet101, VGG19, and a typical CNN , on benchmark datasets likw  CIFAR-10, MNIST, and Tiny-ImageNet-200,  show the quality of the proposed method compared to TRL and regular regression. Also, in these models, the proposed method usually shows about a 95\% reduction in the number of parameters of the fully connected part.
 
-In machine learning, data is typically represented as vectors, and datasets are considered sets of vectors, ideally forming a matrix. Numerous matrix decomposition methods have been developed for such matrices. Tensor methods extend these techniques to higher-dimensional spaces. Mathematically, tensors have been extensively studied. A prominent example within tensor methods is Tensor Decomposition, which serves as a fundamental framework for various tensorized layers and approximations in deep learning \cite{r1, r4}, signal processing \cite{r2, r3}, data fusion \cite{r5}, blind source separation \cite{r3, r6}, and computer vision \cite{r7}.
-
-The FC layers used in many architectures are the main culprit behind vectorizing the data and the large number of parameters. To alleviate this issue, a better replacement for FC layers is needed, one that not only preserves the current model's accuracy but also reduces the number of parameters and does not destroy the structure of the data.
-
-A potential solution for tensorizing FC layers involves utilizing the low-rank approximation of the weight tensor. Various approaches addressing this issue will be discussed in Section \ref{sec:related-works}. However, these methods often underperform when the approximated rank is too low, which is suboptimal for larger models. The computational cost of these models typically depends on the tensor size. Our experiments demonstrate that a thinner, higher-dimensional reshaped tensor of the original input tensor performs significantly better at lower ranks. By employing a unique splitting and stacking technique, we preserved the model's accuracy.
-
-In this paper, we present two splitting approaches tailored to the specific task of the model. These methods reshape the tensor into a higher-dimensional space, reducing computational costs and improving the capability to handle lower approximated ranks. Our methods, evaluated on CIFAR-10, MNIST, and Tiny-ImageNet-200 datasets using established CNN models such as ResNet50, ResNet101, VGG19, and a typical CNN, achieved comparable accuracy with over 95\% fewer parameters compared to traditional FC layers, and even mitigated overfitting in some cases.
-
-Our main contribution is the introduction of splitting approaches that transform an $n$-order tensor into a $2n$-order tensor (doubling the dimensions). We then discuss the number of parameters required for a typical \textit{Tensor Regression Layer} (TRL) or \textit{Tensor Contraction Layer} (TCL) on these newly generated tensors. In the Appendix \ref{subspace-tcl}\ref{subspace-trl}, we prove that our methods are a subspace of TCL and TRL methods and that our parameters are ideally fewer than those required by other work.
+%Neural Networks, especially those that are applied to images such as \textit{Convolutional Neural Networks} (CNNs), often consist of two main parts: one that is responsible for extracting features from the input data, and the other part is a \textit{MultiLayer Perceptron} (MLP) which maps the extracted features to the desired space. Despite empirical success, many known models, such as VGG, use \textit{Fully Connected} (FC) layers, which not only flatten the data but also require too many parameters.
+%
+%Most natural datasets can be represented as a tensor due to their multi-linear or multi-modal structure; images can be considered as third-order tensors with width, height, and color channels as their corresponding three modes, and videos as fourth-order tensors with an additional time mode. In practice, most of the data used in current machine learning and artificial intelligence tasks can be encoded as tensors, necessitating their expansion to linear algebra.
+%
+%In machine learning, data is typically represented as vectors, and datasets are considered sets of vectors, ideally forming a matrix. Numerous matrix decomposition methods have been developed for such matrices. Tensor methods extend these techniques to higher-dimensional spaces. Mathematically, tensors have been extensively studied. A prominent example within tensor methods is Tensor Decomposition, which serves as a fundamental framework for various tensorized layers and approximations in deep learning \cite{r1, r4}, signal processing \cite{r2, r3}, data fusion \cite{r5}, blind source separation \cite{r3, r6}, and computer vision \cite{r7}.
+%
+%The FC layers used in many architectures are the main culprit behind vectorizing the data and the large number of parameters. To alleviate this issue, a better replacement for FC layers is needed, one that not only preserves the current model's accuracy but also reduces the number of parameters and does not destroy the structure of the data.
+%
+%A potential solution for tensorizing FC layers involves utilizing the low-rank approximation of the weight tensor. Various approaches addressing this issue will be discussed in Section \ref{sec:related-works}. However, these methods often underperform when the approximated rank is too low, which is suboptimal for larger models. The computational cost of these models typically depends on the tensor size. Our experiments demonstrate that a thinner, higher-dimensional reshaped tensor of the original input tensor performs significantly better at lower ranks. By employing a unique splitting and stacking technique, we preserved the model's accuracy.
+%
+%In this paper, we present two splitting approaches tailored to the specific task of the model. These methods reshape the tensor into a higher-dimensional space, reducing computational costs and improving the capability to handle lower approximated ranks. Our methods, evaluated on CIFAR-10, MNIST, and Tiny-ImageNet-200 datasets using established CNN models such as ResNet50, ResNet101, VGG19, and a typical CNN, achieved comparable accuracy with over 95\% fewer parameters compared to traditional FC layers, and even mitigated overfitting in some cases.
+%
+%Our main contribution is the introduction of splitting approaches that transform an $n$-order tensor into a $2n$-order tensor (doubling the dimensions). We then discuss the number of parameters required for a typical \textit{Tensor Regression Layer} (TRL) or \textit{Tensor Contraction Layer} (TCL) on these newly generated tensors. In the Appendix \ref{subspace-tcl}\ref{subspace-trl}, we prove that our methods are a subspace of TCL and TRL methods and that our parameters are ideally fewer than those required by other work.
 
 %
 %Please read the instructions below carefully and follow them faithfully.
@@ -209,8 +216,9 @@ Several prior papers address the importance of using tensors and preserving the 
 
 In general, tensor methods can be widely used in many machine learning and deep learning tasks, especially computer vision \cite{r22}. Their use can be categorized into three  main approaches: The first approach compresses the tuned parameters of the pre-trained network while preserving the quality of network with these approximated parameters. In this approach, the new network is not trained, and the approximated network can only be used in the test step. Two methods for approximation of the tuned parameters of pre-trained CNN in each layer based on matrix and tensor decompositions adjusted with clustering of inlet and outlet layers have been proposed \cite{r23}. An improvement is reported in \cite{r24}. Tensor CP and Tucker decompositions are used to approximate the kernels of pre-trained CNN networks \cite{r25, r26, r27}. In \cite{r27}, a tensor based method to find an approximation of fully connected layer parameters in CNN networks is introduced. Despite the proper implementation results, these methods have the following drawbacks: increased cost of pre-trained networks and finding these compressions is also costly. They also cannot be used in applications such as deep reinforcement learning, where the network must be continuously learned. Furthermore, this approach is limited to compressing convolutional methods for the test phase, raising a deeper question: Why should we compress an already trained network and not seek compact network representation that can be trained from scratch? 
 
-The second approach considers the convolutional layers as a base, and approximates or represents them with smaller parameters to design end-to-end trainable neural networks. Different kinds of methods have been proposed to design end-to-end learnable networks based on the approximation of the convolution process from different perspectives: For example, in \cite{r28} and \cite{r29}, the rank-1 approximation of third-order tensor filters corresponding to each output channel is used. In \cite{r30}, shared factors corresponding to input and output are considered to reduce the redundancy of parameters. Recently, in \cite{r31}, by considering the third-order filters of each output channel as a rank-k tensor, it has been shown that the pixels of each output channel are the contraction of this tensor with the corresponding patch of all input channels. Unlike standard convolution, MobileNets proposed in \cite{r32} separate the spatial filtering and integration steps. For each input channel, only a single spatial filtering is performed, and by different combinations of these filtered images, different output channels are obtained.
+The second approach considers the convolutional layers as a base, and approximates or represents them with smaller parameters to design end-to-end trainable neural networks \cite{r28}, \cite{r29}, and \cite{r30}.In \cite{r34}, it has been shown that efficient convolution methods such as Resnet and MobileNet \cite{r32},  or ResNet’s Bottleneck are actually a special case of tensor decomposition methods.
 
+%The second approach considers the convolutional layers as a base, and approximates or represents them with smaller parameters to design end-to-end trainable neural networks. Different kinds of methods have been proposed to design end-to-end learnable networks based on the approximation of the convolution process from different perspectives: For example, in \cite{r28} and \cite{r29}, the rank-1 approximation of third-order tensor filters corresponding to each output channel is used. In \cite{r30}, shared factors corresponding to input and output are considered to reduce the redundancy of parameters. Recently, in \cite{r31}, by considering the third-order filters of each output channel as a rank-k tensor, it has been shown that the pixels of each output channel are the contraction of this tensor with the corresponding patch of all input channels. Unlike standard convolution, MobileNets proposed in \cite{r32} separate the spatial filtering and integration steps. For each input channel, only a single spatial filtering is performed, and by different combinations of these filtered images, different output channels are obtained.
 The third approach does not consider convolutional structure as a base and tries to find other types of layers to work on multidimensional data. One notable recent work is Tensor Regression Networks \cite{r1}. They use a \textit{Tensor Regression Layer} (TRL) and \textit{Tensor Contraction Layer} (TCL) to preserve the structure of the data as it moves across the network while reducing the number of parameters. Their method surprisingly achieved nearly the same accuracy as its FC network with more than 65 percent space savings. TRL and TCL will be discussed in Section \ref{sec:mathematical-background}, and they are used as the base of our method. Unfortunately, one of the biggest issues with TCL and TRL is their inadequate implementations. They theoretically require fewer parameters than their FC versions; however, they often perform poorly in terms of the actual execution time. This is one of the biggest limitations in working with tensors since a practical implementation of tensor methods is yet to be made.
 
 The power of tensor regression has been addressed in many prior papers \cite{r17, r18, r19, r20}. However, most of these works usually rely on analytical solutions and large tensors. In \cite{r33}, a non-linear Tensor-Train decomposition is used instead of Tucker decomposition. While many works focus on individual layers, in \cite{r34}, T-Nets attempts to provide a single high-order, low-rank tensor that jointly capture
@@ -297,7 +305,7 @@ The Tucker decomposition \cite{r4} is a powerful method in tensor algebra that b
 The combination of tensor regression and tensor contractions has been used in an end-to-end trainable model by Kossaifi \cite{r1}, as discussed in Section \ref{sec:related-works}. Given an MLP, there are two ways to interpret FC layers: one is to consider them as a feature extraction layer where they map a latent or feature space to another latent space. Another approach is to consider them as regression layers, which are basically the classifier layers. Given the purpose of the network, they can be used interchangeably. In Figure \ref{fig:1}, a very simple MLP that is used after some convolution layers is provided. In this case, the first FC layer can be considered a dimension reduction layer, while the second FC layer maps the feature space to the target space. In the following text, we will discuss two main approaches to replace such FC layers:
 \begin{figure}
 	\centering
-	\includegraphics[scale=0.045]{fig1.png}
+	\includegraphics[scale=0.027]{fig1.png}
 	\caption{A simple MLP after some convolution layers.}
 	\label{fig:1}
 \end{figure}
@@ -347,7 +355,7 @@ and $\mathcal{G} \in \mathbb{R}^{R_1\times\dots\times R_N\times O}$; The number 
 Compared to the FC version where the number of parameters is $O\times\prod_{i=1}^{N}I_i$.
 \begin{figure}
 	\centering
-	\includegraphics[scale=0.035]{fig2-3.png}
+	\includegraphics[scale=0.023]{fig2-3.png}
 	\caption{Tensor regression networks, replacement for FC layers. In $(a)$, A simple TCL is applied; Each mode $i$ of tensor $\mathcal{T}$ is multiplied by factor $\mathbf{A}^{(i)}$.
 	In $(b)$, A TRL is applied; Generalized inner product of input tensor $\mathcal{T}$ and weight tensor $\mathcal{W}$ is calculated as the output tensor while considering a low rank approximation of weight tensor $\mathcal{W}$ in a tucker decomposed form. 
 	}
@@ -359,7 +367,7 @@ Compared to the FC version where the number of parameters is $O\times\prod_{i=1}
 Impressed by the Vision Transformer's patching and down-sampling methods, we can transform our input tensor into a thinner and higher-dimensional tensor that not only reduces the number of parameters for a TRL or TCL layer but also maintains accuracy. However, not every reshaping scheme to arbitrary higher orders and dimensions guarantees that the multi-linear structure is preserved and the accuracy is maintained. With a proper splitting scheme, the newly made tensor has a better physical interpretation than the flattened data. We introduced two splitting schemes, both of which are useful and could be used differently according to the network architecture. Figure \ref{fig:4} demonstrates the general splitting outline. Given a third-order tensor, if we split across each mode, the output is a sixth-order tensor where the first three modes correspond to the split index, and the next three modes are the split data.
 \begin{figure}
 	\centering
-	\includegraphics[scale=0.015]{fig4.png}
+	\includegraphics[scale=0.013]{fig4.png}
 	\caption{
 		An outline of reshaping to higher orders tensor.
 	}
@@ -440,7 +448,7 @@ TRL, the same logic as TCL \ref{eq:reshape-parameter-tcl}could also be applied. 
 which is ideally less than equation \ref{eq:trl-parmeter} (Appendix \ref{proof-2} and \ref{subspace-trl}).
 \begin{figure}
 	\centering
-	\includegraphics[scale=0.029]{fig5.png}
+	\includegraphics[scale=0.024]{fig5.png}
 	\caption{
 		$(a)$ attached splitting of a second-order tensor. $(b)$ compressed splitting of a second-order tensor. $(c)$ demonstration of stacking split chunks of a second-order tensor into a 4-order tensor.
 	}
@@ -448,7 +456,7 @@ which is ideally less than equation \ref{eq:trl-parmeter} (Appendix \ref{proof-2
 \end{figure}
 \begin{figure}
 	\centering
-	\includegraphics[scale=0.035]{678.png}
+	\includegraphics[scale=0.03]{678.png}
 	\caption{
 		$(a)$ original sample image. $(b)$ reshaped sample image using attached approach. $(c)$ reshaped sample image using compressed approach. Input Image $\mathcal{T}\in \mathbb{R}^{C,H,W}$, only $H$ and $W$ indices have been split. 
 	}
@@ -553,16 +561,18 @@ which is ideally less than equation \ref{eq:trl-parmeter} (Appendix \ref{proof-2
 	In Figure \ref{fig:9}, loss and accuracy of selected models and datasets are plotted. 
 	The \textbf{ablation study} is carried out in the Appendix \ref{ablation-study}.
 %	
-	\begin{figure}
+	\begin{figure}[h!]
 		\centering
-		\includegraphics[width=1.0\textwidth]{plot.png}
-		\caption{Accuracy and loss plots (Baseline, TCL TRL, Our Method), more detailed plots at (Appendix  \ref{additional-plots})}
+		\includegraphics[width=0.85\textwidth, height=0.3\textheight]{plot.png}
+		\caption{Accuracy and loss plots (Baseline, TCL TRL, Our Method)
+		}
 		\label{fig:9}
 	\end{figure}
-%	
+
+	
 \section{Conclusion}
 \label{sec:conclusion}
-Deep neural networks, especially CNNs, often work with multi-dimensional tensors. Despite their empirical success, these architectures usually contain one or more fully connected layers, which not only destroy the natural multi-linear structure of the data but also over-parameterize the model. By introducing tensorized layers such as TRL and TCL, we can achieve nearly similar accuracy while preserving the multi-modal structure of the data and reducing the number of classifier parameters. However, these methods perform poorly when the approximated rank is too low. We introduced SATURN, a framework that maintains the quality of the network and reduces the number of classifier parameters by more than 95\%. Our experiment, evaluated on CIFAR10, MNIST, and Tiny ImageNet-200, applied to ResNet50, ResNet101, VGG19, and classic CNNs, demonstrates that by splitting the input tensor via an approach that does not disturb the multi-linear structure of the data, a TCL or TRL with fewer parameters can be performed while maintaining accuracy. Based on our observations, many popular CNNs learn their convolutional layers based on the flattening operation and their following FC layers. Therefore, for our framework to achieve the best accuracy, all layers of the models need to be trained for at least a few iterations. While our framework and similar approaches offer theoretical advantages, they currently do not exhibit the expected speed. This limitation underscores the primary challenge in applying tensor methods to models, as the development of optimal implementations remains a pending task.
+Although, methods like, TRL and TCL, can achieve nearly similar accuracy while preserving the multi-modal structure of the data and reducing the number of classifier parameters. However, these methods perform poorly when the approximated rank is too low. We introduced SATURN, a framework that maintains the quality of the network and reduces the number of classifier parameters by more than 95\%. Our experiment, evaluated on CIFAR10, MNIST, and Tiny ImageNet-200, applied to ResNet50, ResNet101, VGG19, and classic CNNs, demonstrates that by splitting the input tensor via an approach that does not disturb the multi-linear structure of the data, a TCL or TRL with fewer parameters can be performed while maintaining accuracy. While our framework and similar approaches offer theoretical advantages, they currently do not exhibit the expected speed. This limitation underscores the primary challenge in applying tensor methods to models, as the development of optimal implementations remains a pending task.
 
 %\section{General formatting instructions}
 %\label{gen_inst}
@@ -925,7 +935,8 @@ equation \ref{eq:reshape-parameter-tcl}, the number of required parameters for a
 	\sum_{i=1}^{N}L_i\times r_i + \sum_{i=1}^{N} \hat{R}_i \times \frac{I_i}{L_i} \leq
 	\sum_{i=1}^{N}R_i\times I_i
 \end{align}
-\begin{proof}[\textbf{ideal}]
+%\begin{proof}[\textbf{ideal}]
+\begin{proof}
 	We prove that given ideal ranks, inequality \ref{eq:proof-1-14} holds. 
 	
 	Assume $\forall i \hspace{2mm}\hat{R}_i \leq R_i$, then:
@@ -956,107 +967,107 @@ equation \ref{eq:reshape-parameter-tcl}, the number of required parameters for a
 		\nonumber\\
 		&\leq \sum_{i=1}^{N}R_i\times I_i
 	\end{align}
-Therefore, with ideal ranks, $\forall i \hspace{2mm}\hat{R}_i \leq R_i$ and $\sum_{i=0}^{N} r_i\times L_i \leq \alpha$, inequality \ref{eq:proof-1-14} holds.
+Therefore, with ideal ranks, $\forall i \hspace{2mm}\hat{R}_i \leq R_i$ and $\sum_{i=0}^{N} r_i\times L_i \leq \alpha$, inequality \ref{eq:proof-1-14} holds. Given no ideal or some ideal ranks, there is no guarantee that inequality \ref{eq:proof-1-14} holds without further constraints. 
 \end{proof}
 
-Given no ideal, or some ideal ranks, there is no guarantee that inequality \ref{eq:proof-1-14} holds without further constraints. We will briefly discuss some ideal settings for semi ideal ranks.  
-
-\begin{proof}[\textbf{semi ideal}] 
-	We prove that given semi ideal ranks, inequality \ref{eq:proof-1-14} holds. 
-	
-	Assume $\forall i \hspace{2mm}\hat{R}_i > R_i$, then:
-	\begin{align}
-		\label{eq:proof-1-19}
-		k_i = \hat{R}_i - R_i \hspace{10mm}&  \forall i
-	\end{align}
-	We can consider:
-	\begin{align}
-		\label{eq:proof-1-20}
-		\sum_{i=1}^{N} \hat{R}_i \times \frac{I_i}{L_i} = \sum_{i=1}^{N} R_i \times \frac{I_i}{L_i} + \sum_{i=1}^{N} k_i \times \frac{I_i}{L_i}
-	\end{align}
-	Consider $\beta$ as:
-	\begin{align}
-		\label{eq:proof-1-21}
-		\beta &= \sum_{i=1}^{N} R_i \times I_i - \sum_{i=1}^{N} R_i \times \frac{I_i}{L_i}
-		\nonumber\\
-		&= \sum_{i=1}^{N} R_i \times I_i \times (1 - \frac{1}{L_i})
-	\end{align}
-	Then as long as the second part of equations \ref{eq:proof-1-20} is less than $\beta$, the inequality \ref{eq:proof-1-15} holds.
-	\begin{align}
-		\label{eq:proof-1-22}
-		\sum_{i=1}^{N} k_i \times \frac{I_i}{L_i} \leq \beta
-	\end{align}
-Given the assumption and the inequality \ref{eq:proof-1-22}:
-\begin{align}
-	\label{eq:proof-1-23}
-	\sum_{i=1}^{N} \hat{R}_i \times \frac{I_i}{L_i} &= \sum_{i=1}^{N} R_i \times \frac{I_i}{L_i} + \sum_{i=1}^{N} k_i \times \frac{I_i}{L_i}
-	\nonumber \\
-	&\leq \sum_{i=1}^{N} R_i \times \frac{I_i}{L_i} + \beta 
-	\nonumber\\
-	&\leq  \sum_{i=1}^{N} R_i \times \frac{I_i}{L_i} + \sum_{i=1}^{N} R_i \times I_i - \sum_{i=1}^{N} R_i \times \frac{I_i}{L_i}
-	\nonumber\\
-	&\leq  \sum_{i=1}^{N} R_i \times I_i
-\end{align}
-Therefore, with ideal splits and $\sum_{i=1}^{N} k_i \times \frac{I_i}{L_i} \leq \beta$ , inequality \ref{eq:proof-1-15} holds. The rest of the proof is similar to \textit{\textbf{ideal}} case.
-\end{proof} 
-
-We will now prove that as long as the only existed semi-ideal ranks, follow the rule above, inequality \ref{eq:proof-1-14} can hold.
- 
-\begin{proof}[\textbf{semi ideal}]
-	We prove that given just some ideal ranks, inequality \ref{eq:proof-1-14} holds.
-	
-	 Assume $\exists j \hspace{2mm}\hat{R}_j > R_j$, then:
-	 \begin{align}
-	 	\label{eq:proof-1-24}
-	 	k_j = \hat{R}_j - R_j \hspace{10mm}&  \forall j \hspace{2mm}s.t \hspace{2mm} \hat{R}_j > R_j
-	 \end{align}
- We can consider $N_1 = \left\{\forall i \hspace{1mm}|\hspace{1mm} \hat{R}_i \leq i\right\}$ and $N_2 = \left\{\forall j \hspace{1mm}|\hspace{1mm} \hat{R}_j > j\right\}$ : 
- \begin{align}
- 	\label{eq:proof-1-25}
- 	\sum_{i=1}^{N} \hat{R}_i \times \frac{I_i}{L_i} &= \sum_{i\in N_1} \hat{R}_i \times \frac{I_i}{L_i} +  \sum_{j\in N_2} \hat{R}_j \times \frac{I_j}{L_j}
- 	\nonumber\\
- 	&\leq 
- 	\sum_{i\in N_1} R_i \times I_i +  \sum_{j\in N_2} \hat{R}_j \times \frac{I_j}{L_j}
- 	\nonumber \\
- 	&\leq 
- 	\sum_{i\in N_1} R_i \times I_i +  \sum_{j\in N_2} R_j \times \frac{I_j}{L_j} + \sum_{j\in N_2} k_j \times \frac{I_j}{L_j}
- \end{align}
-Consider $\beta$ as:
-\begin{align}
-	\label{eq:proof-1-26}
-	\beta &= \sum_{i = 1}^{N} R_i \times I_i - \sum_{i\in N_1} R_i \times I_i +  \sum_{j\in N_2} R_j \times \frac{I_j}{L_j}
-	\nonumber\\
-	&= \sum_{i \in N_1} R_i \times I_i + \sum_{j \in N_2} R_j \times I_j - \sum_{i\in N_1} R_i \times I_i +  \sum_{j\in N_2} R_j \times \frac{I_i}{L_i}
-	\nonumber\\
-	&= \sum_{j \in N_2} R_j \times I_j -  \sum_{j\in N_2} R_j \times \frac{I_i}{L_i}
-	\nonumber\\
-	&= \sum_{j \in N_2} R_j \times I_j \times (1 - \frac{1}{L_j})
-\end{align}
-Then as long as the last part of inequality \ref{eq:proof-1-25} is less than $\beta$, the inequality \ref{eq:proof-1-15} holds.
-\begin{align}
-	\label{eq:proof-1-27}
-	 \sum_{j\in N_2} k_j \times \frac{I_j}{L_j} \leq \beta
-\end{align}
-Given the assumption and the inequality \ref{eq:proof-1-27}:
-\begin{align}
-	\label{eq:proof-1-28}
-	\sum_{i=1}^{N} \hat{R}_i \times \frac{I_i}{L_i} &\leq
-	\sum_{i\in N_1} R_i \times I_i +  \sum_{j\in N_2} R_j \times \frac{I_j}{L_j} + \sum_{j\in N_2} k_j \times \frac{I_j}{L_j} 
-	\nonumber\\
-	&\leq
-	\sum_{i\in N_1} R_i \times I_i +  \sum_{j\in N_2} R_j \times \frac{I_j}{L_j} + \beta
-	\nonumber\\
-	&\leq
-	\sum_{i\in N_1} R_i \times I_i +  \sum_{j\in N_2} R_j \times \frac{I_j}{L_j} + \sum_{j \in N_2} R_j \times I_j -  \sum_{j\in N_2} R_j \times \frac{I_i}{L_i}
-	\nonumber\\
-	&\leq
-	\sum_{i\in N_1} R_i \times I_i +  \sum_{j \in N_2} R_j \times I_j
-	\nonumber \\
-	&\leq 
-	\sum_{i = 1}^{N}R_i \times I_i
-\end{align}
-Therefore, with ideal splits as long as the existed semi ideal ranks follow inequality \ref{eq:proof-1-27}, inequality \ref{eq:proof-1-15} holds. The rest of the proof is similar to \textit{\textbf{ideal}} case.
-\end{proof}
+%Given no ideal, or some ideal ranks, there is no guarantee that inequality \ref{eq:proof-1-14} holds without further constraints. We will briefly discuss some ideal settings for semi ideal ranks.  
+%
+%\begin{proof}[\textbf{semi ideal}] 
+%	We prove that given semi ideal ranks, inequality \ref{eq:proof-1-14} holds. 
+%	
+%	Assume $\forall i \hspace{2mm}\hat{R}_i > R_i$, then:
+%	\begin{align}
+%		\label{eq:proof-1-19}
+%		k_i = \hat{R}_i - R_i \hspace{10mm}&  \forall i
+%	\end{align}
+%	We can consider:
+%	\begin{align}
+%		\label{eq:proof-1-20}
+%		\sum_{i=1}^{N} \hat{R}_i \times \frac{I_i}{L_i} = \sum_{i=1}^{N} R_i \times \frac{I_i}{L_i} + \sum_{i=1}^{N} k_i \times \frac{I_i}{L_i}
+%	\end{align}
+%	Consider $\beta$ as:
+%	\begin{align}
+%		\label{eq:proof-1-21}
+%		\beta &= \sum_{i=1}^{N} R_i \times I_i - \sum_{i=1}^{N} R_i \times \frac{I_i}{L_i}
+%		\nonumber\\
+%		&= \sum_{i=1}^{N} R_i \times I_i \times (1 - \frac{1}{L_i})
+%	\end{align}
+%	Then as long as the second part of equations \ref{eq:proof-1-20} is less than $\beta$, the inequality \ref{eq:proof-1-15} holds.
+%	\begin{align}
+%		\label{eq:proof-1-22}
+%		\sum_{i=1}^{N} k_i \times \frac{I_i}{L_i} \leq \beta
+%	\end{align}
+%Given the assumption and the inequality \ref{eq:proof-1-22}:
+%\begin{align}
+%	\label{eq:proof-1-23}
+%	\sum_{i=1}^{N} \hat{R}_i \times \frac{I_i}{L_i} &= \sum_{i=1}^{N} R_i \times \frac{I_i}{L_i} + \sum_{i=1}^{N} k_i \times \frac{I_i}{L_i}
+%	\nonumber \\
+%	&\leq \sum_{i=1}^{N} R_i \times \frac{I_i}{L_i} + \beta 
+%	\nonumber\\
+%	&\leq  \sum_{i=1}^{N} R_i \times \frac{I_i}{L_i} + \sum_{i=1}^{N} R_i \times I_i - \sum_{i=1}^{N} R_i \times \frac{I_i}{L_i}
+%	\nonumber\\
+%	&\leq  \sum_{i=1}^{N} R_i \times I_i
+%\end{align}
+%Therefore, with ideal splits and $\sum_{i=1}^{N} k_i \times \frac{I_i}{L_i} \leq \beta$ , inequality \ref{eq:proof-1-15} holds. The rest of the proof is similar to \textit{\textbf{ideal}} case.
+%\end{proof} 
+%
+%We will now prove that as long as the only existed semi-ideal ranks, follow the rule above, inequality \ref{eq:proof-1-14} can hold.
+% 
+%\begin{proof}[\textbf{semi ideal}]
+%	We prove that given just some ideal ranks, inequality \ref{eq:proof-1-14} holds.
+%	
+%	 Assume $\exists j \hspace{2mm}\hat{R}_j > R_j$, then:
+%	 \begin{align}
+%	 	\label{eq:proof-1-24}
+%	 	k_j = \hat{R}_j - R_j \hspace{10mm}&  \forall j \hspace{2mm}s.t \hspace{2mm} \hat{R}_j > R_j
+%	 \end{align}
+% We can consider $N_1 = \left\{\forall i \hspace{1mm}|\hspace{1mm} \hat{R}_i \leq i\right\}$ and $N_2 = \left\{\forall j \hspace{1mm}|\hspace{1mm} \hat{R}_j > j\right\}$ : 
+% \begin{align}
+% 	\label{eq:proof-1-25}
+% 	\sum_{i=1}^{N} \hat{R}_i \times \frac{I_i}{L_i} &= \sum_{i\in N_1} \hat{R}_i \times \frac{I_i}{L_i} +  \sum_{j\in N_2} \hat{R}_j \times \frac{I_j}{L_j}
+% 	\nonumber\\
+% 	&\leq 
+% 	\sum_{i\in N_1} R_i \times I_i +  \sum_{j\in N_2} \hat{R}_j \times \frac{I_j}{L_j}
+% 	\nonumber \\
+% 	&\leq 
+% 	\sum_{i\in N_1} R_i \times I_i +  \sum_{j\in N_2} R_j \times \frac{I_j}{L_j} + \sum_{j\in N_2} k_j \times \frac{I_j}{L_j}
+% \end{align}
+%Consider $\beta$ as:
+%\begin{align}
+%	\label{eq:proof-1-26}
+%	\beta &= \sum_{i = 1}^{N} R_i \times I_i - \sum_{i\in N_1} R_i \times I_i +  \sum_{j\in N_2} R_j \times \frac{I_j}{L_j}
+%	\nonumber\\
+%	&= \sum_{i \in N_1} R_i \times I_i + \sum_{j \in N_2} R_j \times I_j - \sum_{i\in N_1} R_i \times I_i +  \sum_{j\in N_2} R_j \times \frac{I_i}{L_i}
+%	\nonumber\\
+%	&= \sum_{j \in N_2} R_j \times I_j -  \sum_{j\in N_2} R_j \times \frac{I_i}{L_i}
+%	\nonumber\\
+%	&= \sum_{j \in N_2} R_j \times I_j \times (1 - \frac{1}{L_j})
+%\end{align}
+%Then as long as the last part of inequality \ref{eq:proof-1-25} is less than $\beta$, the inequality \ref{eq:proof-1-15} holds.
+%\begin{align}
+%	\label{eq:proof-1-27}
+%	 \sum_{j\in N_2} k_j \times \frac{I_j}{L_j} \leq \beta
+%\end{align}
+%Given the assumption and the inequality \ref{eq:proof-1-27}:
+%\begin{align}
+%	\label{eq:proof-1-28}
+%	\sum_{i=1}^{N} \hat{R}_i \times \frac{I_i}{L_i} &\leq
+%	\sum_{i\in N_1} R_i \times I_i +  \sum_{j\in N_2} R_j \times \frac{I_j}{L_j} + \sum_{j\in N_2} k_j \times \frac{I_j}{L_j} 
+%	\nonumber\\
+%	&\leq
+%	\sum_{i\in N_1} R_i \times I_i +  \sum_{j\in N_2} R_j \times \frac{I_j}{L_j} + \beta
+%	\nonumber\\
+%	&\leq
+%	\sum_{i\in N_1} R_i \times I_i +  \sum_{j\in N_2} R_j \times \frac{I_j}{L_j} + \sum_{j \in N_2} R_j \times I_j -  \sum_{j\in N_2} R_j \times \frac{I_i}{L_i}
+%	\nonumber\\
+%	&\leq
+%	\sum_{i\in N_1} R_i \times I_i +  \sum_{j \in N_2} R_j \times I_j
+%	\nonumber \\
+%	&\leq 
+%	\sum_{i = 1}^{N}R_i \times I_i
+%\end{align}
+%Therefore, with ideal splits as long as the existed semi ideal ranks follow inequality \ref{eq:proof-1-27}, inequality \ref{eq:proof-1-15} holds. The rest of the proof is similar to \textit{\textbf{ideal}} case.
+%\end{proof}
 
 \section{Method analysis on TRL}
 \label{proof-2}
@@ -1066,7 +1077,8 @@ As stated in subsection \ref{subsec:method-analysis}, equation \ref{eq:reshape-p
 	\prod_{i=1}^{N}r_i \prod_{i=1}^{N+1}\hat{R}_i + \sum_{i=1}^{N}L_i\times r_i + \sum_{i=1}^{N} \hat{R}_i \times \frac{I_i}{L_i} + \hat{R}_{N+1}\times O \leq
 	\prod_{i=1}^{N+1}R_i + \sum_{i=1}^{N} R_i\times I_i + R_{N+1}\times O 
 \end{align}
-\begin{proof}[\textbf{ideal}]
+%\begin{proof}[\textbf{ideal}]
+\begin{proof}
 	We prove that given ideal ranks, inequality \ref{eq:proof-2-29} holds. 
 	
 	Assume $\forall i \hspace{2mm}\hat{R}_i \leq R_i$, then:
@@ -1133,37 +1145,38 @@ Therefore, with ideal ranks, $\forall i \hspace{2mm}\hat{R}_i \leq R_i$, $\sum_{
 \prod_{i=1}^{N+1}R_i$, or $\prod_{i=1}^{N}r_i \leq \alpha_2$, and inequality \ref{eq:proof-2-37},  inequality \ref{eq:proof-2-29} holds.
 \end{proof}
 
-Given no ideal, or some ideal ranks, there is no guarantee that inequality \ref{eq:proof-2-29} holds without further constraints. We will briefly discuss some ideal settings for semi ideal ranks and splits.  
+Given no ideal, or some ideal ranks, there is no guarantee that inequality \ref{eq:proof-2-29} holds without further constraints. 
+%We will briefly discuss some ideal settings for semi ideal ranks and splits.  
 
-\begin{proof}[\textbf{semi ideal}]
-	We prove that given semi ideal ranks, inequality \ref{eq:proof-2-29} holds.
-	
-	Assume $\forall i \hspace{2mm}\hat{R}_i > R_i$, which is equivalent to solving for 
-	$\exists j \hspace{2mm}\hat{R}_j > R_j$,
-	then:
-	\begin{align}
-		\label{eq:proof-2-38}
-		k_i = \hat{R}_i - R_i
-	\end{align}
-We can consider:
-\begin{align}
-	\label{eq:proof-2-39}
-	\sum_{i=1}^{N} \hat{R}_i \times \frac{I_i}{L_i} + \hat{R}_{N+1}\times O = \sum_{i=1}^{N} R_i \times \frac{I_i}{L_i} + \sum_{i=1}^{N} k_i \times \frac{I_i}{L_i} + R_{N+1}\times O + k_{N+1}\times O
-\end{align}
-	Similar to TCL, consider $\beta$ as:
-	\begin{align}
-		\label{eq:proof-2-40}
-		\beta &= \sum_{i=1}^{N} R_i \times I_i - \sum_{i=1}^{N} R_i \times \frac{I_i}{L_i}
-		\nonumber\\
-		&= \sum_{i=1}^{N} R_i \times I_i \times (1 - \frac{1}{L_i})
-	\end{align}
-	Then as long as the $k_i$ parts of equation \ref{eq:proof-2-39} is less than $\beta$, the inequality \ref{eq:proof-2-30} holds.
-	\begin{align}
-		\label{eq:proof-2-41}
-		\sum_{i=1}^{N} k_i \times \frac{I_i}{L_i} + k_{N+1}\times O \leq \beta
-	\end{align}
-	Therefore, given the assumption and the inequality \ref{eq:proof-2-41}, with ideal splits, \ref{eq:proof-2-30} holds. The rest of the proof is similar to \textbf{\textit{ideal}} case.
-\end{proof}
+%\begin{proof}[\textbf{semi ideal}]
+%	We prove that given semi ideal ranks, inequality \ref{eq:proof-2-29} holds.
+%	
+%	Assume $\forall i \hspace{2mm}\hat{R}_i > R_i$, which is equivalent to solving for 
+%	$\exists j \hspace{2mm}\hat{R}_j > R_j$,
+%	then:
+%	\begin{align}
+%		\label{eq:proof-2-38}
+%		k_i = \hat{R}_i - R_i
+%	\end{align}
+%We can consider:
+%\begin{align}
+%	\label{eq:proof-2-39}
+%	\sum_{i=1}^{N} \hat{R}_i \times \frac{I_i}{L_i} + \hat{R}_{N+1}\times O = \sum_{i=1}^{N} R_i \times \frac{I_i}{L_i} + \sum_{i=1}^{N} k_i \times \frac{I_i}{L_i} + R_{N+1}\times O + k_{N+1}\times O
+%\end{align}
+%	Similar to TCL, consider $\beta$ as:
+%	\begin{align}
+%		\label{eq:proof-2-40}
+%		\beta &= \sum_{i=1}^{N} R_i \times I_i - \sum_{i=1}^{N} R_i \times \frac{I_i}{L_i}
+%		\nonumber\\
+%		&= \sum_{i=1}^{N} R_i \times I_i \times (1 - \frac{1}{L_i})
+%	\end{align}
+%	Then as long as the $k_i$ parts of equation \ref{eq:proof-2-39} is less than $\beta$, the inequality \ref{eq:proof-2-30} holds.
+%	\begin{align}
+%		\label{eq:proof-2-41}
+%		\sum_{i=1}^{N} k_i \times \frac{I_i}{L_i} + k_{N+1}\times O \leq \beta
+%	\end{align}
+%	Therefore, given the assumption and the inequality \ref{eq:proof-2-41}, with ideal splits, \ref{eq:proof-2-30} holds. The rest of the proof is similar to \textbf{\textit{ideal}} case.
+%\end{proof}
 
 \section{Subspace of MLP : TCL}
 \label{subspace-tcl}
@@ -1243,103 +1256,164 @@ It is clear that $\Omega \subseteq \Psi \subseteq \Phi$. So the solution of a TC
 \section{Subspace of MLP : TRL}
 \label{subspace-trl}
 We will discuss the subspace attribute of our methods on TRL, classic TRL, and MLP. 
-Given input tensor $\mathcal{X} \in \mathbb{R}^{S_0\times I_1\times \dots\times I_N}$, similar to TCL \ref{subspace-tcl} : 
+Given input tensor $\mathcal{X} \in \mathbb{R}^{S_0\times I_1\times \dots\times I_N}$, with output tensor $\mathcal{Y} \in \mathbb{R}^{S_0\times O}$: 
+%\begin{align}
+%	\label{eq:subspace-tcl-52}
+%	\bar{\mathcal{X}} = \mathcal{X}_{[0]} \in \mathbb{R}^{S_0\times I} \hspace{10mm}I=I_1I_2\dots I_N
+%\end{align}
+%
+The MLP can be represented as:
 \begin{align}
-	\label{eq:subspace-tcl-52}
-	\bar{\mathcal{X}} = \mathcal{X}_{[0]} \in \mathbb{R}^{S_0\times I} \hspace{10mm}I=I_1I_2\dots I_N
+	\label{eq:subspace-tr1-53}
+	\mathcal{Y} = \left\langle \mathcal{X}, \mathcal{W}\right\rangle_N + b
 \end{align}
+where $b\in \mathbb{R}^O$ and $\mathcal{W}\in \mathbb{R}^{I_1\times\dots\times I_N\times O}$.
 
-A MLP can be represented as:
+In TCL, the $W$ is considered to be in the following form:
 \begin{align}
-	\label{eq:subspace-tcl-53}
-	\mathcal{Y} = \left\langle \mathcal{X}, \mathcal{W}\right\rangle_N
+	\label{eq:subspace-tr1-54}
+	\mathcal{W} = \left(V^{(1)}\times\dots\times V^{(N)}\right)_{1:N}.\mathcal{G}
 \end{align}
-where $\mathcal{Y} \in \mathbb{R}^{S_0\times O}$ and $\mathcal{W} \in \mathbb{R}^{I_1\times \dots\times I_N\times O}$.
+where $\mathcal{G}\in \mathbb{R}^{R_1\times \dots R_N\times R_{N+1}}$ and $R_i \leq I_i \hspace{3mm}\forall i = 1\dots N$, $R_{N+1} \leq O$.
 
-We can write equations \ref{eq:subspace-tcl-53} as : 
+So if $\Phi$  is :
 \begin{align}
-	\label{eq:subspace-tcl-54}
-	\mathcal{Y} = \bar{\mathcal{X}} \bar{\mathcal{W}}^T
-\end{align}
-where $\bar{\mathcal{W}} = \mathcal{W}_{[N+1]} \in \mathbb{R}^{O\times I}$.
-
-Consider solution space $\Phi^\prime$ such that:
-\begin{align}
-	\label{eq:subspace-tcl-55}
-	\Phi^\prime = \left\{ \bar{\mathcal{X}} \bar{\mathcal{W}}^T | \bar{\mathcal{W}} \in \mathbb{R}^{O\times I}\right\}
-\end{align}
-Assume $ V^{(i)} \in \mathbb{R}^{R_i\times I_i}$, $V^{(N+1)} \in \mathbb{R}^{R_{N+1}\times O}$, and core tensor $\mathcal{G} \in \mathbb{R}^{R_1\times R_{N+1}}$, then a TRL with factors $V^{(i)}$ and core $\mathcal{G}$ can be defined as:
-\begin{align}
-	\label{eq:subspace-tcl-56}
-	\mathcal{Y} &= \left\langle \mathcal{X}, \mathcal{W} \right\rangle_N
-	\nonumber\\
-	&= \left\langle \mathcal{X}, \left(V^{(1)}, \dots, V^{(N+1)}\right)_{0:N+1}.\mathcal{G} \right\rangle_N
-	\nonumber\\
-	&= \left\langle \left(V^{(1)^T}, \dots, V^{(N)^T}\right)_{1:N}.\mathcal{X}, \left(V^{(N+1)}\right)_{N+1}.\mathcal{G} \right\rangle_N
-	\nonumber\\
-	&= \left\langle \hat{\mathcal{X}}, \hat{\mathcal{G}} \right\rangle_N
-\end{align}
-Similar to TCL \ref{eq:subspace-tcl-46}, consider :
-\begin{align}
-	\label{eq:subspace-tcl-57}
-	\bar{\hat{\mathcal{X}}} = \hat{\mathcal{X}}_{[0]} \in \mathbb{R}^{S_0\times R} \hspace{10mm}\text{and}\hspace{10mm} \bar{\hat{\mathcal{G}}} = \hat{\mathcal{G}}_{[N+1]} \in \mathbb{R}^{O\times R}
-\end{align}
-Where $R = R_1R_2\dots R_N$, we can consider the TRL as :
-\begin{align}
-	\label{eq:subspace-tcl-58}
-	\mathcal{Y} = \bar{\hat{\mathcal{X}}} \bar{\hat{\mathcal{G}}}^T \in \mathbb{R}^{S_0\times O}
-\end{align}
-Consider solution space $\Psi^\prime$ such that:
-\begin{align}
-	\label{eq:subspace-tcl-59}
-		\Psi^\prime = \left\{\bar{\hat{\mathcal{X}}} \bar{\hat{\mathcal{G}}}^T |
-%		  \bar{\hat{\mathcal{G}}}  = \hat{\mathcal{G}}_{[N+1]} \land \hat{\mathcal{G}} = \left(V^{(N+1)}\right)_{N+1}.\mathcal{G} \land \bar{\hat{\mathcal{X}}} = \hat{\mathcal{X}}_{[0]} \land \hat{\mathcal{X}} =  \left(V^{(1)^T}, \dots, V^{(N)^T}\right)_{1:N}.\mathcal{X}  
-		\text{
-		conditions \ref{eq:subspace-tcl-57},  \ref{eq:subspace-tcl-56} holds
-		}
+		\label{eq:subspace-tr1-55}
+		\Phi = \left\{
+		\left\langle \mathcal{X}, \mathcal{W}\right\rangle_N | \mathcal{W} \in \mathbb{R}^{I_1\times \dots\times I_n\times O}
 		\right\}
 \end{align}
-It is clear that $\Psi^\prime \subseteq \Phi^\prime$. So the solution of a TRL is a subset of MLP but with less parameters. 
 
-Let $\Gamma$ be a reshape function introduced in section \ref{sec:splitting-approach}:
+And $\Psi$ is :
 \begin{align}
-	\label{eq:subspace-tcl-60}
-	\tilde{\mathcal{X}} = \Gamma (\mathcal{X}) \in \mathbb{R}^{L_1\times\dots\times L_N,\frac{I_1}{L_1}\times\dots\times \frac{I_N}{L_N}}
-\end{align}
-Consider $U^{(i)} \in \mathbb{R}^{R_i\times \frac{I_i}{L_i}}$, $U^{(N+1)} \in \mathbb{R}^{R_{N+1}\times O}$, $W^{(i)} \in \mathbb{R}^{r_i\times L_i}$, and core tensor 
-$\mathcal{G} \in \mathbb{R}^{r_1\times\dots\times r_N\times R_1\times \dots\times R_N\times R_{N+1}}$, 
-then a TRL with factors $U^{(i)}$, $W^{(i)}$, and core $\mathcal{G}$ can be defined as :
-\begin{align}
-	\label{eq:subspace-tcl-61}
-	\mathcal{Y} &= \left\langle \tilde{\mathcal{X}}, \mathcal{W} \right\rangle_N
-	\nonumber\\
-	&= \left\langle \tilde{\mathcal{X}}, \left(W^{(1)},\dots,W^{(N)},U^{(1)},\dots,U^{(N+1)}\right)_{0:2N+1}.\mathcal{G} \right\rangle_N
-	\nonumber\\
-	&=  \left\langle \left(W^{(1)^T},\dots,W^{(N)^T},U^{(1)^T},\dots,U^{(N)^T}\right)_{1:2N}. \tilde{\mathcal{X}}, \left(U^{(N+1)}\right)_{N+1}.\mathcal{G} \right\rangle_N
-	\nonumber\\
-	&= \left\langle \left(W^{(1)^T} \otimes U^{(1)^T},\dots,W^{(N)^T}\otimes U^{(N)^T}\right)_{1:N}. \Gamma^{-1}(\tilde{\mathcal{X}}), \left(U^{(N+1)}\right)_{N+1}.\mathcal{G} \right\rangle_N
-	\nonumber\\
-	&= \left\langle \left(\tilde{V}^{(1)},\dots,\tilde{V}^{(N)}\right)_{1:N}. \Gamma^{-1}(\tilde{\mathcal{X}}), \left(\tilde{V}^{(N+1)}\right)_{N+1}.\mathcal{G} \right\rangle_N
-	\nonumber\\
-	&= \left\langle \hat{\tilde{\mathcal{X}}}, \hat{\tilde{\mathcal{G}}} \right\rangle_N
-\end{align}
-which is deduced from equation \ref{eq:subspace-tcl-56}. Similar to previous section \ref{subspace-tcl}, consider:
-\begin{align}
-	\label{eq:subspace-tcl-62}
-	\bar{\tilde{\mathcal{X}}} = \hat{\tilde{\mathcal{X}}}_{[0]} \in \mathbb{R}^{S_0\times R^\prime} \hspace{10mm}\text{and}\hspace{10mm} \bar{\tilde{\mathcal{G}}} = \hat{\tilde{\mathcal{G}}}_{[N+1]} \in \mathbb{R}^{O\times R^\prime}
-\end{align}
-where $R^\prime = \prod_{i=1}R_ir_i$, we can consider the TRL as:
-\begin{align}
-	\label{eq:subspace-tcl-63}
-	\mathcal{Y} = \bar{\tilde{\mathcal{X}}} \bar{\tilde{\mathcal{G}}}^T \in \mathbb{R}^{S_0\times O}
+	\label{eq:subspace-tr1-56}
+	\Psi = \left\{
+	\left\langle \mathcal{X}, \mathcal{W}\right\rangle_N | \mathcal{W} \hspace{2mm}\text{has form \ref{eq:subspace-tr1-54}}
+	\right\}
 \end{align}
 
-Consider solution space $\Omega^\prime$ such that:
+It is clear that $\Psi \subseteq \Phi$.
+
+
+Now consider our method, It is clear that :
 \begin{align}
-	\label{eq:subspace-tcl-64}
-	\Omega^\prime = \left\{\bar{\tilde{\mathcal{X}}} \bar{\tilde{\mathcal{G}}}^T | \text{conditions \ref{eq:subspace-tcl-62}, \ref{eq:subspace-tcl-61}} holds\right\}
+	\label{eq:subspace-tr1-57}
+	\left\langle \mathcal{X}, \mathcal{W}\right\rangle_N  = \left\langle \Gamma(\mathcal{X}), \Gamma(\mathcal{W})\right\rangle_{2N} 
 \end{align}
-It is clear that $\Omega^\prime \subseteq \Psi^\prime \subseteq \Phi^\prime$. So the solution of a TRL on our framework is a subset of standard TRL and MLP but with less parameters. 
+
+where $\Gamma$ is the splitting functions from section \ref{sec:splitting-approach}.  Then : 
+\begin{align}
+	\label{eq:subspace-tr1-58}
+	\Gamma(\mathcal{X}) &\in \mathbb{R}^{S_0\times L_1\times \dots\times L_n\times \frac{I_1}{L_1}\times\dots\times \frac{I_N}{L_N}} 
+	\nonumber\\
+	\Gamma(\mathcal{W}) &\in \mathbb{R}^{L_1\times\dots\times L_N\times\frac{I_1}{L_1}\times\dots\times \frac{I_N}{L_N} \times O}
+\end{align}
+Now in our methods $\Gamma(\mathcal{W}) = \left(W^{(1)}\times \dots\times W^{(N)}\times U^{(1)}\times \dots\times U^{(N)}, U^{(N+1)}\right)_{0:2N+1}.\mathcal{G}$.
+
+From the properties of contraction and $\Gamma$, it is clear that:
+\begin{align}
+		\label{eq:subspace-tr1-59}
+		\text{\ref{eq:subspace-tr1-57} becomes}\hspace{3mm} 
+		\left\langle \mathcal{X}, \mathcal{W}\right\rangle_N = \left\langle \mathcal{X}, \bar{\mathcal{W}}\right\rangle_N
+\end{align}
+When $\bar{\mathcal{W}} = V^{(1)} \otimes \dots \otimes V^{(N)}$, and $V^{(i)} = W^{(i)}\otimes U^{(i)}$.
+
+Sine $V^{(i)}$ has the form above,  it is a special case of matrix in $\mathbb{R}^{R_i\times I_i}$.
+
+If $\Omega$ is :
+\begin{align}
+	\label{eq:subspace-tr1-60}
+	\Omega &= \left\{\left\langle\mathcal{X},\mathcal{W} \right\rangle_N | \mathcal{W} = V^{(1)}\otimes \dots\otimes V^{(N)}, V^{(i)} = W^{(i)}\otimes U^{(i)}\right\}
+\end{align}
+
+We can clearly see that 
+$\Omega \subseteq \Psi \subseteq \Phi$. 
+%where $\mathcal{Y} \in \mathbb{R}^{S_0\times O}$ and $\mathcal{W} \in \mathbb{R}^{I_1\times \dots\times I_N\times O}$.
+%
+%We can write equations \ref{eq:subspace-tcl-53} as : 
+%\begin{align}
+%	\label{eq:subspace-tcl-54}
+%	\mathcal{Y} = \bar{\mathcal{X}} \bar{\mathcal{W}}^T
+%\end{align}
+%where $\bar{\mathcal{W}} = \mathcal{W}_{[N+1]} \in \mathbb{R}^{O\times I}$.
+%
+%Consider solution space $\Phi^\prime$ such that:
+%\begin{align}
+%	\label{eq:subspace-tcl-55}
+%	\Phi^\prime = \left\{ \bar{\mathcal{X}} \bar{\mathcal{W}}^T | \bar{\mathcal{W}} \in \mathbb{R}^{O\times I}\right\}
+%\end{align}
+%Assume $ V^{(i)} \in \mathbb{R}^{R_i\times I_i}$, $V^{(N+1)} \in \mathbb{R}^{R_{N+1}\times O}$, and core tensor $\mathcal{G} \in \mathbb{R}^{R_1\times\dots\times R_{N+1}}$, then a TRL with factors $V^{(i)}$ and core $\mathcal{G}$ can be defined as:
+%\begin{align}
+%	\label{eq:subspace-tcl-56}
+%	\mathcal{Y} &= \left\langle \mathcal{X}, \mathcal{W} \right\rangle_N
+%	\nonumber\\
+%	&= \left\langle \mathcal{X}, \left(V^{(1)}, \dots, V^{(N+1)}\right)_{0:N+1}.\mathcal{G} \right\rangle_N
+%	\nonumber\\
+%	&= \left\langle \left(V^{(1)^T}, \dots, V^{(N)^T}\right)_{1:N}.\mathcal{X}, \left(V^{(N+1)}\right)_{N+1}.\mathcal{G} \right\rangle_N
+%	\nonumber\\
+%	&= \left\langle \hat{\mathcal{X}}, \hat{\mathcal{G}} \right\rangle_N
+%\end{align}
+%Similar to TCL \ref{eq:subspace-tcl-46}, consider :
+%\begin{align}
+%	\label{eq:subspace-tcl-57}
+%	\bar{\hat{\mathcal{X}}} = \hat{\mathcal{X}}_{[0]} \in \mathbb{R}^{S_0\times R} \hspace{10mm}\text{and}\hspace{10mm} \bar{\hat{\mathcal{G}}} = \hat{\mathcal{G}}_{[N+1]} \in \mathbb{R}^{O\times R}
+%\end{align}
+%Where $R = R_1R_2\dots R_N$, we can consider the TRL as :
+%\begin{align}
+%	\label{eq:subspace-tcl-58}
+%	\mathcal{Y} = \bar{\hat{\mathcal{X}}} \bar{\hat{\mathcal{G}}}^T \in \mathbb{R}^{S_0\times O}
+%\end{align}
+%Consider solution space $\Psi^\prime$ such that:
+%\begin{align}
+%	\label{eq:subspace-tcl-59}
+%		\Psi^\prime = \left\{\bar{\hat{\mathcal{X}}} \bar{\hat{\mathcal{G}}}^T |
+%%		  \bar{\hat{\mathcal{G}}}  = \hat{\mathcal{G}}_{[N+1]} \land \hat{\mathcal{G}} = \left(V^{(N+1)}\right)_{N+1}.\mathcal{G} \land \bar{\hat{\mathcal{X}}} = \hat{\mathcal{X}}_{[0]} \land \hat{\mathcal{X}} =  \left(V^{(1)^T}, \dots, V^{(N)^T}\right)_{1:N}.\mathcal{X}  
+%		\text{
+%		conditions \ref{eq:subspace-tcl-57},  \ref{eq:subspace-tcl-56} holds
+%		}
+%		\right\}
+%\end{align}
+%It is clear that $\Psi^\prime \subseteq \Phi^\prime$. So the solution of a TRL is a subset of MLP but with less parameters. 
+%
+%Let $\Gamma$ be a reshape function introduced in section \ref{sec:splitting-approach}:
+%\begin{align}
+%	\label{eq:subspace-tcl-60}
+%	\tilde{\mathcal{X}} = \Gamma (\mathcal{X}) \in \mathbb{R}^{L_1\times\dots\times L_N,\frac{I_1}{L_1}\times\dots\times \frac{I_N}{L_N}}
+%\end{align}
+%Consider $U^{(i)} \in \mathbb{R}^{R_i\times \frac{I_i}{L_i}}$, $U^{(N+1)} \in \mathbb{R}^{R_{N+1}\times O}$, $W^{(i)} \in \mathbb{R}^{r_i\times L_i}$, and core tensor 
+%$\mathcal{G} \in \mathbb{R}^{r_1\times\dots\times r_N\times R_1\times \dots\times R_N\times R_{N+1}}$, 
+%then a TRL with factors $U^{(i)}$, $W^{(i)}$, and core $\mathcal{G}$ can be defined as :
+%\begin{align}
+%	\label{eq:subspace-tcl-61}
+%	\mathcal{Y} &= \left\langle \tilde{\mathcal{X}}, \mathcal{W} \right\rangle_N
+%	\nonumber\\
+%	&= \left\langle \tilde{\mathcal{X}}, \left(W^{(1)},\dots,W^{(N)},U^{(1)},\dots,U^{(N+1)}\right)_{0:2N+1}.\mathcal{G} \right\rangle_N
+%	\nonumber\\
+%	&=  \left\langle \left(W^{(1)^T},\dots,W^{(N)^T},U^{(1)^T},\dots,U^{(N)^T}\right)_{1:2N}. \tilde{\mathcal{X}}, \left(U^{(N+1)}\right)_{N+1}.\mathcal{G} \right\rangle_N
+%	\nonumber\\
+%	&= \left\langle \left(W^{(1)^T} \otimes U^{(1)^T},\dots,W^{(N)^T}\otimes U^{(N)^T}\right)_{1:N}. \Gamma^{-1}(\tilde{\mathcal{X}}), \left(U^{(N+1)}\right)_{N+1}.\mathcal{G} \right\rangle_N
+%	\nonumber\\
+%	&= \left\langle \left(\tilde{V}^{(1)},\dots,\tilde{V}^{(N)}\right)_{1:N}. \Gamma^{-1}(\tilde{\mathcal{X}}), \left(\tilde{V}^{(N+1)}\right)_{N+1}.\mathcal{G} \right\rangle_N
+%	\nonumber\\
+%	&= \left\langle \hat{\tilde{\mathcal{X}}}, \hat{\tilde{\mathcal{G}}} \right\rangle_N
+%\end{align}
+%which is deduced from equation \ref{eq:subspace-tcl-56}. Similar to previous section \ref{subspace-tcl}, consider:
+%\begin{align}
+%	\label{eq:subspace-tcl-62}
+%	\bar{\tilde{\mathcal{X}}} = \hat{\tilde{\mathcal{X}}}_{[0]} \in \mathbb{R}^{S_0\times R^\prime} \hspace{10mm}\text{and}\hspace{10mm} \bar{\tilde{\mathcal{G}}} = \hat{\tilde{\mathcal{G}}}_{[N+1]} \in \mathbb{R}^{O\times R^\prime}
+%\end{align}
+%where $R^\prime = \prod_{i=1}R_ir_i$, we can consider the TRL as:
+%\begin{align}
+%	\label{eq:subspace-tcl-63}
+%	\mathcal{Y} = \bar{\tilde{\mathcal{X}}} \bar{\tilde{\mathcal{G}}}^T \in \mathbb{R}^{S_0\times O}
+%\end{align}
+%
+%Consider solution space $\Omega^\prime$ such that:
+%\begin{align}
+%	\label{eq:subspace-tcl-64}
+%	\Omega^\prime = \left\{\bar{\tilde{\mathcal{X}}} \bar{\tilde{\mathcal{G}}}^T | \text{conditions \ref{eq:subspace-tcl-62}, \ref{eq:subspace-tcl-61}} holds\right\}
+%\end{align}
+%It is clear that $\Omega^\prime \subseteq \Psi^\prime \subseteq \Phi^\prime$. So the solution of a TRL on our framework is a subset of standard TRL and MLP but with less parameters. 
 
 \section{Additional tables}
 \label{additional-tables}

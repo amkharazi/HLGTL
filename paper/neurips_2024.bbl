@@ -1,15 +1,15 @@
 \begin{thebibliography}{10}
 
+\bibitem{r35}
+Alex Krizhevsky, Ilya Sutskever, and Geoffrey~E Hinton.
+\newblock Imagenet classification with deep convolutional neural networks.
+\newblock {\em Advances in neural information processing systems}, 25, 2012.
+
 \bibitem{r1}
 Jean Kossaifi, Zachary~C Lipton, Arinbjorn Kolbeinsson, Aran Khanna, Tommaso
   Furlanello, and Anima Anandkumar.
 \newblock Tensor regression networks.
 \newblock {\em Journal of Machine Learning Research}, 21(123):1--21, 2020.
-
-\bibitem{r4}
-Tamara~G Kolda and Brett~W Bader.
-\newblock Tensor decompositions and applications.
-\newblock {\em SIAM review}, 51(3):455--500, 2009.
 
 \bibitem{r2}
 Nicholas~D Sidiropoulos, Lieven De~Lathauwer, Xiao Fu, Kejun Huang, Evangelos~E
@@ -23,6 +23,23 @@ RZdunek ACichocki et~al.
 \newblock Nonnegativematrixandtensor factorizations:
   Applicationstoexploratorymulti-waydata analysisandblindsourceseparation,
   2009.
+
+\bibitem{r4}
+Tamara~G Kolda and Brett~W Bader.
+\newblock Tensor decompositions and applications.
+\newblock {\em SIAM review}, 51(3):455--500, 2009.
+
+\bibitem{r36}
+Song Han, Jeff Pool, John Tran, and William Dally.
+\newblock Learning both weights and connections for efficient neural network.
+\newblock {\em Advances in neural information processing systems}, 28, 2015.
+
+\bibitem{r32}
+Andrew~G Howard, Menglong Zhu, Bo~Chen, Dmitry Kalenichenko, Weijun Wang,
+  Tobias Weyand, Marco Andreetto, and Hartwig Adam.
+\newblock Mobilenets: Efficient convolutional neural networks for mobile vision
+  applications.
+\newblock {\em arXiv preprint arXiv:1704.04861}, 2017.
 
 \bibitem{r5}
 Evangelos~E Papalexakis, Christos Faloutsos, and Nicholas~D Sidiropoulos.
@@ -128,18 +145,12 @@ Cheng Tai, Tong Xiao, Yi~Zhang, Xiaogang Wang, et~al.
 \newblock Convolutional neural networks with low-rank regularization.
 \newblock {\em arXiv preprint arXiv:1511.06067}, 2015.
 
-\bibitem{r31}
-Dat~Thanh Tran, Alexandros Iosifidis, and Moncef Gabbouj.
-\newblock Improving efficiency in convolutional neural networks with
-  multilinear filters.
-\newblock {\em Neural Networks}, 105:328--339, 2018.
-
-\bibitem{r32}
-Andrew~G Howard, Menglong Zhu, Bo~Chen, Dmitry Kalenichenko, Weijun Wang,
-  Tobias Weyand, Marco Andreetto, and Hartwig Adam.
-\newblock Mobilenets: Efficient convolutional neural networks for mobile vision
-  applications.
-\newblock {\em arXiv preprint arXiv:1704.04861}, 2017.
+\bibitem{r34}
+Jean Kossaifi, Adrian Bulat, Georgios Tzimiropoulos, and Maja Pantic.
+\newblock T-net: Parametrizing fully convolutional nets with a single
+  high-order tensor.
+\newblock In {\em Proceedings of the IEEE/CVF conference on computer vision and
+  pattern recognition}, pages 7822--7831, 2019.
 
 \bibitem{r17}
 Weiwei Guo, Irene Kotsia, and Ioannis Patras.
@@ -167,13 +178,6 @@ Rose Yu and Yan Liu.
 Dingheng Wang, Guangshe Zhao, Hengnu Chen, Zhexian Liu, Lei Deng, and Guoqi Li.
 \newblock Nonlinear tensor train format for deep neural network compression.
 \newblock {\em Neural Networks}, 144:320--333, 2021.
-
-\bibitem{r34}
-Jean Kossaifi, Adrian Bulat, Georgios Tzimiropoulos, and Maja Pantic.
-\newblock T-net: Parametrizing fully convolutional nets with a single
-  high-order tensor.
-\newblock In {\em Proceedings of the IEEE/CVF conference on computer vision and
-  pattern recognition}, pages 7822--7831, 2019.
 
 \bibitem{r12}
 Nadav Cohen, Or~Sharir, and Amnon Shashua.
