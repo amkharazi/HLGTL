@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2024.5.20)  22 MAY 2024 06:22
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2024.5.20)  22 MAY 2024 10:30
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -622,104 +622,96 @@ Package microtype Info: Loading generic protrusion settings for font family
 
 {c:/texlive/2023/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{c:/texlive/2023/
 texmf-dist/fonts/enc/dvips/base/8r.enc}{c:/texlive/2023/texmf-dist/fonts/enc/dv
-ips/cm-super/cm-super-t1.enc}] [2]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [3]
-[4]
-<fig1.png, id=218, 5435.30624pt x 3011.25pt>
+ips/cm-super/cm-super-t1.enc}] [2] [3]
+<fig1.png, id=205, 5435.30624pt x 3011.25pt>
 File: fig1.png Graphic file (type png)
 <use fig1.png>
-Package pdftex.def Info: fig1.png  used on input line 323.
+Package pdftex.def Info: fig1.png  used on input line 301.
 (pdftex.def)             Requested size: 163.05215pt x 90.3336pt.
- [5 <./fig1.png>]
-<fig2-3.png, id=234, 12978.4875pt x 4230.80624pt>
+ [4]
+<fig2-3.png, id=227, 12978.4875pt x 4230.80624pt>
 File: fig2-3.png Graphic file (type png)
 <use fig2-3.png>
-Package pdftex.def Info: fig2-3.png  used on input line 372.
+Package pdftex.def Info: fig2-3.png  used on input line 350.
 (pdftex.def)             Requested size: 324.38219pt x 105.74406pt.
-<fig4.png, id=236, 8627.23125pt x 3477.99374pt>
+ [5 <./fig1.png>]
+<fig4.png, id=240, 8627.23125pt x 3477.99374pt>
 File: fig4.png Graphic file (type png)
 <use fig4.png>
-Package pdftex.def Info: fig4.png  used on input line 386.
+Package pdftex.def Info: fig4.png  used on input line 364.
 (pdftex.def)             Requested size: 129.40288pt x 52.16765pt.
  [6 <./fig2-3.png> <./fig4.png>]
-<fig5.png, id=255, 12963.43124pt x 5435.30624pt>
+<fig5.png, id=258, 12963.43124pt x 5435.30624pt>
 File: fig5.png Graphic file (type png)
 <use fig5.png>
-Package pdftex.def Info: fig5.png  used on input line 467.
+Package pdftex.def Info: fig5.png  used on input line 445.
 (pdftex.def)             Requested size: 259.32338pt x 108.72908pt.
-<678.png, id=256, 10037.5pt x 3430.8175pt>
+<678.png, id=259, 10037.5pt x 3430.8175pt>
 File: 678.png Graphic file (type png)
 <use 678.png>
-Package pdftex.def Info: 678.png  used on input line 475.
+Package pdftex.def Info: 678.png  used on input line 453.
 (pdftex.def)             Requested size: 301.11201pt x 102.92007pt.
- [7 <./fig5.png>] [8 <./678.png>] (./neurips_2024.bbl
+ [7 <./fig5.png> <./678.png>] [8] (./neurips_2024.bbl
 Underfull \hbox (badness 10000) in paragraph at lines 22--26
 []\T1/ptm/m/n/10 (+20) RZdunek ACi-chocki et al.  Non-neg-a-tive-ma-trixandten-
 sor fac-tor-iza-tions:
  []
 
-[9]
+
 Overfull \hbox (0.58293pt too wide) in paragraph at lines 72--76
 \T1/ptm/m/n/10 (-20) acceleration for neural networks: A comprehensive survey. 
  \T1/ptm/m/it/10 (-20) Proceedings of the IEEE\T1/ptm/m/n/10 (-20) , 108(4):485
 --
  []
 
-[10]) [11] [12]
-Underfull \hbox (badness 3907) in paragraph at lines 1073--1074
+[9] [10]) [11] [12]
+Underfull \hbox (badness 3907) in paragraph at lines 1051--1052
 \T1/ptm/m/n/10 (+20) As stated in sub-sec-tion []4.3[], equa-tion []14[], the n
 um-ber of re-quired pa-ram-e-ters for a
  []
 
 
-Underfull \hbox (badness 1533) in paragraph at lines 1073--1074
+Underfull \hbox (badness 1533) in paragraph at lines 1051--1052
 \T1/ptm/m/n/10 (+20) TRL on our frame-work is ide-ally less than equa-tions []1
 0[]. Given $\OMS/cmsy/m/n/10 T 2 \U/msb/m/n/10 R[]$
  []
 
 
-Underfull \hbox (badness 6461) in paragraph at lines 1073--1074
+Underfull \hbox (badness 6461) in paragraph at lines 1051--1052
 \T1/ptm/m/n/10 (+20) and $[] \OMS/cmsy/m/n/10 2 \U/msb/m/n/10 R[]$\T1/ptm/m/n/1
 0 (+20) , and out-put $\OMS/cmsy/m/n/10 Y 2 \U/msb/m/n/10 R[]$\T1/ptm/m/n/10 (+
 20) , ide-ally a rank
  []
 
 [13] [14] [15] [16]
-Overfull \hbox (4.27133pt too wide) in paragraph at lines 1514--1526
+Overfull \hbox (4.27133pt too wide) in paragraph at lines 1492--1504
  [][] 
  []
 
-[17]
-Underfull \vbox (badness 1297) has occurred while \output is active []
-
- [18]
-[19]
-<ablation.png, id=475, 9726.3375pt x 13249.5pt>
+<ablation.png, id=449, 9726.3375pt x 13249.5pt>
 File: ablation.png Graphic file (type png)
 <use ablation.png>
-Package pdftex.def Info: ablation.png  used on input line 1537.
+Package pdftex.def Info: ablation.png  used on input line 1515.
 (pdftex.def)             Requested size: 388.98724pt x 529.88976pt.
- [20] [21 <./ablation.png>]
+[17] [18] [19] [20 <./ablation.png>]
 LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 1
-586.
+564.
 
 (c:/texlive/2023/texmf-dist/tex/latex/psnfss/ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
-) [22] [23] [24] [25]
-[26] [27] (./neurips_2024.aux)
+) [21] [22] [23] [24]
+[25] [26] [27] (./neurips_2024.aux)
 Package rerunfilecheck Info: File `neurips_2024.out' has not changed.
 (rerunfilecheck)             Checksum: FAC21B3A95DF1A814AA402FEBB9B5D11;3259.
  ) 
 Here is how much of TeX's memory you used:
- 14262 strings out of 476025
- 221548 string characters out of 5794015
- 1909382 words of memory out of 5000000
+ 14271 strings out of 476025
+ 221632 string characters out of 5794015
+ 1907382 words of memory out of 5000000
  34056 multiletter control sequences out of 15000+600000
- 556821 words of font info for 216 fonts, out of 8000000 for 9000
+ 557300 words of font info for 222 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,13n,76p,1640b,725s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,13n,76p,1640b,775s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/tex
 live/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2023
 /texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2023/texmf-di
@@ -736,10 +728,10 @@ rw/helvetic/uhvr8a.pfb><c:/texlive/2023/texmf-dist/fonts/type1/urw/times/utmb8a
 .pfb><c:/texlive/2023/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb><c:/texlive/
 2023/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><c:/texlive/2023/texmf-dist/fo
 nts/type1/urw/times/utmri8a.pfb>
-Output written on neurips_2024.pdf (27 pages, 32816162 bytes).
+Output written on neurips_2024.pdf (27 pages, 32815904 bytes).
 PDF statistics:
- 660 PDF objects out of 1000 (max. 8388607)
- 546 compressed objects within 6 object streams
+ 662 PDF objects out of 1000 (max. 8388607)
+ 548 compressed objects within 6 object streams
  190 named destinations out of 1000 (max. 500000)
  48847 words of extra memory for PDF output out of 51595 (max. 10000000)
 
