@@ -26,4 +26,17 @@ Second:
 
 Third: run any test case or build your own using examples
 
+
+
+
+- Ablation study is a .ipynb file in ./Tests
+- Plots are drawn using a .ipynb file in ./Tests
+- All experiments are identified in ./Tests
+- Test Plan is a excel file in ./Test Plan
+- results include accuray results (top1 - top5), loss, and execution time as well as model stats for each test ID.
+- Models are included in ./Models
+- Examples are illustrative ways to learn about Utils and applications of our framework
+
+
+
 License: BSD 3 clause
