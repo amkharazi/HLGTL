@@ -10,6 +10,8 @@ Researchers : A.M.Kharazi a.m.kharazi.ac@gmail.com | M.Badzohreh badzohreee@gmai
 
 To run this project you just need to the steps bellow :
 
+Make sure you have both tensorly and tensorly-torch installed,
+
 First:
 
 ```
