@@ -440,7 +440,7 @@ TRL, the same logic as TCL \ref{eq:reshape-parameter-tcl}could also be applied. 
 which is ideally less than equation \ref{eq:trl-parmeter} (Appendix \ref{proof-2} and \ref{subspace-trl}).
 \begin{figure}
 	\centering
-	\includegraphics[scale=0.03]{fig5.png}
+	\includegraphics[scale=0.029]{fig5.png}
 	\caption{
 		$(a)$ attached splitting of a second-order tensor. $(b)$ compressed splitting of a second-order tensor. $(c)$ demonstration of stacking split chunks of a second-order tensor into a 4-order tensor.
 	}
@@ -457,7 +457,9 @@ which is ideally less than equation \ref{eq:trl-parmeter} (Appendix \ref{proof-2
 \section{Experiments}
 \label{sec:experiments}
 
-	We conducted a series of experiments to assess the performance of our proposed framework. Our experiments were performed on a GeForce RTX 4090. Datasets \ref{table:datasets} MNIST, CIFAR10, and Tiny ImageNet-200 applied to ResNet50, ResNet101, VGG-19, and a classic CNN demonstrate that our methods can significantly reduce the number of parameters while maintaining or even improving classification accuracy. In Tables \ref{table:resnet_mnist_cifar10}, \ref{table:vgg_tiny}, and \ref{table:cnn_mnist}, parameters include only the classifier parameters. For a better representation of our methods, we ignored adaptive average pooling layers in all models. $^A$ and $^C$ are splitting approaches. Code of this project will be made publicly available at our github. 
+	We conducted a series of experiments to assess the performance of our proposed framework. Our experiments were performed on a 
+	GeForce RTX 4090, 13th Gen Intel(R) Core(TM) i9-13900K, 24 core, 24564MiB
+	. Datasets \ref{table:datasets} MNIST, CIFAR10, and Tiny ImageNet-200 applied to ResNet50, ResNet101, VGG-19, and a classic CNN demonstrate that our methods can significantly reduce the number of parameters while maintaining or even improving classification accuracy. In Tables \ref{table:resnet_mnist_cifar10}, \ref{table:vgg_tiny}, and \ref{table:cnn_mnist}, parameters include only the classifier parameters. For a better representation of our methods, we ignored adaptive average pooling layers in all models. $^A$ and $^C$ are splitting approaches. Code of this project will be made publicly available at our github. 
 	
 		\begin{table}
 		\centering
@@ -548,15 +550,15 @@ which is ideally less than equation \ref{eq:trl-parmeter} (Appendix \ref{proof-2
 %	\subsection{Analysis}
 %	
 	Our framework performs exceptionally well compared to traditional TCL TRL and baseline models across various datasets and architectures. Notably, our approach significantly reduces the number of parameters without acutely compromising accuracy. 
-%	In figure \ref{fig:9}, loss and accuracy of selected models and datasets are plotted. 
+	In Figure \ref{fig:9}, loss and accuracy of selected models and datasets are plotted. 
 	The \textbf{ablation study} is carried out in the Appendix \ref{ablation-study}.
 %	
-%	\begin{figure}
-%		\centering
-%		\includegraphics[width=1.0\textwidth]{plot.png}
-%		\caption{Accuracy and loss plots (Baseline, TCL TRL, Our Method), more detailed plots at (Appendix  \ref{additional-plots})}
-%		\label{fig:9}
-%	\end{figure}
+	\begin{figure}
+		\centering
+		\includegraphics[width=1.0\textwidth]{plot.png}
+		\caption{Accuracy and loss plots (Baseline, TCL TRL, Our Method), more detailed plots at (Appendix  \ref{additional-plots})}
+		\label{fig:9}
+	\end{figure}
 %	
 \section{Conclusion}
 \label{sec:conclusion}
@@ -1568,18 +1570,7 @@ We generated synthetic samples from a Gaussian distribution $\mathcal{N}(0, 3)$ 
 \item {\bf Claims}
     \item[] Question: Do the main claims made in the abstract and introduction accurately reflect the paper's contributions and scope?
     \item[] Answer: \answerYes{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
-    \item[] Justification: We have shown in Appendix \ref{subspace-tcl}, \ref{subspace-trl}, various tables in \ref{additional-tables}, and Table \ref{table:resnet_mnist_cifar10} that our framework has both experimental and theoretical backing. Specifically, in Table \ref{table:resnet_mnist_cifar10}, our framework can achieve better or near-perfect accuracy while reducing the parameters by more than 95%.
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
+    \item[] Justification: We have shown in Appendix \ref{subspace-tcl}, \ref{subspace-trl}, various tables in \ref{additional-tables}, and Table \ref{table:resnet_mnist_cifar10} that our framework has both experimental and theoretical backing. Specifically, in Table \ref{table:resnet_mnist_cifar10}, our framework can achieve better or near-perfect accuracy while reducing the parameters by more than 95\%. 
     \item[] Guidelines:
     \begin{itemize}
         \item The answer NA means that the abstract and introduction do not include the claims made in the paper.
@@ -1592,7 +1583,6 @@ We generated synthetic samples from a Gaussian distribution $\mathcal{N}(0, 3)$ 
     \item[] Question: Does the paper discuss the limitations of the work performed by the authors?
     \item[] Answer: \answerYes{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
     \item[] Justification: As mentioned in Section \ref{sec:conclusion}, tensor methods do not tend to exhibit the expected speed when compared to their competitors. This limitation is the primary challenge in applying tensor methods to models, and an optimal implementation is yet to be developed.
-    
     \item[] Guidelines:
     \begin{itemize}
         \item The answer NA means that the paper has no limitation while the answer No means that the paper has limitations, but those are not discussed in the paper. 
@@ -1622,8 +1612,7 @@ We generated synthetic samples from a Gaussian distribution $\mathcal{N}(0, 3)$ 
     \item {\bf Experimental Result Reproducibility}
     \item[] Question: Does the paper fully disclose all the information needed to reproduce the main experimental results of the paper to the extent that it affects the main claims and/or conclusions of the paper (regardless of whether the code and data are provided or not)?
     \item[] Answer: \answerYes{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
-    \item[] Justification: The README file in the supplementary materials submitted alongside the paper contains instructions to reproduce the same results. The code itself is also written in a very easy-to-understand and illustrative manner.
-     
+    \item[] Justification: The README file in the supplementary materials submitted alongside the paper contains instructions to reproduce the same results. The code itself is also written in a very easy-to-understand and illustrative manner. Experiments settings are also mentions in all Tables. Model parameters are also accessible upon request. 
     \item[] Guidelines:
     \begin{itemize}
         \item The answer NA means that the paper does not include experiments.
@@ -1643,9 +1632,8 @@ We generated synthetic samples from a Gaussian distribution $\mathcal{N}(0, 3)$ 
 \item {\bf Open access to data and code}
     \item[] Question: Does the paper provide open access to the data and code, with sufficient instructions to faithfully reproduce the main experimental results, as described in supplemental material?
     \item[] Answer: \answerYes{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
-    \item[] Justification: As mentioned in Section \ref{sec:experiments}, our code is already on our GitHub and will be made publicly available after the camera-ready deadlines. The code is also anonymously shared in a .zip file as supplementary material.
-    
-   
+    \item[] Justification: As mentioned in Section \ref{sec:experiments}, our code is already on our GitHub and will be made publicly available after the camera-ready deadlines. The code is also anonymously shared in a .zip file as supplementary material. README file included in the supplementary material includes the instructions.
+
     \item[] Guidelines:  
     \begin{itemize}
         \item The answer NA means that paper does not include experiments requiring code.
@@ -1673,8 +1661,8 @@ We generated synthetic samples from a Gaussian distribution $\mathcal{N}(0, 3)$ 
 
 \item {\bf Experiment Statistical Significance}
     \item[] Question: Does the paper report error bars suitably and correctly defined or other appropriate information about the statistical significance of the experiments?
-    \item[] Answer: \answerNo{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
-    \item[] Justification: Our error/loss is reported at our Tables. 
+    \item[] Answer: \answerYes{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
+    \item[] Justification: In Figure \ref{fig:9}, a Loss-epoch of 12 models as well as their accuracy-epoch is plotted. 
     \item[] Guidelines:
     \begin{itemize}
         \item The answer NA means that the paper does not include experiments.
