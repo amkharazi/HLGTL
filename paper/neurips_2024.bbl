@@ -12,8 +12,12 @@ Jean Kossaifi, Zachary~C Lipton, Arinbjorn Kolbeinsson, Aran Khanna, Tommaso
 \newblock {\em Journal of Machine Learning Research}, 21(123):1--21, 2020.
 
 \bibitem{r2}
+Nicholas~D Sidiropoulos, Lieven De~Lathauwer, Xiao Fu, Kejun Huang, Evangelos~E
+  Papalexakis, and Christos Faloutsos.
+\newblock Tensor decomposition for signal processing and machine learning.
+\newblock {\em IEEE Transactions on signal processing}, 65(13):3551--3582,
+  2017.
 
-<<<<<<< HEAD
 \bibitem{r3}
 RZdunek ACichocki et~al.
 \newblock Nonnegativematrixandtensor factorizations:
@@ -56,8 +60,6 @@ M~Alex~O Vasilescu and Demetri Terzopoulos.
 \newblock In {\em Computer Vision—ECCV 2002: 7th European Conference on
   Computer Vision Copenhagen, Denmark, May 28--31, 2002 Proceedings, Part I 7},
   pages 447--460. Springer, 2002.
-=======
->>>>>>> c5d68b19f960ff8748710e499b0a56af257d7642
 
 \bibitem{r8}
 Vadim Lebedev, Yaroslav Ganin, Maksim Rakhuba, Ivan Oseledets, and Victor
@@ -204,10 +206,5 @@ Hanie Sedghi and Anima Anandkumar.
 \newblock Training input-output recurrent neural networks through spectral
   methods.
 \newblock {\em arXiv preprint arXiv:1603.00954}, 2016.
-
-\bibitem{r4}
-Tamara~G Kolda and Brett~W Bader.
-\newblock Tensor decompositions and applications.
-\newblock {\em SIAM review}, 51(3):455--500, 2009.
 
 \end{thebibliography}
