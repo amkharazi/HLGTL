@@ -472,9 +472,9 @@ which is ideally less than equation \ref{eq:trl-parmeter} (Appendix \ref{proof-2
 \end{figure}
 \begin{figure}
 	\centering
-	\includegraphics[scale=0.03]{fig6-7-8.png}
+	\includegraphics[scale=0.03]{678.png}
 	\caption{
-		$(a)$ original sample image. $(b)$ reshaped sample image using attached approach. $(c)$ reshaped sample image using compressed approach. 
+		$(a)$ original sample image. $(b)$ reshaped sample image using attached approach. $(c)$ reshaped sample image using compressed approach. Input Image $\mathcal{T}\in \mathbb{R}^{C,H,W}$, only $H$ and $W$ indices have been split. 
 	}
 	\label{fig:6-7-8}
 \end{figure}
@@ -1242,7 +1242,7 @@ Consider the solution space $\Omega$ such that:
 	\bar{\mathcal{X}} \tilde{V}^T | 
 	\tilde{V} = \left(V^{(1)}\otimes V^{(2)}\otimes \dots\otimes V^{(N)}\right)  \in \mathbb{R}^{R^\prime\times I} \right\}
 	\nonumber \\
-	&\textbf{s.t.}\nonumber\\
+	&\text{s.t.}\nonumber\\
 	 &\forall i \hspace{2mm} V^{(i)} = W^{(i)} \otimes U^{(i)} \in \mathbb{R}^{R_ir_i\times I_i} 
 	 \nonumber \\
 	 &\forall i \hspace{2mm} U^{(i)} \in \mathbb{R}^{R_i \times \frac{I_i}{L_i}}, W^{(i)} \in \mathbb{R}^{r_i\times L_i}
@@ -1278,7 +1278,7 @@ Consider solution space $\Phi^\prime$ such that:
 	\label{eq:subspace-tcl-55}
 	\Phi^\prime = \left\{ \bar{\mathcal{X}} \bar{\mathcal{W}}^T | \bar{\mathcal{W}} \in \mathbb{R}^{O\times I}\right\}
 \end{align}
-Assume $ V^{(i)} \in \mathbb{R}^{R_i\times I_i}}$, $V^{(N+1)} \in \mathbb{R}^{R_{N+1}\times O}$, and core tensor $\mathcal{G} \in \mathbb{R}^{R_1\times R_{N+1}}$, then a TRL with factors $V^{(i)}$ and core $\mathcal{G}$ can be defined as:
+Assume $ V^{(i)} \in \mathbb{R}^{R_i\times I_i}$, $V^{(N+1)} \in \mathbb{R}^{R_{N+1}\times O}$, and core tensor $\mathcal{G} \in \mathbb{R}^{R_1\times R_{N+1}}$, then a TRL with factors $V^{(i)}$ and core $\mathcal{G}$ can be defined as:
 \begin{align}
 	\label{eq:subspace-tcl-56}
 	\mathcal{Y} &= \left\langle \mathcal{X}, \mathcal{W} \right\rangle_N
@@ -1292,7 +1292,7 @@ Assume $ V^{(i)} \in \mathbb{R}^{R_i\times I_i}}$, $V^{(N+1)} \in \mathbb{R}^{R_
 Similar to TCL \ref{eq:subspace-tcl-46}, consider :
 \begin{align}
 	\label{eq:subspace-tcl-57}
-	\bar{\hat{\mathcal{X}}} = \hat{\mathcal{X}}_{[0]} \in \mathbb{R}^{S_0\times R} \hspace{10mm}\textbf{and}\hspace{10mm} \bar{\hat{\mathcal{G}}} = \hat{\mathcal{G}}_{[N+1]} \in \mathbb{R}^{O\times R}
+	\bar{\hat{\mathcal{X}}} = \hat{\mathcal{X}}_{[0]} \in \mathbb{R}^{S_0\times R} \hspace{10mm}\text{and}\hspace{10mm} \bar{\hat{\mathcal{G}}} = \hat{\mathcal{G}}_{[N+1]} \in \mathbb{R}^{O\times R}
 \end{align}
 Where $R = R_1R_2\dots R_N$, we can consider the TRL as :
 \begin{align}
@@ -1317,7 +1317,7 @@ Let $\Gamma$ be a reshape function introduced in section \ref{sec:splitting-appr
 	\tilde{\mathcal{X}} = \Gamma (\mathcal{X}) \in \mathbb{R}^{L_1\times\dots\times L_N,\frac{I_1}{L_1}\times\dots\times \frac{I_N}{L_N}}
 \end{align}
 Consider $U^{(i)} \in \mathbb{R}^{R_i\times \frac{I_i}{L_i}}$, $U^{(N+1)} \in \mathbb{R}^{R_{N+1}\times O}$, $W^{(i)} \in \mathbb{R}^{r_i\times L_i}$, and core tensor 
-$\mathcal{G} \in \mathbb{R}^{r_1\times\dots\times r_N\times R_1\times \dots\times R_N\times R_{N+1}$, 
+$\mathcal{G} \in \mathbb{R}^{r_1\times\dots\times r_N\times R_1\times \dots\times R_N\times R_{N+1}}$, 
 then a TRL with factors $U^{(i)}$, $W^{(i)}$, and core $\mathcal{G}$ can be defined as :
 \begin{align}
 	\label{eq:subspace-tcl-61}
@@ -1336,7 +1336,7 @@ then a TRL with factors $U^{(i)}$, $W^{(i)}$, and core $\mathcal{G}$ can be defi
 which is deduced from equation \ref{eq:subspace-tcl-56}. Similar to previous section \ref{subspace-tcl}, consider:
 \begin{align}
 	\label{eq:subspace-tcl-62}
-	\bar{\tilde{\mathcal{X}}} = \hat{\tilde{\mathcal{X}}}_{[0]} \in \mathbb{R}^{S_0\times R^\prime} \hspace{10mm}\textbf{and}\hspace{10mm} \bar{\tilde{\mathcal{G}}} = \hat{\tilde{\mathcal{G}}}_{[N+1]} \in \mathbb{R}^{O\times R^\prime}
+	\bar{\tilde{\mathcal{X}}} = \hat{\tilde{\mathcal{X}}}_{[0]} \in \mathbb{R}^{S_0\times R^\prime} \hspace{10mm}\text{and}\hspace{10mm} \bar{\tilde{\mathcal{G}}} = \hat{\tilde{\mathcal{G}}}_{[N+1]} \in \mathbb{R}^{O\times R^\prime}
 \end{align}
 where $R^\prime = \prod_{i=1}R_ir_i$, we can consider the TRL as:
 \begin{align}
@@ -1347,7 +1347,7 @@ where $R^\prime = \prod_{i=1}R_ir_i$, we can consider the TRL as:
 Consider solution space $\Omega^\prime$ such that:
 \begin{align}
 	\label{eq:subspace-tcl-64}
-	\Omega^\prime = \left\{\bar{\tilde{\mathcal{X}}} \bar{\tilde{\mathcal{G}}}^T | \textbf{conditions \ref{eq:subspace-tcl-62}, \ref{eq:subspace-tcl-61}}\right\}
+	\Omega^\prime = \left\{\bar{\tilde{\mathcal{X}}} \bar{\tilde{\mathcal{G}}}^T | \text{conditions \ref{eq:subspace-tcl-62}, \ref{eq:subspace-tcl-61}} holds\right\}
 \end{align}
 It is clear that $\Omega^\prime \subseteq \Psi^\prime \subseteq \Phi^\prime$. So the solution of a TRL on our framework is a subset of standard TRL and MLP but with less parameters. 
 

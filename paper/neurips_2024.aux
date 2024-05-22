@@ -11,7 +11,8 @@
 \fi}
 \global\let\hyper@last\relax 
 \gdef\HyperFirstAtBeginDocument#1{#1}
-\providecommand*\HyPL@Entry[1]{}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
 \citation{r1}
 \citation{r4}
 \citation{r2}
@@ -20,7 +21,6 @@
 \citation{r3}
 \citation{r6}
 \citation{r7}
-\HyPL@Entry{0<</S/D>>}
 \@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1}\protected@file@percent }
 \newlabel{sec:intorduction}{{1}{1}{Introduction}{section.1}{}}
 \citation{r8}
@@ -113,14 +113,14 @@
 \newlabel{subsec:method-analysis}{{4.3}{7}{Method analysis}{subsection.4.3}{}}
 \newlabel{eq:reshape-parameter-tcl}{{13}{7}{Method analysis}{equation.4.13}{}}
 \newlabel{eq:reshape-parameter-trl}{{14}{7}{Method analysis}{equation.4.14}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces  $(a)$ original sample image. $(b)$ reshaped sample image using attached approach. $(c)$ reshaped sample image using compressed approach. }}{8}{figure.5}\protected@file@percent }
-\newlabel{fig:6-7-8}{{5}{8}{$(a)$ original sample image. $(b)$ reshaped sample image using attached approach. $(c)$ reshaped sample image using compressed approach}{figure.5}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces  $(a)$ original sample image. $(b)$ reshaped sample image using attached approach. $(c)$ reshaped sample image using compressed approach. Input Image $\mathcal  {T}\in \mathbb  {R}^{C,H,W}$, only $H$ and $W$ indices have been split. }}{8}{figure.5}\protected@file@percent }
+\newlabel{fig:6-7-8}{{5}{8}{$(a)$ original sample image. $(b)$ reshaped sample image using attached approach. $(c)$ reshaped sample image using compressed approach. Input Image $\mathcal {T}\in \mathbb {R}^{C,H,W}$, only $H$ and $W$ indices have been split}{figure.5}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces  \textbf  {Performance evaluation of ResNet50 and ResNet101}, Our methods reduce the number of parameters by more than 90 \% while achieving near similar accuracy. More detailed Table(s) at (Appendix \ref {additional-tables}). }}{8}{table.1}\protected@file@percent }
 \newlabel{table:resnet_mnist_cifar10}{{1}{8}{\textbf {Performance evaluation of ResNet50 and ResNet101}, Our methods reduce the number of parameters by more than 90 \% while achieving near similar accuracy. More detailed Table(s) at (Appendix \ref {additional-tables})}{table.1}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {5}Experiments}{8}{section.5}\protected@file@percent }
 \newlabel{sec:experiments}{{5}{8}{Experiments}{section.5}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces  \textbf  {Tiny ImageNet-200 performance on VGG-19}, Given extreme number of classifier parameters for a VGG-19 model, we applied TCL layers before TRL layers. More detailed Table(s) at (Appendix \ref {additional-tables}). }}{8}{table.2}\protected@file@percent }
-\newlabel{table:vgg_tiny}{{2}{8}{\textbf {Tiny ImageNet-200 performance on VGG-19}, Given extreme number of classifier parameters for a VGG-19 model, we applied TCL layers before TRL layers. More detailed Table(s) at (Appendix \ref {additional-tables})}{table.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Conclusion}{8}{section.6}\protected@file@percent }
+\newlabel{sec:conclusion}{{6}{8}{Conclusion}{section.6}{}}
 \bibstyle{unsrt}
 \bibdata{ref}
 \bibcite{r1}{{1}{}{{}}{{}}}
@@ -130,11 +130,11 @@
 \bibcite{r5}{{5}{}{{}}{{}}}
 \bibcite{r6}{{6}{}{{}}{{}}}
 \bibcite{r7}{{7}{}{{}}{{}}}
-\bibcite{r8}{{8}{}{{}}{{}}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces  \textbf  {Tiny ImageNet-200 performance on VGG-19}, Given extreme number of classifier parameters for a VGG-19 model, we applied TCL layers before TRL layers. More detailed Table(s) at (Appendix \ref {additional-tables}). }}{9}{table.2}\protected@file@percent }
+\newlabel{table:vgg_tiny}{{2}{9}{\textbf {Tiny ImageNet-200 performance on VGG-19}, Given extreme number of classifier parameters for a VGG-19 model, we applied TCL layers before TRL layers. More detailed Table(s) at (Appendix \ref {additional-tables})}{table.2}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces  \textbf  {Classic CNN on MNIST}, Our methods are dependent on a good convolutional foundation. More detailed Table(s) at (Appendix \ref {additional-tables}). }}{9}{table.3}\protected@file@percent }
 \newlabel{table:cnn_mnist}{{3}{9}{\textbf {Classic CNN on MNIST}, Our methods are dependent on a good convolutional foundation. More detailed Table(s) at (Appendix \ref {additional-tables})}{table.3}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {6}Conclusion}{9}{section.6}\protected@file@percent }
-\newlabel{sec:conclusion}{{6}{9}{Conclusion}{section.6}{}}
+\bibcite{r8}{{8}{}{{}}{{}}}
 \bibcite{r9}{{9}{}{{}}{{}}}
 \bibcite{r10}{{10}{}{{}}{{}}}
 \bibcite{r11}{{11}{}{{}}{{}}}
