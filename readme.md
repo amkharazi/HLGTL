@@ -1,18 +1,23 @@
-Private Repository - 
-
-Tensor Regression Project 
+SATURN - currently private
 
 Tarbiat Modares University - TMU
 
-Supervisor : M. Rezghi modscicourse@gmail.com  & rezghi@modares.ac.ir
+Supervisor : M. Rezghi modscicourse@gmail.com & rezghi@modares.ac.ir
 
 Researchers : A.M.Kharazi a.m.kharazi.ac@gmail.com | M.Badzohreh badzohreee@gmail.com
 
+# How to Run ...
 
-# python download_datasets.py cifar10 --save_dir ./dataset
+To run this project you just need to the steps bellow :
 
+1.  '''
+    python Datasets.py
+    '''
 
+2.  '''
+    python Weights.py
+    '''
 
-1.  download datasets via python3 Datasets.py
+3.  run any test case or build your own using examples
 
-2.  download weights via python3 Weights.py
+License: BSD 3 clause
