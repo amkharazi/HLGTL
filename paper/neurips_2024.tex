@@ -457,7 +457,7 @@ which is ideally less than equation \ref{eq:trl-parmeter} (Appendix \ref{proof-2
 \section{Experiments}
 \label{sec:experiments}
 
-	We conducted a series of experiments to assess the performance of our proposed framework. Our experiments were performed on a GeForce RTX 4090. Datasets \ref{table:datasets} MNIST, CIFAR10, and Tiny ImageNet-200 applied to ResNet50, ResNet101, VGG-19, and a classic CNN demonstrate that our methods can significantly reduce the number of parameters while maintaining or even improving classification accuracy. In Tables \ref{table:resnet_mnist_cifar10}, \ref{table:vgg_tiny}, and \ref{table:cnn_mnist}, parameters include only the classifier parameters. For a better representation of our methods, we ignored adaptive average pooling layers in all models. $^A$ and $^C$ are splitting approaches.
+	We conducted a series of experiments to assess the performance of our proposed framework. Our experiments were performed on a GeForce RTX 4090. Datasets \ref{table:datasets} MNIST, CIFAR10, and Tiny ImageNet-200 applied to ResNet50, ResNet101, VGG-19, and a classic CNN demonstrate that our methods can significantly reduce the number of parameters while maintaining or even improving classification accuracy. In Tables \ref{table:resnet_mnist_cifar10}, \ref{table:vgg_tiny}, and \ref{table:cnn_mnist}, parameters include only the classifier parameters. For a better representation of our methods, we ignored adaptive average pooling layers in all models. $^A$ and $^C$ are splitting approaches. Code of this project will be made publicly available at our github. 
 	
 		\begin{table}
 		\centering
@@ -1207,11 +1207,11 @@ Let $\Gamma$ be a reshape function introduced in section \ref{sec:splitting-appr
 Consider $U^{(i)} \in \mathbb{R}^{R_i\times \frac{I_i}{L_i}}$ and $W^{(i)} \in \mathbb{R}^{r_i\times L_i}$, then a TCL with factors $U^{(i)}$ and $W^{(i)}$ can be defined as :
 \begin{align}
 	\label{eq:subspace-tcl-50}
-	\hat{\mathcal{X}} &= \left(W^{(1)},\dots,W^{(N)}, U^{(1)},\dots,U^{(N)}\right)_{1:2N} \tilde{\mathcal{X}}
+	\hat{\mathcal{X}} &= \left(W^{(1)},\dots,W^{(N)}, U^{(1)},\dots,U^{(N)}\right)_{1:2N} .\tilde{\mathcal{X}}
 	\nonumber \\
-	& = \left(W^{(1)} \otimes U^{(1)} ,\dots,W^{(N)} \otimes U^{(N)}\right)_{1:N} \Gamma^{-1}(\tilde{\mathcal{X}})
+	& = \left(W^{(1)} \otimes U^{(1)} ,\dots,W^{(N)} \otimes U^{(N)}\right)_{1:N} .\Gamma^{-1}(\tilde{\mathcal{X}})
 	\nonumber\\
-	& = \left(V^{(1)} ,\dots,V^{(N)}\right)_{1:N} \mathcal{X}
+	& = \left(V^{(1)} ,\dots,V^{(N)}\right)_{1:N} .\mathcal{X}
 	\nonumber\\
 	&= \bar{\mathcal{X}} \tilde{V}^T 
 \end{align}
@@ -1271,9 +1271,9 @@ Assume $ V^{(i)} \in \mathbb{R}^{R_i\times I_i}$, $V^{(N+1)} \in \mathbb{R}^{R_{
 	\label{eq:subspace-tcl-56}
 	\mathcal{Y} &= \left\langle \mathcal{X}, \mathcal{W} \right\rangle_N
 	\nonumber\\
-	&= \left\langle \mathcal{X}, \left(V^{(1)}, \dots, V^{(N+1)}\right)_{0:N+1}\mathcal{G} \right\rangle_N
+	&= \left\langle \mathcal{X}, \left(V^{(1)}, \dots, V^{(N+1)}\right)_{0:N+1}.\mathcal{G} \right\rangle_N
 	\nonumber\\
-	&= \left\langle \left(V^{(1)^T}, \dots, V^{(N)^T}\right)_{1:N}.\mathcal{X}, \left(V^{(N+1)}\right)_{N+1}\mathcal{G} \right\rangle_N
+	&= \left\langle \left(V^{(1)^T}, \dots, V^{(N)^T}\right)_{1:N}.\mathcal{X}, \left(V^{(N+1)}\right)_{N+1}.\mathcal{G} \right\rangle_N
 	\nonumber\\
 	&= \left\langle \hat{\mathcal{X}}, \hat{\mathcal{G}} \right\rangle_N
 \end{align}
@@ -1518,7 +1518,8 @@ Additional experiments evaluated on MNIST, CIFAR10, and Tiny ImageNet-200 applie
 
 \section{Ablation studies}
 \label{ablation-study}
-We generated synthetic samples from a Gaussian distribution $\mathcal{N}(0, 3)$ such that $\mathcal{X} \in \mathbb{R}^{S\times32}$, where $S$ is the number of samples. Given a fixed $\mathcal{W} \in \mathbb{R}^{32\times32}$, we consider $\mathcal{Y} = \mathcal{X} \times \mathcal{W}^T$. Note that $\mathcal{X}$ is the vectorization of each samples if they were higher order tensors and $\mathcal{Y} \in \mathbb{R}^{S\times 32}$. Our goal is to estimate $\mathcal{W}$ using our modules trained on noisy $\mathcal{X} + \epsilon$, where $\epsilon$ is from a Gaussian distribution $\mathcal{N}(0,1)$. We evaluated our framework, standard TRL, and standard FC using RMSE; This study is carried out with a single layer model trained on noisy data using Adam optimizer. In figure \ref{fig:ablation}, a comparison of different methods using same ranks is provided. 
+We generated synthetic samples from a Gaussian distribution $\mathcal{N}(0, 3)$ such that $\mathcal{X} \in \mathbb{R}^{S \times 32}$, where $S$ is the number of samples. Given a fixed $\mathcal{W} \in \mathbb{R}^{32 \times 32}$, we consider $\mathcal{Y} = \mathcal{X} \times \mathcal{W}^T$. Note that $\mathcal{X}$ is the vectorization of each sample if they were higher-order tensors, and $\mathcal{Y} \in \mathbb{R}^{S \times 32}$. Our goal is to estimate $\mathcal{W}$ using our modules trained on noisy $\mathcal{X} + \epsilon$, where $\epsilon$ is from a Gaussian distribution $\mathcal{N}(0, 1)$. We evaluated our framework, standard TRL, and standard FC using RMSE. This study is carried out with a single-layer model trained on noisy data using the Adam optimizer. In Figure \ref{fig:ablation}, a comparison of different methods using the same ranks is provided.
+ 
 
 \begin{figure}
 	\centering
@@ -1535,7 +1536,6 @@ We generated synthetic samples from a Gaussian distribution $\mathcal{N}(0, 3)$ 
 
 \newpage
 \section*{NeurIPS Paper Checklist}
-
 %%% BEGIN INSTRUCTIONS %%%
 %The checklist is designed to encourage best practices for responsible machine learning research, addressing issues of reproducibility, transparency, research ethics, and societal impact. Do not remove the checklist: {\bf The papers not including the checklist will be desk rejected.} The checklist should follow the references and follow the (optional) supplemental material.  The checklist does NOT count towards the page
 %limit. 
@@ -1567,8 +1567,19 @@ We generated synthetic samples from a Gaussian distribution $\mathcal{N}(0, 3)$ 
 
 \item {\bf Claims}
     \item[] Question: Do the main claims made in the abstract and introduction accurately reflect the paper's contributions and scope?
-    \item[] Answer: \answerTODO{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
-    \item[] Justification: \justificationTODO{}
+    \item[] Answer: \answerYes{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
+    \item[] Justification: We have shown in Appendix \ref{subspace-tcl}, \ref{subspace-trl}, various tables in \ref{additional-tables}, and Table \ref{table:resnet_mnist_cifar10} that our framework has both experimental and theoretical backing. Specifically, in Table \ref{table:resnet_mnist_cifar10}, our framework can achieve better or near-perfect accuracy while reducing the parameters by more than 95%.
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
     \item[] Guidelines:
     \begin{itemize}
         \item The answer NA means that the abstract and introduction do not include the claims made in the paper.
@@ -1579,8 +1590,9 @@ We generated synthetic samples from a Gaussian distribution $\mathcal{N}(0, 3)$ 
 
 \item {\bf Limitations}
     \item[] Question: Does the paper discuss the limitations of the work performed by the authors?
-    \item[] Answer: \answerTODO{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
-    \item[] Justification: \justificationTODO{}
+    \item[] Answer: \answerYes{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
+    \item[] Justification: As mentioned in Section \ref{sec:conclusion}, tensor methods do not tend to exhibit the expected speed when compared to their competitors. This limitation is the primary challenge in applying tensor methods to models, and an optimal implementation is yet to be developed.
+    
     \item[] Guidelines:
     \begin{itemize}
         \item The answer NA means that the paper has no limitation while the answer No means that the paper has limitations, but those are not discussed in the paper. 
@@ -1595,8 +1607,8 @@ We generated synthetic samples from a Gaussian distribution $\mathcal{N}(0, 3)$ 
 
 \item {\bf Theory Assumptions and Proofs}
     \item[] Question: For each theoretical result, does the paper provide the full set of assumptions and a complete (and correct) proof?
-    \item[] Answer: \answerTODO{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
-    \item[] Justification: \justificationTODO{}
+    \item[] Answer: \answerYes{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
+    \item[] Justification: We tried to include enough proofs for our presented framework in Appendix \ref{proof-1}, \ref{proof-2}, \ref{subspace-tcl}, and \ref{subspace-trl}. However, not every theoretical result required written proofs.
     \item[] Guidelines:
     \begin{itemize}
         \item The answer NA means that the paper does not include theoretical results. 
@@ -1609,8 +1621,9 @@ We generated synthetic samples from a Gaussian distribution $\mathcal{N}(0, 3)$ 
 
     \item {\bf Experimental Result Reproducibility}
     \item[] Question: Does the paper fully disclose all the information needed to reproduce the main experimental results of the paper to the extent that it affects the main claims and/or conclusions of the paper (regardless of whether the code and data are provided or not)?
-    \item[] Answer: \answerTODO{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
-    \item[] Justification: \justificationTODO{}
+    \item[] Answer: \answerYes{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
+    \item[] Justification: The README file in the supplementary materials submitted alongside the paper contains instructions to reproduce the same results. The code itself is also written in a very easy-to-understand and illustrative manner.
+     
     \item[] Guidelines:
     \begin{itemize}
         \item The answer NA means that the paper does not include experiments.
@@ -1629,9 +1642,11 @@ We generated synthetic samples from a Gaussian distribution $\mathcal{N}(0, 3)$ 
 
 \item {\bf Open access to data and code}
     \item[] Question: Does the paper provide open access to the data and code, with sufficient instructions to faithfully reproduce the main experimental results, as described in supplemental material?
-    \item[] Answer: \answerTODO{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
-    \item[] Justification: \justificationTODO{}
-    \item[] Guidelines:
+    \item[] Answer: \answerYes{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
+    \item[] Justification: As mentioned in Section \ref{sec:experiments}, our code is already on our GitHub and will be made publicly available after the camera-ready deadlines. The code is also anonymously shared in a .zip file as supplementary material.
+    
+   
+    \item[] Guidelines:  
     \begin{itemize}
         \item The answer NA means that paper does not include experiments requiring code.
         \item Please see the NeurIPS code and data submission guidelines (\url{https://nips.cc/public/guides/CodeSubmissionPolicy}) for more details.
@@ -1646,8 +1661,9 @@ We generated synthetic samples from a Gaussian distribution $\mathcal{N}(0, 3)$ 
 
 \item {\bf Experimental Setting/Details}
     \item[] Question: Does the paper specify all the training and test details (e.g., data splits, hyperparameters, how they were chosen, type of optimizer, etc.) necessary to understand the results?
-    \item[] Answer: \answerTODO{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
-    \item[] Justification: \justificationTODO{}
+    \item[] Answer: \answerYes{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
+    \item[] Justification: Every table includes the model settings, and the supplementary materials include the Test Plan, which contains all the information about each experiment.
+     
     \item[] Guidelines:
     \begin{itemize}
         \item The answer NA means that the paper does not include experiments.
@@ -1657,8 +1673,8 @@ We generated synthetic samples from a Gaussian distribution $\mathcal{N}(0, 3)$ 
 
 \item {\bf Experiment Statistical Significance}
     \item[] Question: Does the paper report error bars suitably and correctly defined or other appropriate information about the statistical significance of the experiments?
-    \item[] Answer: \answerTODO{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
-    \item[] Justification: \justificationTODO{}
+    \item[] Answer: \answerNo{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
+    \item[] Justification: Our error/loss is reported at our Tables. 
     \item[] Guidelines:
     \begin{itemize}
         \item The answer NA means that the paper does not include experiments.
@@ -1674,8 +1690,9 @@ We generated synthetic samples from a Gaussian distribution $\mathcal{N}(0, 3)$ 
 
 \item {\bf Experiments Compute Resources}
     \item[] Question: For each experiment, does the paper provide sufficient information on the computer resources (type of compute workers, memory, time of execution) needed to reproduce the experiments?
-    \item[] Answer: \answerTODO{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
-    \item[] Justification: \justificationTODO{}
+    \item[] Answer: \answerYes{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
+    \item[] Justification: All experiments are executed on the same device, the specifics of which can be found in Section \ref{sec:experiments}.
+    
     \item[] Guidelines:
     \begin{itemize}
         \item The answer NA means that the paper does not include experiments.
@@ -1686,8 +1703,9 @@ We generated synthetic samples from a Gaussian distribution $\mathcal{N}(0, 3)$ 
     
 \item {\bf Code Of Ethics}
     \item[] Question: Does the research conducted in the paper conform, in every respect, with the NeurIPS Code of Ethics \url{https://neurips.cc/public/EthicsGuidelines}?
-    \item[] Answer: \answerTODO{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
-    \item[] Justification: \justificationTODO{}
+    \item[] Answer: \answerYes{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
+    \item[] Justification: We tried to follow the NeurIPS Code of Ethics. Details of our experiments and our model parameters can be provided for reproducibility.
+     
     \item[] Guidelines:
     \begin{itemize}
         \item The answer NA means that the authors have not reviewed the NeurIPS Code of Ethics.
@@ -1698,8 +1716,9 @@ We generated synthetic samples from a Gaussian distribution $\mathcal{N}(0, 3)$ 
 
 \item {\bf Broader Impacts}
     \item[] Question: Does the paper discuss both potential positive societal impacts and negative societal impacts of the work performed?
-    \item[] Answer: \answerTODO{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
-    \item[] Justification: \justificationTODO{}
+    \item[] Answer: \answerNA{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
+    \item[] Justification:There is no societal impact from the work performed.
+    .
     \item[] Guidelines:
     \begin{itemize}
         \item The answer NA means that there is no societal impact of the work performed.
@@ -1712,8 +1731,9 @@ We generated synthetic samples from a Gaussian distribution $\mathcal{N}(0, 3)$ 
     
 \item {\bf Safeguards}
     \item[] Question: Does the paper describe safeguards that have been put in place for responsible release of data or models that have a high risk for misuse (e.g., pretrained language models, image generators, or scraped datasets)?
-    \item[] Answer: \answerTODO{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
-    \item[] Justification: \justificationTODO{}
+    \item[] Answer: \answerNA{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
+    \item[] Justification: The paper does not pose such risks and is not based on models pre-trained on large datasets.
+     
     \item[] Guidelines:
     \begin{itemize}
         \item The answer NA means that the paper poses no such risks.
@@ -1724,8 +1744,9 @@ We generated synthetic samples from a Gaussian distribution $\mathcal{N}(0, 3)$ 
 
 \item {\bf Licenses for existing assets}
     \item[] Question: Are the creators or original owners of assets (e.g., code, data, models), used in the paper, properly credited and are the license and terms of use explicitly mentioned and properly respected?
-    \item[] Answer: \answerTODO{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
-    \item[] Justification: \justificationTODO{}
+    \item[] Answer: \answerYes{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
+    \item[] Justification: Citations are done thoroughly, and the code is licensed according to the packages used.
+      
     \item[] Guidelines:
     \begin{itemize}
         \item The answer NA means that the paper does not use existing assets.
@@ -1740,8 +1761,9 @@ We generated synthetic samples from a Gaussian distribution $\mathcal{N}(0, 3)$ 
 
 \item {\bf New Assets}
     \item[] Question: Are new assets introduced in the paper well documented and is the documentation provided alongside the assets?
-    \item[] Answer: \answerTODO{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
-    \item[] Justification: \justificationTODO{}
+    \item[] Answer: \answerYes{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
+    \item[] Justification: Every asset is documented, licensed, and version-controlled.
+     
     \item[] Guidelines:
     \begin{itemize}
         \item The answer NA means that the paper does not release new assets.
@@ -1752,8 +1774,9 @@ We generated synthetic samples from a Gaussian distribution $\mathcal{N}(0, 3)$ 
 
 \item {\bf Crowdsourcing and Research with Human Subjects}
     \item[] Question: For crowdsourcing experiments and research with human subjects, does the paper include the full text of instructions given to participants and screenshots, if applicable, as well as details about compensation (if any)? 
-    \item[] Answer: \answerTODO{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
-    \item[] Justification: \justificationTODO{}
+    \item[] Answer: \answerNA{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
+    \item[] Justification: The paper does not involve crowdsourcing.
+     
     \item[] Guidelines:
     \begin{itemize}
         \item The answer NA means that the paper does not involve crowdsourcing nor research with human subjects.
@@ -1763,8 +1786,9 @@ We generated synthetic samples from a Gaussian distribution $\mathcal{N}(0, 3)$ 
 
 \item {\bf Institutional Review Board (IRB) Approvals or Equivalent for Research with Human Subjects}
     \item[] Question: Does the paper describe potential risks incurred by study participants, whether such risks were disclosed to the subjects, and whether Institutional Review Board (IRB) approvals (or an equivalent approval/review based on the requirements of your country or institution) were obtained?
-    \item[] Answer: \answerTODO{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
-    \item[] Justification: \justificationTODO{}
+    \item[] Answer: \answerNA{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
+    \item[] Justification: The paper does not involve crowdsourcing or research with human subjects.
+      
     \item[] Guidelines:
     \begin{itemize}
         \item The answer NA means that the paper does not involve crowdsourcing nor research with human subjects.
