@@ -12,16 +12,16 @@ To run this project you just need to the steps bellow :
 
 1.
 
-````
+```
     python Datasets.py
-    ```
+```
 
+2.
 
-2.  ```
+```
     python Weights.py
-    ```
+```
 
 3.  run any test case or build your own using examples
 
 License: BSD 3 clause
-````
