@@ -10,18 +10,18 @@ Researchers : A.M.Kharazi a.m.kharazi.ac@gmail.com | M.Badzohreh badzohreee@gmai
 
 To run this project you just need to the steps bellow :
 
-1.
+First.
 
 ```
     python Datasets.py
 ```
 
-2.
+Secondly.
 
 ```
     python Weights.py
 ```
 
-3.  run any test case or build your own using examples
+Thirdly. run any test case or build your own using examples
 
 License: BSD 3 clause
