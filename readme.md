@@ -16,12 +16,12 @@ First:
     python Datasets.py
 ```
 
-Secondly:
+Second:
 
 ```
     python Weights.py
 ```
 
-Thirdly: run any test case or build your own using examples
+Third: run any test case or build your own using examples
 
 License: BSD 3 clause
