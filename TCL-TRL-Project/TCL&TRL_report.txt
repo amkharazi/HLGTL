@@ -1,0 +1,21 @@
+FC classifier # parameters 1051136
+FC took 81.7484028339386 time
+FC had Memory Usage  - Allocated: 32.59 MB, Reserved: 68.00 MB
+FCL last epoch result:
+Train epoch 10: top1=0.9132999777793884%, top2=0.9789800047874451%, top3=0.9929800033569336%, top4=0.9971999526023865%, top5=0.9989599585533142%, loss=0.030648079910871383, time=7.332998275756836s
+Test epoch 10: top1=0.6765999794006348%, top2=0.8348000049591064%, top3=0.9061999917030334%, top4=0.9454999566078186%, top5=0.9680999517440796%, loss=0.1977863713565166, time=0.8799939155578613s
+########################################
+TCL & TRL tensorly classifier # parameters 4972
+TCL & TRL tensorly took 107.27318811416626 time
+TCL & TRL tensorly had Memory Usage  - Allocated: 24.80 MB, Reserved: 70.00 MB
+TCL & TRL tensorly last epoch result:
+Train epoch 10: top1=0.7255600094795227%, top2=0.8751800060272217%, top3=0.934179961681366%, top4=0.9648000001907349%, top5=0.9818399548530579%, loss=0.09773706273674965, time=9.762048959732056s
+Test epoch 10: top1=0.7109999656677246%, top2=0.8641999959945679%, top3=0.9243999719619751%, top4=0.9598000049591064%, top5=0.9792999625205994%, loss=0.10417625146880746, time=1.144219160079956s
+########################################
+TCL & TRL method 1 classifier # parameters 4972
+TCL & TRL method 1 took 103.16290807723999 time
+TCL & TRL method 1 had Memory Usage  - Allocated: 24.99 MB, Reserved: 70.00 MB
+TCL & TRL method 1 last epoch result:
+Train epoch 10: top1=0.7308399677276611%, top2=0.8794399499893188%, top3=0.9367799758911133%, top4=0.9666999578475952%, top5=0.9821400046348572%, loss=0.09624715417154134, time=9.321645021438599s
+Test epoch 10: top1=0.7075999975204468%, top2=0.8673999905586243%, top3=0.9296999573707581%, top4=0.9621999859809875%, top5=0.981499969959259%, loss=0.1053601483605802, time=1.1023063659667969s
+########################################
