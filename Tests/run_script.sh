@@ -95,5 +95,20 @@
 # python3 TEST_088.py
 # python3 TEST_089.py
 # python3 TEST_090.py
+# python3 TEST_091.py
+# python3 TEST_092.py
+# python3 TEST_093.py
+# python3 TEST_094.py
+# python3 TEST_095.py
+# python3 TEST_096.py
+# python3 TEST_097.py
+# python3 TEST_098.py
+# python3 TEST_099.py
+# python3 TEST_100.py
+# python3 TEST_101.py
+# python3 TEST_102.py
+python3 TEST_103.py
+python3 TEST_104.py
+
 
 

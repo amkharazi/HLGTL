@@ -11,6 +11,20 @@ import torchvision.datasets as datasets
 import wget
 import zipfile
 
+def download_cifar100(save_dir):
+    '''
+    download CIFAR100 datasets, stored at save_dir
+
+    ----------
+    save_dir : str
+        stored location
+    '''
+    print('Downloading CIFAR-100 dataset...')
+    os.makedirs(save_dir, exist_ok=True)
+    datasets.CIFAR100(root=save_dir, download=True)
+    print('CIFAR-100 dataset downloaded successfully.')
+
+
 def download_cifar10(save_dir):
     '''
     download CIFAR10 datasets, stored at save_dir
@@ -75,7 +89,7 @@ def main(dataset=None, save_dir=None):
 
     ----------
     dataset : str
-        choices = ['cifar10', 'minist', 'tiny_imagenet', None]
+        choices = ['cifar10', 'cifar100', minist', 'tiny_imagenet', None]
         if None, then every dataset will be downloaded
         
     save_dir : str
@@ -87,20 +101,23 @@ def main(dataset=None, save_dir=None):
         download_cifar10(save_dir)
         download_mnist(save_dir)
         download_tiny_imagenet(save_dir)
+        download_cifar100(save_dir)
     elif dataset == 'cifar10':
         download_cifar10(save_dir)
     elif dataset == 'mnist':
         download_mnist(save_dir)
     elif dataset == 'tiny_imagenet':
         download_tiny_imagenet(save_dir)
+    elif dataset == 'cifar100':
+        download_cifar100(save_dir)
     else:
-        print('Invalid dataset choice. Please choose from cifar10, mnist, or tiny_imagenet.')
+        print('Invalid dataset choice. Please choose from cifar10, cifar100, mnist, or tiny_imagenet.')
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Download datasets.')
-    parser.add_argument('--dataset', type=str, nargs='?', choices=['cifar10', 'mnist', 'tiny_imagenet'], 
+    parser.add_argument('--dataset', type=str, nargs='?', choices=['cifar10','cifar100', 'mnist', 'tiny_imagenet'], 
                         default=None,
-                        help='Choose which dataset to download (cifar10, mnist, or tiny_imagenet). If None, then all datasets will be downloaded')
+                        help='Choose which dataset to download (cifar10, cifar100, mnist, or tiny_imagenet). If None, then all datasets will be downloaded')
     parser.add_argument('--save_dir', type=str, default=None,
                         help='Specify the directory to save the datasets. If None, then ./datasets is set as the path')
     args = parser.parse_args()
