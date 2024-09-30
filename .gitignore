@@ -6,3 +6,4 @@ results/**/model_stats/*.pth
 onlyfortest/
 Tests/Drafts.ipynb/
 TCL-TRL-Project/data/
+TCL-TRL-Project/new-TCL/data/
