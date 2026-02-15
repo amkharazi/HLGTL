@@ -8,19 +8,26 @@ echo "Starting execution of all python scripts..."
 
 # لیست فایل‌ها بر اساس تصویر شما
 # نکته: اگر ترتیب خاصی مد نظر دارید (مثلا اول train بعد test)، جای خطوط را عوض کنید
+# files=(
+#     "loss_test_test_id_0025.py"
+#     "loss_test_test_id_0028.py"
+#     "loss_test_test_id_0032.py"
+#     "loss_train_test_id_0025.py"
+#     "loss_train_test_id_0028.py"
+#     "loss_train_test_id_0032.py"
+#     "test_test_id_0025.py"
+#     "test_test_id_0028.py"
+#     "test_test_id_0032.py"
+#     "train_test_id_0025.py"
+#     "train_test_id_0028.py"
+#     "train_test_id_0032.py"
+# )
+
 files=(
     "loss_test_test_id_0025.py"
-    "loss_test_test_id_0028.py"
-    "loss_test_test_id_0032.py"
     "loss_train_test_id_0025.py"
-    "loss_train_test_id_0028.py"
-    "loss_train_test_id_0032.py"
     "test_test_id_0025.py"
-    "test_test_id_0028.py"
-    "test_test_id_0032.py"
     "train_test_id_0025.py"
-    "train_test_id_0028.py"
-    "train_test_id_0032.py"
 )
 
 # حلقه برای اجرای فایل‌ها
