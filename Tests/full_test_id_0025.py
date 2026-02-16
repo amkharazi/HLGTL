@@ -2,7 +2,7 @@ import os
 import re
 import numpy as np
 import matplotlib
-matplotlib.use('Agg') # حالت بدون نمایشگر (مناسب سرور و لینوکس)
+matplotlib.use('Agg') # جلوگیری از ارور گرافیکی (Headless Mode)
 import matplotlib.pyplot as plt
 
 # ==========================================
@@ -12,36 +12,37 @@ RESULTS_DIR = '../results'
 SEED_PREFIX = 'TEST_ID0025'
 NUM_SEEDS = 16
 TOTAL_EPOCHS = 15
-UNFREEZE_EPOCH = 5  # نقطه تغییر فاز (برای خط جداکننده)
+UNFREEZE_EPOCH = 5  # نقطه تغییر فاز
 
-# مسیر ذخیره سازی
-BASE_OUTPUT_DIR = 'images/test25'
+# --- تغییر مسیر ذخیره‌سازی ---
+# مسیر: ../results/images/tiny_image_net
+BASE_OUTPUT_DIR = os.path.join(RESULTS_DIR, 'images', 'tiny_image_net')
 
-# تنظیمات متریک‌ها
+# --- تغییر تیترها (Tiny ImageNet) ---
 METRICS_CONFIG = {
     'Train_Accuracy': {
         'pattern': r"Train epoch \d+:.*?top1=([\d\.]+)",
         'color': 'blue',
         'ylabel': 'Train Accuracy (%)',
-        'title': 'Train Accuracy'
+        'title': 'Train Accuracy (Tiny ImageNet)' 
     },
     'Train_Loss': {
         'pattern': r"Train epoch \d+:.*?loss=([\d\.]+)",
         'color': 'blue',
         'ylabel': 'Train Loss',
-        'title': 'Train Loss'
+        'title': 'Train Loss (Tiny ImageNet)'
     },
     'Test_Accuracy': {
         'pattern': r"Test epoch \d+:.*?top1=([\d\.]+)",
         'color': 'darkorange',
         'ylabel': 'Test Accuracy (%)',
-        'title': 'Test Accuracy'
+        'title': 'Test Accuracy (Tiny ImageNet)'
     },
     'Test_Loss': {
         'pattern': r"Test epoch \d+:.*?loss=([\d\.]+)",
         'color': 'darkorange',
         'ylabel': 'Test Loss',
-        'title': 'Test Loss'
+        'title': 'Test Loss (Tiny ImageNet)'
     }
 }
 
@@ -78,12 +79,9 @@ def ensure_dir(path):
         os.makedirs(path)
 
 # ==========================================
-# 3. تابع رسم نمودار اصلی
+# 3. تابع رسم نمودار
 # ==========================================
 def plot_and_save(data_np, metric_key, range_type, shadow_type):
-    """
-    رسم نمودار با اعداد مناسب (Std یا Range) روی نقاط
-    """
     config = METRICS_CONFIG[metric_key]
     
     # --- الف) تعیین بازه زمانی ---
@@ -104,25 +102,19 @@ def plot_and_save(data_np, metric_key, range_type, shadow_type):
     # --- ب) محاسبات آماری ---
     y_mean = np.mean(sliced_data, axis=0)
     
-    # محاسبات مخصوص نوع سایه
     if shadow_type == 'Min_Max':
         y_lower = np.min(sliced_data, axis=0)
         y_upper = np.max(sliced_data, axis=0)
-        
-        # عددی که روی نمودار می‌نویسیم: تفاوت ماکسیمم و مینیمم (Range)
         annotation_values = y_upper - y_lower
         shadow_label = 'Range (Min-Max)'
         text_color = 'darkred'
-        
-    else: # Std_Dev (انحراف معیار)
+    else: # Std_Dev
         y_std = np.std(sliced_data, axis=0)
         y_lower = y_mean - y_std
         y_upper = y_mean + y_std
-        
-        # عددی که روی نمودار می‌نویسیم: انحراف معیار (Standard Deviation)
         annotation_values = y_std
         shadow_label = 'Range (Mean ± Std)'
-        text_color = 'darkgreen' # رنگ سبز تیره برای انحراف معیار
+        text_color = 'darkgreen'
 
     # --- ج) رسم نمودار ---
     fig, ax = plt.subplots(figsize=(11, 7))
@@ -139,51 +131,38 @@ def plot_and_save(data_np, metric_key, range_type, shadow_type):
     # 3. خط جداکننده (فقط برای Full Range)
     if range_type == 'Full_Range':
         ax.axvline(x=UNFREEZE_EPOCH + 0.5, color='gray', linestyle='--', linewidth=1.5)
-        # محاسبه ارتفاع متن
         y_lim_text = np.max(y_upper)
         ax.text(UNFREEZE_EPOCH - 1, y_lim_text, 'Frozen', color='gray', ha='center', va='bottom', fontsize=10, fontweight='bold')
         ax.text(UNFREEZE_EPOCH + 2, y_lim_text, 'Unfrozen', color='gray', ha='center', va='bottom', fontsize=10, fontweight='bold')
 
-    # 4. نوشتن اعداد روی نقاط (Spread Value)
-    # محاسبه فاصله داینامیک
+    # 4. نوشتن اعداد
     y_span = np.max(y_upper) - np.min(y_lower)
     if y_span == 0: y_span = 1.0
-    offset = y_span * 0.06 # فاصله 6 درصدی
+    offset = y_span * 0.06 
     
     for x, y, val in zip(x_epochs, y_mean, annotation_values):
-        # فرمت علمی: e.g., 4.2e-03
         label = f"{val:.1e}"
-        
-        ax.text(x, y + offset, label, 
-                fontsize=8, 
-                ha='center', 
-                va='bottom', 
-                color=text_color, 
-                rotation=45,
-                fontweight='bold')
+        ax.text(x, y + offset, label, fontsize=8, ha='center', va='bottom', color=text_color, rotation=45, fontweight='bold')
 
     # --- د) تنظیمات ظاهری ---
+    # ترکیب تیتر متریک + نوع بازه + نوع سایه
     plot_title = f"{config['title']} | {range_type.replace('_', ' ')} | {shadow_type.replace('_', ' ')}"
+    
     ax.set_title(plot_title, fontsize=13, fontweight='bold')
     ax.set_xlabel('Epochs', fontsize=12)
     ax.set_ylabel(config['ylabel'], fontsize=12)
     ax.legend(loc='best')
     ax.set_xticks(x_epochs)
     
-    # تنظیم محدوده Y (کمی بازتر برای جا شدن متن‌ها)
     ylim_top = np.max(y_upper) + (offset * 6)
     ylim_bottom = np.min(y_lower) - (offset * 3)
-    
-    # اگر Loss است، کف نمودار منفی نشود
-    if 'Loss' in metric_key and ylim_bottom < 0:
-        ylim_bottom = 0
-        
+    if 'Loss' in metric_key and ylim_bottom < 0: ylim_bottom = 0
     ax.set_ylim(ylim_bottom, ylim_top)
 
     plt.tight_layout()
     
     # --- ه) ذخیره سازی ---
-    # ساختار: images/test25/Full_Range/Min_Max/filename.png
+    # ساخت مسیر: ../results/images/tiny_image_net/Full_Range/Min_Max/filename.png
     save_dir = os.path.join(BASE_OUTPUT_DIR, range_type, shadow_type)
     ensure_dir(save_dir)
     
@@ -191,16 +170,17 @@ def plot_and_save(data_np, metric_key, range_type, shadow_type):
     save_path = os.path.join(save_dir, filename)
     
     plt.savefig(save_path, dpi=300)
-    plt.close() # بستن برای آزادسازی رم
-    print(f" Saved: {filename} -> (Val: {'Range' if shadow_type=='Min_Max' else 'StdDev'})")
+    plt.close()
+    print(f" Saved: {save_path}")
 
 # ==========================================
 # 4. بدنه اصلی
 # ==========================================
 if __name__ == "__main__":
     print(f"--- Generating 16 Plots for {SEED_PREFIX} ---")
-    print(f"Output Directory: {BASE_OUTPUT_DIR}\n")
+    print(f"Target Directory: {BASE_OUTPUT_DIR}\n")
     
+    # 1. Loop Metrics
     for metric_name in METRICS_CONFIG.keys():
         print(f"Processing Metric: {metric_name}...")
         
@@ -209,8 +189,12 @@ if __name__ == "__main__":
             print(f"  -> Skipping {metric_name} (No Data)")
             continue
             
+        # 2. Loop Range (Full vs Unfrozen)
         for r_type in ['Full_Range', 'Unfrozen_Only']:
+            
+            # 3. Loop Shadow (MinMax vs Std)
             for s_type in ['Min_Max', 'Std_Dev']:
-                plot_and_save(data, metric_name, r_type, s_type)
                 
+                plot_and_save(data, metric_name, r_type, s_type)
+
     print("\n--- All Done! ---")
