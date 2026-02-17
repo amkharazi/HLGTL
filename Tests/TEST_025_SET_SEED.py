@@ -73,7 +73,7 @@ if __name__ == '__main__':
         ])
 
     # --- MAIN LOOP FOR 30 SEEDS ---
-    total_seeds = 30
+    total_seeds = 16
     
     for seed_id in range(total_seeds):
         print(f"\n{'='*20} STARTING RUN FOR SEED {seed_id} {'='*20}")

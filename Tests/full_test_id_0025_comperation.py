@@ -1,0 +1,179 @@
+import os
+import re
+import numpy as np
+import matplotlib
+matplotlib.use('Agg') # حالت بدون نمایشگر
+import matplotlib.pyplot as plt
+
+# ==========================================
+# 1. تنظیمات اصلی
+# ==========================================
+RESULTS_DIR = '../results'
+
+# مدل‌ها و رنگ‌هایشان برای مقایسه
+MODELS_CONFIG = {
+    'TEST_ID0025': {'label': 'Base Model', 'color': 'gray',      'style': '--'}, # مدل پایه: خاکستری و خط‌چین
+    'TEST_ID0028': {'label': 'TRL Model',  'color': 'blue',      'style': '-.'}, # مدل TRL: آبی و نقطه-خط
+    'TEST_ID0032': {'label': 'Our Method', 'color': 'red',       'style': '-'}   # متد ما: قرمز و پررنگ (مهم‌ترین)
+}
+
+NUM_SEEDS = 16
+TOTAL_EPOCHS = 15
+UNFREEZE_EPOCH = 5
+
+# مسیر ذخیره سازی: پوشه Comparison
+BASE_OUTPUT_DIR = os.path.join(RESULTS_DIR, 'images', 'tiny_image_net', 'Comparison')
+
+# تنظیمات متریک‌ها
+METRICS_CONFIG = {
+    'Train_Accuracy': {
+        'pattern': r"Train epoch \d+:.*?top1=([\d\.]+)",
+        'ylabel': 'Train Accuracy (%)',
+        'title': 'Train Accuracy Comparison (Tiny ImageNet)'
+    },
+    'Train_Loss': {
+        'pattern': r"Train epoch \d+:.*?loss=([\d\.]+)",
+        'ylabel': 'Train Loss',
+        'title': 'Train Loss Comparison (Tiny ImageNet)'
+    },
+    'Test_Accuracy': {
+        'pattern': r"Test epoch \d+:.*?top1=([\d\.]+)",
+        'ylabel': 'Test Accuracy (%)',
+        'title': 'Test Accuracy Comparison (Tiny ImageNet)'
+    },
+    'Test_Loss': {
+        'pattern': r"Test epoch \d+:.*?loss=([\d\.]+)",
+        'ylabel': 'Test Loss',
+        'title': 'Test Loss Comparison (Tiny ImageNet)'
+    }
+}
+
+# ==========================================
+# 2. تابع خواندن دیتا
+# ==========================================
+def get_model_mean_data(metric_key, seed_prefix):
+    """
+    میانگین دیتای یک مدل خاص را برای تمام سیدها برمی‌گرداند.
+    خروجی: یک آرایه تک بعدی (میانگین ایپاک‌ها)
+    """
+    config = METRICS_CONFIG[metric_key]
+    pattern_str = config['pattern']
+    all_seeds_data = []
+    
+    for seed in range(NUM_SEEDS):
+        folder_name = f'{seed_prefix}_SEED_{seed}'
+        file_path = os.path.join(RESULTS_DIR, folder_name, 'accuracy_stats', 'report.txt')
+        
+        if not os.path.exists(file_path):
+            continue 
+        try:
+            with open(file_path, 'r') as f:
+                content = f.read()
+                matches = re.findall(pattern_str, content)
+                values = [float(m) for m in matches]
+                if len(values) >= TOTAL_EPOCHS:
+                    all_seeds_data.append(values[:TOTAL_EPOCHS])
+        except Exception:
+            pass
+
+    if not all_seeds_data:
+        return None
+        
+    # محاسبه میانگین روی سیدها (axis=0) -> خروجی: [epoch1_mean, epoch2_mean, ...]
+    return np.mean(np.array(all_seeds_data), axis=0)
+
+def ensure_dir(path):
+    if not os.path.exists(path):
+        os.makedirs(path)
+
+# ==========================================
+# 3. تابع رسم نمودار مقایسه‌ای
+# ==========================================
+def plot_comparison(metric_key, range_type):
+    config = METRICS_CONFIG[metric_key]
+    
+    # تنظیم ابعاد فیگور
+    fig, ax = plt.subplots(figsize=(10, 6))
+    ax.grid(True, linestyle='--', alpha=0.4) # گرید کمرنگ‌تر
+    
+    # تعیین بازه ایپاک‌ها
+    if range_type == 'Full_Range':
+        idx_start, idx_end = 0, 15
+    else: # Unfrozen_Only
+        idx_start, idx_end = 5, 15
+        
+    # لیستی برای چک کردن اینکه آیا دیتایی رسم شده یا نه
+    plotted_any = False
+    
+    # --- حلقه روی مدل‌ها (هر مدل یک خط) ---
+    for seed_prefix, model_info in MODELS_CONFIG.items():
+        
+        # 1. گرفتن میانگین دیتا
+        mean_data = get_model_mean_data(metric_key, seed_prefix)
+        
+        if mean_data is None:
+            print(f"  Warning: No data for {model_info['label']}")
+            continue
+            
+        # 2. برش دیتا طبق بازه
+        sliced_data = mean_data[idx_start:idx_end]
+        
+        # 3. تنظیم محور X (شروع از 1)
+        x_epochs = list(range(1, len(sliced_data) + 1))
+        
+        # 4. رسم خط
+        ax.plot(x_epochs, sliced_data, 
+                label=model_info['label'], 
+                color=model_info['color'], 
+                linestyle=model_info['style'], 
+                linewidth=2.5 if 'Our' in model_info['label'] else 2, # متد ما کمی ضخیم‌تر
+                marker='o', markersize=5)
+        
+        plotted_any = True
+
+    if not plotted_any:
+        plt.close()
+        return
+
+    # --- تنظیمات ظاهری ---
+    plot_title = f"{config['title']} | {range_type.replace('_', ' ')}"
+    ax.set_title(plot_title, fontsize=13, fontweight='bold')
+    
+    ax.set_xlabel('Epochs', fontsize=12)
+    ax.set_ylabel(config['ylabel'], fontsize=12)
+    
+    # تنظیم محور X که حتما اعداد صحیح باشند
+    # برای Unfrozen (10 نقطه) و Full (15 نقطه)
+    if len(x_epochs) > 0:
+        ax.set_xticks(x_epochs)
+    
+    ax.legend(loc='best', fontsize=11, frameon=True, shadow=True)
+    
+    plt.tight_layout()
+    
+    # --- ذخیره سازی ---
+    # ساخت پوشه: Comparison/Full_Range/ یا Comparison/Unfrozen_Only/
+    save_dir = os.path.join(BASE_OUTPUT_DIR, range_type)
+    ensure_dir(save_dir)
+    
+    filename = f"Compare_{metric_key}_{range_type}.png"
+    save_path = os.path.join(save_dir, filename)
+    
+    plt.savefig(save_path, dpi=300)
+    plt.close()
+    print(f" Saved: {save_path}")
+
+# ==========================================
+# 4. اجرای اصلی
+# ==========================================
+if __name__ == "__main__":
+    print(f"--- Generating Comparison Plots ---")
+    print(f"Output: {BASE_OUTPUT_DIR}\n")
+    
+    for metric_name in METRICS_CONFIG.keys():
+        print(f"Processing Metric: {metric_name}...")
+        
+        for r_type in ['Full_Range', 'Unfrozen_Only']:
+            plot_comparison(metric_name, r_type)
+            
+    print("\n--- All Comparison Plots Created! ---")

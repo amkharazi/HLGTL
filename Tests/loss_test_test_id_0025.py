@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 RESULTS_DIR = '../results'
 SEED_PREFIX = 'TEST_ID0025'
 
-START_EPOCH = 6    
+START_EPOCH = 1    
 END_EPOCH = 15     
 NUM_SEEDS = 16     
 
