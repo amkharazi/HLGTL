@@ -23,9 +23,12 @@ echo "Starting execution of all python scripts..."
 #     "train_test_id_0032.py"
 # )
 
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> 611bee2077e31ee1a6bf8029e3ad344868af8aa9
 files=(
     "loss_test_test_id_0025.py"
     "loss_train_test_id_0025.py"
