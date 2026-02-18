@@ -1,0 +1,6 @@
+total number of parameters:
+30451216
+total number of classifier parameters:
+12902600
+classifier in_features:
+64512
