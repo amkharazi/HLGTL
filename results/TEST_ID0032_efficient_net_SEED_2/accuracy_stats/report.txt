@@ -1,0 +1,45 @@
+Train epoch 1: top1=1.62%, top5=6.43%, loss=12.6892, time=123.47s
+Test epoch 1: top1=3.21%, top5=10.87%, loss=5.0746, time=11.60s
+
+Train epoch 2: top1=6.13%, top5=16.91%, loss=4.8365, time=123.39s
+Test epoch 2: top1=15.31%, top5=35.55%, loss=4.1312, time=11.66s
+
+Train epoch 3: top1=19.59%, top5=39.74%, loss=3.8646, time=123.53s
+Test epoch 3: top1=34.69%, top5=57.97%, loss=3.0901, time=11.65s
+
+Train epoch 4: top1=28.51%, top5=51.10%, loss=3.3274, time=124.44s
+Test epoch 4: top1=40.94%, top5=63.96%, loss=2.7388, time=11.55s
+
+Train epoch 5: top1=31.79%, top5=54.71%, loss=3.1291, time=123.48s
+Test epoch 5: top1=43.63%, top5=65.69%, loss=2.5865, time=11.60s
+
+Train epoch 6: top1=40.35%, top5=64.30%, loss=2.6450, time=266.28s
+Test epoch 6: top1=57.37%, top5=78.21%, loss=1.8793, time=11.54s
+
+Train epoch 7: top1=48.96%, top5=72.97%, loss=2.1719, time=266.02s
+Test epoch 7: top1=64.04%, top5=83.45%, loss=1.5447, time=11.60s
+
+Train epoch 8: top1=53.96%, top5=77.33%, loss=1.9231, time=265.54s
+Test epoch 8: top1=67.24%, top5=85.32%, loss=1.3741, time=11.60s
+
+Train epoch 9: top1=57.30%, top5=80.17%, loss=1.7575, time=265.68s
+Test epoch 9: top1=69.90%, top5=87.29%, loss=1.2464, time=11.53s
+
+Train epoch 10: top1=60.10%, top5=82.12%, loss=1.6325, time=265.92s
+Test epoch 10: top1=71.76%, top5=88.28%, loss=1.1745, time=11.52s
+
+Train epoch 11: top1=62.17%, top5=83.71%, loss=1.5277, time=265.77s
+Test epoch 11: top1=72.86%, top5=89.08%, loss=1.1033, time=11.56s
+
+Train epoch 12: top1=64.14%, top5=85.17%, loss=1.4418, time=265.58s
+Test epoch 12: top1=74.39%, top5=89.98%, loss=1.0504, time=11.56s
+
+Train epoch 13: top1=65.66%, top5=86.08%, loss=1.3740, time=265.61s
+Test epoch 13: top1=75.40%, top5=90.81%, loss=1.0012, time=11.53s
+
+Train epoch 14: top1=66.97%, top5=87.15%, loss=1.3072, time=265.95s
+Test epoch 14: top1=76.44%, top5=91.15%, loss=0.9605, time=11.58s
+
+Train epoch 15: top1=68.15%, top5=87.92%, loss=1.2479, time=266.05s
+Test epoch 15: top1=77.49%, top5=91.64%, loss=0.9324, time=11.57s
+

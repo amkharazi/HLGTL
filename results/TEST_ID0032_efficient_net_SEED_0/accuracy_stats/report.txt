@@ -1,0 +1,45 @@
+Train epoch 1: top1=0.74%, top5=3.15%, loss=5.4320, time=122.63s
+Test epoch 1: top1=1.12%, top5=4.45%, loss=5.2845, time=11.56s
+
+Train epoch 2: top1=17.79%, top5=34.07%, loss=4.1926, time=122.58s
+Test epoch 2: top1=38.45%, top5=63.68%, loss=2.9519, time=11.57s
+
+Train epoch 3: top1=39.41%, top5=64.41%, loss=2.8201, time=123.49s
+Test epoch 3: top1=47.43%, top5=72.24%, loss=2.4329, time=11.45s
+
+Train epoch 4: top1=44.40%, top5=69.27%, loss=2.5272, time=123.48s
+Test epoch 4: top1=49.99%, top5=74.50%, loss=2.2601, time=11.57s
+
+Train epoch 5: top1=46.92%, top5=71.63%, loss=2.3778, time=123.20s
+Test epoch 5: top1=52.89%, top5=76.12%, loss=2.1373, time=11.62s
+
+Train epoch 6: top1=53.91%, top5=77.25%, loss=1.9994, time=265.72s
+Test epoch 6: top1=62.90%, top5=83.38%, loss=1.5780, time=11.53s
+
+Train epoch 7: top1=61.15%, top5=82.97%, loss=1.6164, time=265.76s
+Test epoch 7: top1=67.76%, top5=87.29%, loss=1.3169, time=11.55s
+
+Train epoch 8: top1=65.74%, top5=86.29%, loss=1.3885, time=265.48s
+Test epoch 8: top1=70.86%, top5=89.04%, loss=1.1711, time=11.51s
+
+Train epoch 9: top1=68.72%, top5=88.04%, loss=1.2479, time=265.28s
+Test epoch 9: top1=73.11%, top5=90.52%, loss=1.0575, time=11.55s
+
+Train epoch 10: top1=71.29%, top5=89.70%, loss=1.1287, time=265.43s
+Test epoch 10: top1=75.00%, top5=91.18%, loss=0.9767, time=11.54s
+
+Train epoch 11: top1=73.23%, top5=90.89%, loss=1.0372, time=265.64s
+Test epoch 11: top1=76.39%, top5=91.82%, loss=0.9226, time=11.48s
+
+Train epoch 12: top1=74.80%, top5=91.71%, loss=0.9663, time=265.44s
+Test epoch 12: top1=77.44%, top5=92.62%, loss=0.8668, time=11.46s
+
+Train epoch 13: top1=76.32%, top5=92.60%, loss=0.9006, time=265.21s
+Test epoch 13: top1=78.31%, top5=92.90%, loss=0.8318, time=11.50s
+
+Train epoch 14: top1=77.58%, top5=93.23%, loss=0.8443, time=264.79s
+Test epoch 14: top1=79.07%, top5=93.36%, loss=0.7994, time=11.42s
+
+Train epoch 15: top1=78.58%, top5=93.74%, loss=0.8007, time=265.34s
+Test epoch 15: top1=79.61%, top5=93.73%, loss=0.7776, time=11.58s
+

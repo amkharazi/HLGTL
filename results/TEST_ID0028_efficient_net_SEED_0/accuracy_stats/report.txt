@@ -1,0 +1,45 @@
+Train epoch 1: top1=14.41%, top5=29.38%, loss=46.4838, time=96.47s
+Test epoch 1: top1=27.93%, top5=49.66%, loss=3.5265, time=8.78s
+
+Train epoch 2: top1=24.19%, top5=44.18%, loss=3.6904, time=98.44s
+Test epoch 2: top1=36.11%, top5=58.68%, loss=3.0794, time=8.78s
+
+Train epoch 3: top1=29.34%, top5=50.98%, loss=3.3275, time=98.57s
+Test epoch 3: top1=41.15%, top5=63.64%, loss=2.7707, time=8.83s
+
+Train epoch 4: top1=32.53%, top5=55.13%, loss=3.1084, time=98.44s
+Test epoch 4: top1=43.77%, top5=66.62%, loss=2.5681, time=8.72s
+
+Train epoch 5: top1=36.14%, top5=59.97%, loss=2.8910, time=97.74s
+Test epoch 5: top1=49.29%, top5=72.61%, loss=2.2475, time=8.77s
+
+Train epoch 6: top1=52.01%, top5=75.70%, loss=2.0796, time=209.68s
+Test epoch 6: top1=64.47%, top5=84.50%, loss=1.4874, time=8.92s
+
+Train epoch 7: top1=62.83%, top5=84.00%, loss=1.5318, time=209.64s
+Test epoch 7: top1=69.35%, top5=88.45%, loss=1.2161, time=8.97s
+
+Train epoch 8: top1=67.64%, top5=87.72%, loss=1.2858, time=209.01s
+Test epoch 8: top1=72.94%, top5=90.34%, loss=1.0715, time=8.92s
+
+Train epoch 9: top1=71.14%, top5=89.88%, loss=1.1239, time=208.96s
+Test epoch 9: top1=75.10%, top5=91.63%, loss=0.9763, time=8.90s
+
+Train epoch 10: top1=73.76%, top5=91.46%, loss=1.0062, time=209.87s
+Test epoch 10: top1=76.44%, top5=92.27%, loss=0.9116, time=8.94s
+
+Train epoch 11: top1=76.04%, top5=92.71%, loss=0.9044, time=209.63s
+Test epoch 11: top1=77.72%, top5=92.79%, loss=0.8696, time=8.93s
+
+Train epoch 12: top1=78.05%, top5=93.84%, loss=0.8151, time=209.60s
+Test epoch 12: top1=78.41%, top5=92.91%, loss=0.8441, time=8.87s
+
+Train epoch 13: top1=79.74%, top5=94.74%, loss=0.7387, time=209.48s
+Test epoch 13: top1=78.80%, top5=93.12%, loss=0.8535, time=8.96s
+
+Train epoch 14: top1=81.31%, top5=95.48%, loss=0.6734, time=209.86s
+Test epoch 14: top1=78.76%, top5=93.27%, loss=0.8287, time=9.02s
+
+Train epoch 15: top1=82.82%, top5=96.13%, loss=0.6126, time=209.50s
+Test epoch 15: top1=79.56%, top5=93.37%, loss=0.8027, time=8.89s
+
