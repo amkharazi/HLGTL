@@ -115,12 +115,15 @@
 # python3 TEST_007_efficientNet_32.py
 # python3 TEST_008_efficientNet_32.py
 # python3 TEST_002_efficientNet_28_exp.py
-python3 TEST_003_efficientNet_32_exp.py
-python3 TEST_004_efficientNet_32_exp.py
-python3 TEST_005_efficientNet_32_exp.py
-python3 TEST_006_efficientNet_32_exp.py
-python3 TEST_007_efficientNet_32_exp.py
-python3 TEST_008_efficientNet_32_exp.py
+# python3 TEST_003_efficientNet_32_exp.py
+# python3 TEST_004_efficientNet_32_exp.py
+# python3 TEST_005_efficientNet_32_exp.py
+# python3 TEST_006_efficientNet_32_exp.py
+# python3 TEST_007_efficientNet_32_exp.py
+# python3 TEST_008_efficientNet_32_exp.py
+# python3 TEST_003_efficientNet_32_exp.py
+python3 TEST_001_efficientNet_25_seed_exp.py 
+python3 TEST_006_efficientNet_32_seed.py
 
 
 
