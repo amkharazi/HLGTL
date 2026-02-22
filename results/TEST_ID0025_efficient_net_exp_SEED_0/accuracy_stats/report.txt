@@ -1,0 +1,45 @@
+Train epoch 1: top1=40.71%, top5=63.80%, loss=2.7775, time=103.83s
+Test epoch 1: top1=58.26%, top5=80.05%, loss=1.8185, time=8.75s
+
+Train epoch 2: top1=53.63%, top5=77.15%, loss=1.9877, time=103.48s
+Test epoch 2: top1=60.13%, top5=81.86%, loss=1.6693, time=8.83s
+
+Train epoch 3: top1=56.34%, top5=79.43%, loss=1.8433, time=103.42s
+Test epoch 3: top1=61.00%, top5=81.96%, loss=1.6525, time=8.78s
+
+Train epoch 4: top1=58.27%, top5=81.08%, loss=1.7482, time=103.47s
+Test epoch 4: top1=61.48%, top5=82.76%, loss=1.6062, time=8.72s
+
+Train epoch 5: top1=59.49%, top5=82.11%, loss=1.6779, time=103.44s
+Test epoch 5: top1=61.95%, top5=83.26%, loss=1.5952, time=8.71s
+
+Train epoch 6: top1=65.44%, top5=86.36%, loss=1.3949, time=215.54s
+Test epoch 6: top1=68.40%, top5=87.75%, loss=1.2811, time=8.64s
+
+Train epoch 7: top1=71.55%, top5=90.44%, loss=1.1045, time=215.98s
+Test epoch 7: top1=71.79%, top5=89.26%, loss=1.1550, time=8.66s
+
+Train epoch 8: top1=75.14%, top5=92.56%, loss=0.9395, time=216.00s
+Test epoch 8: top1=73.07%, top5=90.34%, loss=1.0937, time=8.67s
+
+Train epoch 9: top1=78.22%, top5=94.24%, loss=0.8045, time=216.07s
+Test epoch 9: top1=74.25%, top5=90.78%, loss=1.0491, time=8.62s
+
+Train epoch 10: top1=80.50%, top5=95.32%, loss=0.7057, time=215.69s
+Test epoch 10: top1=75.43%, top5=91.27%, loss=1.0119, time=8.71s
+
+Train epoch 11: top1=82.70%, top5=96.22%, loss=0.6199, time=216.06s
+Test epoch 11: top1=75.59%, top5=91.27%, loss=0.9960, time=8.59s
+
+Train epoch 12: top1=84.67%, top5=97.05%, loss=0.5376, time=215.86s
+Test epoch 12: top1=76.21%, top5=91.69%, loss=0.9802, time=8.62s
+
+Train epoch 13: top1=86.25%, top5=97.71%, loss=0.4706, time=215.99s
+Test epoch 13: top1=76.79%, top5=92.16%, loss=0.9611, time=8.64s
+
+Train epoch 14: top1=87.80%, top5=98.14%, loss=0.4154, time=215.98s
+Test epoch 14: top1=77.39%, top5=92.38%, loss=0.9496, time=8.55s
+
+Train epoch 15: top1=89.00%, top5=98.61%, loss=0.3658, time=215.95s
+Test epoch 15: top1=77.59%, top5=92.60%, loss=0.9478, time=8.71s
+
