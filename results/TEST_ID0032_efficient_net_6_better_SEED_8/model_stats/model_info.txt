@@ -1,0 +1,9 @@
+Seed: 8
+total number of parameters:
+17867428
+total number of classifier parameters:
+318812
+feature map (C,H,W) before avgpool:
+(1792,6,6)
+trl input shape:
+(2, 2, 2, 896, 3, 3)
