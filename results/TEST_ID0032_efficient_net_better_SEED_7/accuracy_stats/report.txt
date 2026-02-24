@@ -1,0 +1,75 @@
+Train epoch 1: top1=1.93%, top5=6.68%, loss=61.7824, time=122.93s
+Test epoch 1: top1=4.16%, top5=12.67%, loss=5.0543, time=11.56s
+
+Train epoch 2: top1=4.05%, top5=12.11%, loss=5.0525, time=122.78s
+Test epoch 2: top1=7.15%, top5=18.77%, loss=4.8548, time=11.63s
+
+Train epoch 3: top1=8.04%, top5=20.02%, loss=4.7496, time=123.19s
+Test epoch 3: top1=16.04%, top5=33.11%, loss=4.2450, time=11.58s
+
+Train epoch 4: top1=17.31%, top5=35.54%, loss=4.0877, time=123.00s
+Test epoch 4: top1=30.56%, top5=52.83%, loss=3.3550, time=11.62s
+
+Train epoch 5: top1=26.50%, top5=47.77%, loss=3.4883, time=123.06s
+Test epoch 5: top1=39.59%, top5=61.41%, loss=2.9093, time=11.60s
+
+Train epoch 6: top1=37.75%, top5=61.43%, loss=2.7889, time=265.59s
+Test epoch 6: top1=56.52%, top5=77.28%, loss=1.9378, time=11.64s
+
+Train epoch 7: top1=47.86%, top5=71.80%, loss=2.2384, time=265.37s
+Test epoch 7: top1=63.04%, top5=82.72%, loss=1.6026, time=11.58s
+
+Train epoch 8: top1=53.36%, top5=76.77%, loss=1.9599, time=265.51s
+Test epoch 8: top1=67.25%, top5=85.31%, loss=1.3893, time=11.59s
+
+Train epoch 9: top1=56.71%, top5=79.68%, loss=1.7900, time=265.51s
+Test epoch 9: top1=69.66%, top5=87.12%, loss=1.2804, time=11.60s
+
+Train epoch 10: top1=59.51%, top5=81.73%, loss=1.6546, time=265.71s
+Test epoch 10: top1=71.74%, top5=88.22%, loss=1.1825, time=11.57s
+
+Train epoch 11: top1=61.97%, top5=83.53%, loss=1.5427, time=265.40s
+Test epoch 11: top1=73.16%, top5=89.03%, loss=1.1182, time=11.51s
+
+Train epoch 12: top1=63.94%, top5=84.85%, loss=1.4611, time=265.57s
+Test epoch 12: top1=74.43%, top5=89.70%, loss=1.0584, time=11.56s
+
+Train epoch 13: top1=65.86%, top5=86.24%, loss=1.3710, time=265.58s
+Test epoch 13: top1=75.47%, top5=90.53%, loss=1.0077, time=11.50s
+
+Train epoch 14: top1=68.16%, top5=87.57%, loss=1.2818, time=265.60s
+Test epoch 14: top1=76.44%, top5=91.21%, loss=0.9675, time=11.59s
+
+Train epoch 15: top1=71.16%, top5=89.05%, loss=1.1702, time=265.57s
+Test epoch 15: top1=77.35%, top5=91.51%, loss=0.9206, time=11.55s
+
+Train epoch 16: top1=73.49%, top5=90.48%, loss=1.0652, time=265.53s
+Test epoch 16: top1=78.17%, top5=92.37%, loss=0.8670, time=11.52s
+
+Train epoch 17: top1=75.35%, top5=91.44%, loss=0.9831, time=265.74s
+Test epoch 17: top1=79.24%, top5=92.84%, loss=0.8257, time=11.57s
+
+Train epoch 18: top1=76.64%, top5=92.29%, loss=0.9133, time=265.54s
+Test epoch 18: top1=79.61%, top5=93.12%, loss=0.8020, time=11.60s
+
+Train epoch 19: top1=77.91%, top5=93.05%, loss=0.8540, time=265.65s
+Test epoch 19: top1=80.01%, top5=93.50%, loss=0.7771, time=11.61s
+
+Train epoch 20: top1=78.90%, top5=93.57%, loss=0.8097, time=265.82s
+Test epoch 20: top1=80.55%, top5=93.77%, loss=0.7586, time=11.61s
+
+Train epoch 21: top1=79.55%, top5=93.96%, loss=0.7738, time=265.51s
+Test epoch 21: top1=80.85%, top5=93.91%, loss=0.7426, time=11.60s
+
+Train epoch 22: top1=80.47%, top5=94.43%, loss=0.7339, time=265.34s
+Test epoch 22: top1=81.27%, top5=94.18%, loss=0.7339, time=11.51s
+
+Train epoch 23: top1=81.02%, top5=94.76%, loss=0.7036, time=265.40s
+Test epoch 23: top1=81.55%, top5=94.41%, loss=0.7214, time=11.56s
+
+Train epoch 24: top1=81.83%, top5=95.09%, loss=0.6751, time=265.39s
+Test epoch 24: top1=81.92%, top5=94.51%, loss=0.7145, time=11.55s
+
+Train epoch 25: top1=82.51%, top5=95.49%, loss=0.6417, time=265.60s
+Test epoch 25: top1=82.11%, top5=94.61%, loss=0.7033, time=11.60s
+
