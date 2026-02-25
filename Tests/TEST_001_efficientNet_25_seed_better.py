@@ -45,7 +45,7 @@ def set_seed(seed):
 # تنظیمات اصلی
 # ==========================================
 TEST_ID_BASE = 'TEST_ID0025_efficient_net_better'  # شناسه پایه تست شما
-SEEDS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]             # لیست سیدهایی که می‌خواهید اجرا کنید
+SEEDS = [1, 2, 3, 4, 5, 6, 7, 8, 9]             # لیست سیدهایی که می‌خواهید اجرا کنید
 DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
 IMAGE_SIZE = 192
 BATCH_SIZE = 64

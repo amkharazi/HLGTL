@@ -1,0 +1,7 @@
+Seed: 6
+total number of parameters:
+19149652
+total number of classifier parameters:
+1601036
+trl input shape (C,H,W):
+(1792, 6, 6)
