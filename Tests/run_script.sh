@@ -125,7 +125,10 @@
 # python3 TEST_001_efficientNet_25_seed_exp.py 
 # python3 TEST_006_efficientNet_32_seed.py
 # python3 TEST_002_efficientNet_28_seed_better.py
-python3 TEST_001_efficientNet_25_seed_better.py
+# python3 TEST_001_efficientNet_25_seed_better.py
+python TEST_025_SET_SEED_EXP_V2.py
+python TEST_028_SET_SEED_V2.py
+python TEST_032_TEST_SEED_V2.py
 
 
 
