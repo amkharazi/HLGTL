@@ -9,8 +9,6 @@ Mansoor Rezghi, Amir Mohammad Kharazi, and Mohammad Badzohreh. *Hierarchical loc
 - [ScienceDirect](https://www.sciencedirect.com/science/article/abs/pii/S0957417426023961)
 - [DOI: 10.1016/j.eswa.2026.133487](https://doi.org/10.1016/j.eswa.2026.133487)
 
-SATURN - currently private
-
 Tarbiat Modares University - TMU
 
 Supervisor : M. Rezghi modscicourse@gmail.com & rezghi@modares.ac.ir
